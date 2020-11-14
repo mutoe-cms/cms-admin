@@ -1,0 +1,17 @@
+{
+  "origins": [
+    {
+      "originType": "SwaggerV3",
+      "originUrl": "http://localhost:8080/docs-json",
+      "usingOperationId": true
+    }
+  ],
+  "transformPath": "./pontTransform",
+  "templatePath": "./pontTemplate",
+  "outDir": "../src/services",
+  "surrounding": "typeScript",
+  "mocks": {
+    "enable": true
+  },
+  "templateType": "hooks"
+}

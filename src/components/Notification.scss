@@ -1,0 +1,28 @@
+@import 'src/assets/scss/variables';
+
+.newNotification {
+  position: absolute;
+  top: -7px;
+  right: -3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: 16px;
+  color: #fff;
+  text-align: center;
+  background-color: $primary;
+  border-radius: 16px;
+
+  span {
+    padding: 0 5px;
+  }
+}
+
+.menuDropdown {
+  margin-right: -65px;
+}
+
+.iconStyle {
+  margin: 0 10px 0 0;
+}

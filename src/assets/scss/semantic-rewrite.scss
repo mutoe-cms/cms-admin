@@ -1,0 +1,13 @@
+.ui.form {
+  .field {
+    position: relative;
+    margin-bottom: 1.4em;
+
+    .ui.pointing.label {
+      position: absolute;
+      top: calc(100% - 4px);
+      left: 0;
+      z-index: 1;
+    }
+  }
+}

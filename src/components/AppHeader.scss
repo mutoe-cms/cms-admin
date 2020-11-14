@@ -1,0 +1,49 @@
+@import 'src/assets/scss/variables';
+
+.AppHeader {
+  z-index: 100;
+  width: 100%;
+  margin-bottom: 0 !important;
+  background-color: #fff !important;
+
+  .menuLogo {
+    display: flex;
+    justify-content: center;
+    width: 220px;
+
+    .logoLink {
+      color: $primary;
+      font-weight: 600;
+    }
+  }
+
+  .menuItem {
+    height: 100%;
+    color: $disabled !important;
+
+    &:hover {
+      color: fade-out($primary, 0.9);
+    }
+
+    &.active {
+      color: $primary !important;
+      border-color: $primary !important;
+    }
+
+    .itemIcon {
+      margin: 0 10px 0 0;
+    }
+
+    .menu.menuDropdown {
+      .item .icon.right.floated {
+        margin-left: 1em !important;
+      }
+    }
+  }
+
+  .userTrigger {
+
+  }
+
+}
+
