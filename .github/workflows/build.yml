@@ -19,10 +19,14 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
       - run: yarn install
+
       - run: yarn test --coverage
-      - uses: codacy/codacy-coverage-reporter-action@master
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage/lcov.info
+
+      #      - uses: codacy/codacy-coverage-reporter-action@master
+      #        with:
+      #          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      #          coverage-reports: coverage/lcov.info
+
       - run: yarn build
