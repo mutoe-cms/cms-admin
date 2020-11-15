@@ -1,6 +1,6 @@
 import { pick } from 'lodash'
 import React, { useEffect, useImperativeHandle, useState } from 'react'
-import { Form, StrictDropdownItemProps } from 'semantic-ui-react'
+import { Form, Message, StrictDropdownItemProps } from 'semantic-ui-react'
 import FormInputField from 'src/components/form/FormInputField'
 import FormRichField from 'src/components/form/FormRichField'
 import FormSelectField, { FormSelectFieldProps } from 'src/components/form/FormSelectField'
@@ -68,7 +68,7 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
   const [form, setForm] = useState<F>(props.initForm ?? {} as F)
   useEffect(() => { setForm(props.initForm ?? {} as F) }, [props.initForm])
 
-  const [errors, setErrors] = useState<Partial<Record<K, string>>>({})
+  const [errors, setErrors] = useState<Partial<Record<K | 'form', string>>>({})
 
   const setError = (fieldName: string, errorMessage?: string) => {
     if (errorMessage) {
@@ -88,6 +88,7 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
   const onChange = (field: FieldConfig<K>, value: FormValue) => {
     setForm(prev => ({ ...prev, [field.name]: value }))
     setError(field.name)
+    setError('form')
   }
 
   const validateField = (field: FieldConfig<K>, newValue?: FormValue): boolean => {
@@ -165,7 +166,7 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
     return null
   })
 
-  return <Form noValidate data-testid="form" className={props.className} onSubmit={onSubmit}>
+  return <Form noValidate data-testid="form" className={props.className} error={!!errors.form} onSubmit={onSubmit}>
 
     {renderFields}
 
@@ -175,6 +176,11 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
       type="submit"
       content={props.submitText ?? 'Submit'}
       loading={props.submitting}
+    />
+    <Message
+      error
+      header='Server error'
+      content='Please check your internet or contact admin.'
     />
   </Form>
 }
