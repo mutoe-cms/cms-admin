@@ -48,7 +48,7 @@ export function register (config?: Config): void {
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {
+        void navigator.serviceWorker.ready.then(() => {
           console.log(
             'This web app is being served cache-first by a service ' +
             'worker. To learn more, visit https://bit.ly/CRA-PWA',
@@ -83,7 +83,7 @@ function registerValidSW (swUrl: string, config?: Config) {
               )
 
               // Execute callback
-              if (config && config.onUpdate) {
+              if (config?.onUpdate) {
                 config.onUpdate(registration)
               }
             } else {
@@ -93,7 +93,7 @@ function registerValidSW (swUrl: string, config?: Config) {
               console.log('Content is cached for offline use.')
 
               // Execute callback
-              if (config && config.onSuccess) {
+              if (config?.onSuccess) {
                 config.onSuccess(registration)
               }
             }
@@ -116,11 +116,11 @@ function checkValidServiceWorker (swUrl: string, config?: Config) {
       const contentType = response.headers.get('content-type')
       if (
         response.status === 404 ||
-        (contentType != null && contentType.indexOf('javascript') === -1)
+        (contentType != null && !contentType.includes('javascript'))
       ) {
         // No service worker found. Probably a different app. Reload the page.
-        navigator.serviceWorker.ready.then(registration => {
-          registration.unregister().then(() => {
+        void navigator.serviceWorker.ready.then(registration => {
+          void registration.unregister().then(() => {
             window.location.reload()
           })
         })
@@ -140,7 +140,7 @@ export function unregister (): void {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready
       .then(registration => {
-        registration.unregister()
+        void registration.unregister()
       })
       .catch(error => {
         console.error(error.message)

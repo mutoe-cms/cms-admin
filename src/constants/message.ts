@@ -10,4 +10,3 @@ export const ERROR_MESSAGE = {
   MIN_LENGTH: (label: string, length: number) => `${label} is too short (minimum is ${length} characters)`,
   MAX_LENGTH: (label: string, length: number) => `${label} is too long (maximum is ${length} characters)`,
 }
-

@@ -1,7 +1,6 @@
 import { render, waitFor } from '@testing-library/react'
 import React from 'react'
 import { fieldErrorDecorator, focusErrorField, sentence } from 'src/utils/form.util'
-import { FormException } from '../../../cms-api/src/exception'
 
 describe('# focus error field util', () => {
   const Wrapper: React.FC = () => (<div className='error field'>

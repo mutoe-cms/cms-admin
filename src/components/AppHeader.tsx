@@ -1,4 +1,3 @@
-import { noop } from 'lodash'
 import React, { useState } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import { Dropdown, Icon, Menu } from 'semantic-ui-react'

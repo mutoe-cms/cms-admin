@@ -21,7 +21,7 @@ declare namespace defs {
 
   export class ArticlesRo {
     /** items */
-    items: Array<defs.ArticleEntity>
+    items: defs.ArticleEntity[]
 
     /** meta */
     meta: any

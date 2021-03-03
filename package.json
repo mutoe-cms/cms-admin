@@ -7,7 +7,7 @@
     "build": "node scripts/build.js",
     "test:unit": "node scripts/test.js --coverage",
     "test": "yarn tsc && yarn test:unit",
-    "lint": "eslint 'src/**/*.ts?(x)' --fix",
+    "lint": "eslint 'src/**/*.ts?(x)'",
     "pont:sync": "sh scripts/pont-rebuild.sh"
   },
   "dependencies": {
@@ -57,7 +57,7 @@
     "dotenv-expand": "^5.1.0",
     "eslint": "^7.21.0",
     "eslint-config-react-app": "^6.0.0",
-    "eslint-config-standard": "^16.0.2",
+    "eslint-config-standard-with-typescript": "^20.0.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-flowtype": "^5.3.1",
     "eslint-plugin-import": "^2.22.1",
@@ -67,6 +67,7 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-testing-library": "^3.10.1",
     "file-loader": "^6.2.0",
     "fs-extra": "^9.1.0",
     "html-webpack-plugin": "^4.5.2",
@@ -138,80 +139,31 @@
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
+      "project": "./tsconfig.json",
       "ecmaVersion": 2018,
       "sourceType": "module",
       "ecmaFeatures": {
         "jsx": false
       }
     },
-    "plugins": [
-      "import"
-    ],
     "extends": [
-      "standard",
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react/recommended",
-      "plugin:jest/recommended"
+      "react-app",
+      "react-app/jest",
+      "plugin:jsx-a11y/recommended",
+      "standard-with-typescript"
     ],
     "rules": {
-      "@typescript-eslint/consistent-type-definitions": [
-        "error",
-        "interface"
-      ],
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/member-delimiter-style": [
-        "warn",
-        {
-          "multiline": {
-            "delimiter": "none"
-          },
-          "singleline": {
-            "requireLast": false
-          }
-        }
-      ],
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/semi": [
-        "warn",
-        "never"
-      ],
-      "@typescript-eslint/no-use-before-define": "off",
-      "no-use-before-define": "off",
       "comma-dangle": [
         "warn",
         "always-multiline"
       ],
-      "import/named": "off",
-      "import/no-unresolved": "off",
-      "jest/no-disabled-tests": "off",
-      "jest/no-try-expect": "off",
-      "jsx-quotes": [
-        "warn",
-        "prefer-single"
-      ],
-      "no-empty": [
-        "warn",
-        {
-          "allowEmptyCatch": true
-        }
-      ],
-      "no-multiple-empty-lines": [
-        "warn",
-        {
-          "max": 1,
-          "maxEOF": 1,
-          "maxBOF": 0
-        }
-      ],
-      "react/jsx-tag-spacing": [
-        "warn",
-        {
-          "beforeSelfClosing": "always"
-        }
-      ],
-      "react/prop-types": "off",
-      "semi": "off"
+      "no-void": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/strict-boolean-expressions": "off",
+      "@typescript-eslint/consistent-type-assertions": "off",
+      "@typescript-eslint/no-invalid-void-type": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/array-type": ["error", {"default": "array"}]
     },
     "settings": {
       "react": {
@@ -225,6 +177,8 @@
         ],
         "rules": {
           "@typescript-eslint/no-unused-vars": "off",
+          "@typescript-eslint/promise-function-async": "off",
+          "@typescript-eslint/no-use-before-define": "off",
           "no-use-before-define": "off"
         }
       }

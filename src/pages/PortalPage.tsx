@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router'
 import { useHistory, useParams } from 'react-router-dom'
-import { Loader, Segment } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
 import { AppKey, appMenus } from 'src/appMenu'
 import AppHeader from 'src/components/AppHeader'
 import AppSidebar from 'src/components/AppSidebar'

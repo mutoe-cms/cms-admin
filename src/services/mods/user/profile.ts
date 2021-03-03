@@ -13,10 +13,10 @@ export function useRetrieveList<T = any> (axiosOption: AxiosRequestConfig = {}) 
   return Hooks.useRetrieveList<T>(path, axiosOption)
 }
 
-export function request (
+export async function request (
   axiosOption: AxiosRequestConfig = {},
 ): Promise<defs.ProfileRo> {
-  return PontCore.fetch({
+  return await PontCore.fetch({
     url: PontCore.injectPathVariables(path),
     method,
 

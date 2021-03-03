@@ -20,7 +20,7 @@ export function useRetrieveList<Entity = any, Params = never> (
   path: string,
   axiosOption: AxiosRequestConfig = {},
 ) {
-  const method = axiosOption?.method || 'GET'
+  const method = axiosOption?.method ?? 'GET'
   const [items, setItems] = useState<Entity[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -48,7 +48,7 @@ export function useRetrieveList<Entity = any, Params = never> (
   }
 
   useEffect(() => {
-    retrieveList()
+    void retrieveList()
   }, [])
 
   return {
@@ -91,4 +91,3 @@ export function useSubmit<Req = any, Res = any> (formRef: FormRef, method: Metho
     onSubmit,
   }
 }
-

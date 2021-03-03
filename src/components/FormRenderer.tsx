@@ -1,5 +1,4 @@
 import { pick } from 'lodash'
-import { Editor } from 'draft-js'
 
 import React, { useImperativeHandle, useState } from 'react'
 import { Form } from 'semantic-ui-react'
@@ -31,16 +30,17 @@ export type FieldConfig<K> = InputFieldConfig<K> | RichTextFieldConfig<K>
 
 type FormValue = number | boolean | string | string[] | number[]
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 type Form<T extends string> = Record<T, FormValue>
 
-export type FormConfig<TForm extends Form<string>> = Array<FieldConfig<keyof TForm>>
+export type FormConfig<TForm extends Form<string>> = FieldConfig<keyof TForm>[]
 
 interface FormRendererHandle {
   setError: (fieldName: string, errorMessage?: string) => boolean
 }
 
 interface FormRendererProps<K extends string, F extends Form<K>> {
-  fields: Array<FieldConfig<K>>
+  fields: FieldConfig<K>[]
   initForm?: F
   submitText?: string
   onSubmit?: (form: F) => Promise<Record<string, string> | void>
@@ -49,7 +49,7 @@ interface FormRendererProps<K extends string, F extends Form<K>> {
 }
 
 function FormRenderer<K extends string, F extends Form<K>> (props: FormRendererProps<K, F>, forwardedRef: React.Ref<FormRendererHandle>): React.ReactElement {
-  const [form, setForm] = useState<F>(props.initForm || {} as F)
+  const [form, setForm] = useState<F>(props.initForm ?? {} as F)
   const [errors, setErrors] = useState<Partial<Record<K, string>>>({})
 
   const setError = (fieldName: string, errorMessage?: string) => {
@@ -90,7 +90,7 @@ function FormRenderer<K extends string, F extends Form<K>> (props: FormRendererP
     const validateResults = props.fields.map(field => validateField(field))
     if (!validateResults.every(valid => valid)) return focusErrorField()
 
-    props.onSubmit?.(form)
+    await props.onSubmit?.(form)
   }
 
   const renderFields = props.fields.map(field => {

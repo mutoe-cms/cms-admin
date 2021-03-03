@@ -2,8 +2,8 @@ import React, { Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import { Loader } from 'semantic-ui-react'
 
-const ArticleListPage = React.lazy(() => import(/* webpackChunkName: "content" */'src/pages/content/article/ArticleListPage'))
-const ArticleEditPage = React.lazy(() => import(/* webpackChunkName: "content" */'src/pages/content/article/ArticleEditPage'))
+const ArticleListPage = React.lazy(async () => await import(/* webpackChunkName: "content" */'src/pages/content/article/ArticleListPage'))
+const ArticleEditPage = React.lazy(async () => await import(/* webpackChunkName: "content" */'src/pages/content/article/ArticleEditPage'))
 
 type ModuleKey = 'article'
 
@@ -12,7 +12,7 @@ const componentMap: Record<ModuleKey, Record<'list' | 'edit', React.LazyExoticCo
 }
 
 const ContentPage: React.FC = () => {
-  const { module: moduleKey, id } = useParams<{ module: ModuleKey; id: string }>()
+  const { module: moduleKey, id } = useParams<{ module: ModuleKey, id: string }>()
 
   const Component = componentMap[moduleKey]?.[id ? 'edit' : 'list'] || React.Fragment
 

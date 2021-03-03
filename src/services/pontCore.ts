@@ -32,11 +32,12 @@ class PontCoreManager {
   injectPathVariables (path: string, paramVariables: any = {}) {
     const params = { ...paramVariables }
 
-    const url = path.replace(/{([^\\}]*(?:\\.[^\\}]*)*)}/gm, (match, key) => {
+    const url = path.replace(/{([^\\}]*(?:\\.[^\\}]*)*)}/gm, (match, key: string) => {
       key = key.trim()
 
       if (params[key] !== undefined) {
         const value = params[key]
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete params[key]
         return value
       }
@@ -46,6 +47,7 @@ class PontCoreManager {
 
     const paramStr = Object.keys(params)
       .map(key => {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         return params[key] === undefined || params[key]?.length <= 0 ? '' : `${key}=${params[key]}`
       })
       .filter(id => id)

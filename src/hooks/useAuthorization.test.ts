@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/dom'
+import { waitFor } from '@testing-library/react'
 import { act, renderHook } from '@testing-library/react-hooks'
 import { MemoryRouter } from 'react-router-dom'
 import useAuthorization from 'src/hooks/useAuthorization'

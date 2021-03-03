@@ -19,8 +19,7 @@ describe('# injectPathVariables', () => {
   const { warn } = console
 
   beforeAll(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     delete console.warn
     console.warn = jest.fn()
   })

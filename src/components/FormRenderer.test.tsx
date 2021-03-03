@@ -4,7 +4,7 @@ import FormRenderer, { FieldConfig } from 'src/components/FormRenderer'
 import { ERROR_MESSAGE } from 'src/constants/message'
 
 describe('# Form Renderer Component', () => {
-  let fields: Array<FieldConfig<string>>
+  let fields: FieldConfig<string>[]
   let container: HTMLElement
   let username: HTMLInputElement
   let password: HTMLInputElement
@@ -35,16 +35,16 @@ describe('# Form Renderer Component', () => {
   })
 
   describe('common feature', () => {
-    it('should display required error when submit an empty form given a required field', () => {
+    it('should display required error when submit an empty form given a required field', async () => {
       fireEvent.submit(form)
 
-      waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE.REQUIRED('Username'))).toHaveLength(1))
+      await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE.REQUIRED('Username'))).toHaveLength(1))
     })
 
-    it('should display required error when blur given a required field', () => {
+    it('should display required error when blur given a required field', async () => {
       fireEvent.blur(username)
 
-      waitFor(() => expect(container).toHaveTextContent(ERROR_MESSAGE.REQUIRED('Username')))
+      await waitFor(() => expect(container).toHaveTextContent(ERROR_MESSAGE.REQUIRED('Username')))
     })
 
     it('should clear error message when change field', async () => {
@@ -70,7 +70,7 @@ describe('# Form Renderer Component', () => {
     })
 
     it('should render nothing when passed in invalid field type', () => {
-      const invalidFields = [{ type: 'foo', name: 'foo' }] as unknown as Array<FieldConfig<'foo'>>
+      const invalidFields = [{ type: 'foo', name: 'foo' }] as unknown as FieldConfig<'foo'>[]
 
       const { container } = render(<FormRenderer fields={invalidFields} />)
 
