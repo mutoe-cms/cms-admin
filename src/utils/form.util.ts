@@ -4,9 +4,8 @@ import { ERROR_MESSAGE, PUNCTUATION } from 'src/constants/message'
 export function focusErrorField (): void {
   setTimeout(() => {
     const firstErrorField = document.querySelector('.error.field')
-    if (!firstErrorField) return
 
-    firstErrorField.querySelector('input')?.focus()
+    firstErrorField?.querySelector('input')?.focus()
   })
 }
 

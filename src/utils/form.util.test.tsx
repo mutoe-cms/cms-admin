@@ -1,17 +1,18 @@
 import { render, waitFor } from '@testing-library/react'
 import React from 'react'
-import { focusErrorField, sentence } from 'src/utils/form.util'
+import { fieldErrorDecorator, focusErrorField, sentence } from 'src/utils/form.util'
+import { FormException } from '../../../cms-api/src/exception'
 
 describe('# focus error field util', () => {
   const Wrapper: React.FC = () => (<div className='error field'>
     <input type='text' data-testid='input' />
   </div>)
 
-  it('should focus on first error field input', () => {
+  it('should focus on first error field input', async () => {
     const { getByTestId } = render(<Wrapper />)
     focusErrorField()
 
-    return waitFor(() => expect(document.activeElement).toEqual(getByTestId('input')))
+    await waitFor(() => expect(document.activeElement).toEqual(getByTestId('input')))
   })
 })
 
@@ -24,5 +25,13 @@ describe('# sentence', () => {
   it('should keep special chars exist', () => {
     const text = 'userName is invalid (max value is 5)'
     expect(sentence(text)).toBe('User name is invalid (max value is 5)')
+  })
+})
+
+describe('# fieldErrorDecorator', () => {
+  it('should convert error message correctly', () => {
+    const result = fieldErrorDecorator('username', ['isNotEmpty'])
+
+    expect(result).toEqual('username can\'t be blank')
   })
 })
