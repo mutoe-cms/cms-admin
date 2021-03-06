@@ -4,7 +4,7 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 
 import 'draft-js/dist/Draft.css'
-import 'src/assets/scss/index.scss'
+import 'src/assets/css/index.scss'
 
 ReactDOM.render(
   <App />,
