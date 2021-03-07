@@ -1,3 +1,21 @@
+## 0.3.0 (2021-03-07)
+
+* chore: downgrade dependencies (fix webpack compatibility) ([cf9017a](https://github.com/mutoe-cms/mutoe-cms/commit/cf9017a))
+* chore: ignore codacy reporter ([a7e6596](https://github.com/mutoe-cms/mutoe-cms/commit/a7e6596))
+* chore: migrate repo ([36ee214](https://github.com/mutoe-cms/mutoe-cms/commit/36ee214))
+* chore: migrate to vite builder ([bc363c1](https://github.com/mutoe-cms/mutoe-cms/commit/bc363c1))
+* chore: remove useless transformer ([d0b54c7](https://github.com/mutoe-cms/mutoe-cms/commit/d0b54c7))
+* chore: setup commit changelog ([1a1b43d](https://github.com/mutoe-cms/mutoe-cms/commit/1a1b43d))
+* chore: setup workflow ([6030628](https://github.com/mutoe-cms/mutoe-cms/commit/6030628))
+* chore: upgrade dependencies ([f39c9eb](https://github.com/mutoe-cms/mutoe-cms/commit/f39c9eb))
+* chore: upgrade to Nodejs 14 ([83f2e66](https://github.com/mutoe-cms/mutoe-cms/commit/83f2e66))
+* chore: upgrade to React 17 ([e5feb2e](https://github.com/mutoe-cms/mutoe-cms/commit/e5feb2e))
+* refactor: replace pont with swagger-typescript-api ([7a59283](https://github.com/mutoe-cms/mutoe-cms/commit/7a59283))
+* refactor: update eslint rules ([bccabf4](https://github.com/mutoe-cms/mutoe-cms/commit/bccabf4))
+* test: add test for fieldErrorDecorator ([9f06565](https://github.com/mutoe-cms/mutoe-cms/commit/9f06565))
+
+
+
 # Change Log
 
 All notable changes to this project will be documented in this file.
