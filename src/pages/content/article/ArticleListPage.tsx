@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, Input, Menu, Table } from 'semantic-ui-react'
 import ListWrapper from 'src/components/ListWrapper'
 import { CREATE, routeMap } from 'src/routeConfig'
-import { API } from 'src/services'
+import { service, useRetrieveList } from 'src/services'
 import { formatDateTime } from 'src/utils/format.util'
 import { curry } from 'lodash'
 
@@ -14,7 +14,7 @@ const ArticleListPage: React.FC = () => {
     pageMeta,
     items: articles,
     retrieveList,
-  } = API.article.retrieveArticles.useRetrieveList<defs.ArticleEntity>()
+  } = useRetrieveList(service.article.retrieveArticles)
 
   const navigateEdit = curry(routeMap.moduleEdit)('content', 'article')
 

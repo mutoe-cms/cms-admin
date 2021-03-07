@@ -1,6 +1,14 @@
-import * as defs from './baseClass'
-import * as Hooks from './hooks'
-import { API } from './mods/'
-import { PontCore } from './pontCore'
+import { Api } from './api'
 
-export { defs, API, Hooks, PontCore }
+export * from './hooks/useSubmit'
+export * from './hooks/useRetrieveList'
+
+export const service = new Api<string>({
+  securityWorker: token => token
+    ? {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    : {},
+})

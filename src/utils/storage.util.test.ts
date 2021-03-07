@@ -1,7 +1,11 @@
 import StorageUtil from './storage.util'
 
 describe('# Storage Util', () => {
-  afterEach(jest.clearAllMocks)
+  beforeAll(() => {
+    jest.spyOn(Storage.prototype, 'setItem')
+    jest.spyOn(Storage.prototype, 'getItem')
+    jest.spyOn(Storage.prototype, 'removeItem')
+  })
 
   it('should using localStorage to store data default', () => {
     const fooStorage = new StorageUtil('storage_foo')

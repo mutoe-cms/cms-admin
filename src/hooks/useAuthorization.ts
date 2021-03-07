@@ -1,47 +1,46 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { API, defs } from 'src/services'
-import StorageUtil from 'src/utils/storage.util'
+import { service } from 'src/services'
+import { AuthRo, ProfileRo } from 'src/services/api'
 
 export interface AuthorizationState {
-  profile: defs.ProfileRo | null
+  profile: ProfileRo | null
   loading: boolean
-  mountAuthorization: (authRo: defs.AuthRo) => void
+  mountAuthorization: (authRo: AuthRo) => void
   unmountAuthorization: () => void
 }
 
-export const authorizationTokenStorage = new StorageUtil<string>('auth_token')
-
 export default function useAuthorization (): AuthorizationState {
-  const [profile, setProfile] = useState<defs.ProfileRo | null>(null)
-  const localToken = authorizationTokenStorage.get()
+  const [loading, setLoading] = useState(false)
+  const [profile, setProfile] = useState<ProfileRo | null>(null)
   const history = useHistory()
 
-  const mountAuthorization = (authRo: defs.AuthRo) => {
+  const mountAuthorization = (authRo: AuthRo) => {
     setProfile(authRo)
-    authorizationTokenStorage.set(authRo.token)
+    service.setSecurityData(authRo.token)
   }
 
   const unmountAuthorization = () => {
     setProfile(null)
-    authorizationTokenStorage.remove()
+    service.setSecurityData(null)
   }
 
-  const retrieveUserProfile = async () => {
+  const retrieveUserProfile = useCallback(async () => {
     try {
-      const profile = await API.user.profile.request()
+      setLoading(true)
+      const { data: profile } = await service.user.profile()
       setProfile(profile)
     } catch (e) {
       unmountAuthorization()
       history.replace('/login')
+    } finally {
+      setLoading(false)
     }
-  }
+  }, [history])
 
   useEffect(() => {
-    localToken && retrieveUserProfile()
-  }, [])
-
-  const loading = Boolean(localToken && !profile)
+    void retrieveUserProfile()
+  }, [retrieveUserProfile])
 
   return {
     profile,

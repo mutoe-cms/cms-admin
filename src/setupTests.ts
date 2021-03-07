@@ -4,8 +4,6 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect'
 
-import 'src/services'
-
 document.createRange = (): any => ({
   setStart: jest.fn(),
   setEnd: jest.fn(),
@@ -15,8 +13,6 @@ document.createRange = (): any => ({
   },
 })
 
-beforeEach(() => {
-  jest.spyOn(Storage.prototype, 'setItem')
-  jest.spyOn(Storage.prototype, 'getItem')
-  jest.spyOn(Storage.prototype, 'removeItem')
+afterEach(() => {
+  jest.clearAllMocks()
 })

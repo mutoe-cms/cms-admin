@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react'
 import { Button, Header, Icon, Placeholder, Segment, Pagination, Menu, Dropdown, DropdownItemProps } from 'semantic-ui-react'
-import { PaginationDto } from 'src/services/hooks'
+import { PaginationDto } from 'src/services'
+import { PaginationMeta } from 'src/services/api'
 
 const paginationLimitOptions: DropdownItemProps[] = [
   { value: 10, text: 10 },
@@ -13,7 +14,7 @@ const paginationLimitOptions: DropdownItemProps[] = [
 interface ListWrapperProps {
   loading?: boolean
   error?: boolean
-  pageMeta?: defs.PaginationMeta
+  pageMeta?: PaginationMeta
   onRetrieve?: (paginationDto: PaginationDto) => void
 }
 
