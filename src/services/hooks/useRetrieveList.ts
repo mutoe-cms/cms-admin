@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 import { PaginationMeta, RequestParams } from 'src/services/api'
 
-interface PaginationRo<T> {
+export interface PaginationRo<T> {
   items: T[]
   meta: PaginationMeta
 }

@@ -31,7 +31,7 @@ describe('# useSubmit', () => {
   const setError = jest.fn()
   const formRef = { current: { setError } }
 
-  it('should call axios request when call onSubmit method', async () => {
+  it('should call request when call onSubmit method', async () => {
     const request = jest.fn().mockResolvedValue({ status: 200, data: {} })
     const { result } = renderHook(() => useSubmit(formRef, request))
 
