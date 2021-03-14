@@ -27,6 +27,6 @@
   },
   "include": [
     "src",
-    "*.{js,ts}"
+    "vite.config.ts"
   ]
 }
