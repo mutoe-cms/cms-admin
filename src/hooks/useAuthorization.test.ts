@@ -12,13 +12,21 @@ describe('# Authorization Context', () => {
   const mockRetrieveProfile = service.user.profile as jest.Mock
 
   it('should got auth with null when init state', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter })
-    await waitForNextUpdate()
+    const { result } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter })
 
     expect(result.current.profile).toBeNull()
   })
 
+  it('should jump to login page when token not exist', async () => {
+    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue(null)
+
+    renderHook(() => useAuthorization(), { wrapper: MemoryRouter })
+
+    await waitFor(() => expect(mockSetSecurityData).toBeCalledWith(null))
+  })
+
   it('should retrieve userProfile API when load context', async () => {
+    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockResolvedValue({ status: 200, data: { username: 'foo' } })
 
     const { result, waitForNextUpdate } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter })
@@ -28,6 +36,7 @@ describe('# Authorization Context', () => {
   })
 
   it('should redirect to login page when token is invalid', async () => {
+    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockRejectedValue({ response: { status: 401 } })
 
     const { waitForNextUpdate } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter })

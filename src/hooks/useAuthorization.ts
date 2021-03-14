@@ -14,7 +14,7 @@ export interface AuthorizationState {
 const authorizationTokenStorage = new StorageUtil<string>('auth_token')
 
 export default function useAuthorization (): AuthorizationState {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [profile, setProfile] = useState<ProfileRo | null>(null)
   const history = useHistory()
 
@@ -32,7 +32,11 @@ export default function useAuthorization (): AuthorizationState {
 
   const retrieveUserProfile = useCallback(async () => {
     const localToken = authorizationTokenStorage.get()
-    if (!localToken) history.replace('/login')
+    if (!localToken) {
+      unmountAuthorization()
+      history.replace('/login')
+      return
+    }
     service.setSecurityData(localToken)
 
     try {

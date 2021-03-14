@@ -31,8 +31,10 @@ const PortalPage: React.FC = () => {
 
   return <div className='App'>
     <AppHeader />
+
     <div className='moduleContainer'>
       {appMenu.modules?.length && <AppSidebar moduleMenus={appMenu.modules} />}
+
       <main className='moduleMain'>
         <Switch>
           <Route path={routePath.dashboard} component={DashboardPage} />
