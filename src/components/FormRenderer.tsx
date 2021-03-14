@@ -1,5 +1,4 @@
 import { pick } from 'lodash'
-
 import React, { useImperativeHandle, useState } from 'react'
 import { Form } from 'semantic-ui-react'
 import RichEditor from 'src/components/RichEditor'

@@ -1,14 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-import * as serviceWorker from './serviceWorker'
+import { BrowserRouter } from 'react-router-dom'
+import App from 'src/App'
+import { AuthorizationProvider } from 'src/contexts/authorization.context'
+import * as serviceWorker from 'src/serviceWorker'
 
 import 'semantic-ui-css/semantic.min.css'
 import 'draft-js/dist/Draft.css'
 import 'src/assets/css/index.scss'
 
 ReactDOM.render(
-  <App />,
+  <BrowserRouter>
+    <AuthorizationProvider>
+      <App />
+    </AuthorizationProvider>
+  </BrowserRouter>,
   document.getElementById('root'),
 )
 

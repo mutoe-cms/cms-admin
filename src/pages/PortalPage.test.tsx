@@ -2,7 +2,6 @@ import { render } from '@testing-library/react'
 import React from 'react'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import PortalPage from 'src/pages/PortalPage'
-import { routePath } from 'src/routeConfig'
 
 jest.mock('src/contexts/authorization.context')
 
@@ -35,7 +34,7 @@ describe('# PortalPage', () => {
     })
     render(<PortalPage />)
 
-    expect(mockPush).toBeCalledWith(routePath.login)
+    expect(mockPush).toBeCalledWith('/login')
   })
 
   it('should redirect to 404 page when url is invalid', () => {

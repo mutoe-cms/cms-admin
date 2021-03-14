@@ -2,10 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Input, Menu, Table } from 'semantic-ui-react'
 import ListWrapper from 'src/components/ListWrapper'
-import { CREATE, routeMap } from 'src/routeConfig'
 import { service, useRetrieveList } from 'src/services'
 import { formatDateTime } from 'src/utils/format.util'
-import { curry } from 'lodash'
 
 const ArticleListPage: React.FC = () => {
   const {
@@ -16,11 +14,9 @@ const ArticleListPage: React.FC = () => {
     retrieveList,
   } = useRetrieveList(service.article.retrieveArticles)
 
-  const navigateEdit = curry(routeMap.moduleEdit)('content', 'article')
-
   return <div>
     <Menu attached='top'>
-      <Menu.Item icon='plus' content='New' as={Link} to={navigateEdit(CREATE)} />
+      <Menu.Item icon='plus' content='New' as={Link} to="create" />
       <Menu.Menu position='right'>
         <Menu.Item>
           <Input transparent icon='search' type='search' placeholder='Search' />
@@ -45,7 +41,7 @@ const ArticleListPage: React.FC = () => {
             <Table.Cell>{formatDateTime(article.createdAt)}</Table.Cell>
             <Table.Cell>{formatDateTime(article.updatedAt)}</Table.Cell>
             <Table.Cell>
-              <Button basic icon='edit' as={Link} to={navigateEdit(article.id)} />
+              <Button basic icon='edit' as={Link} to={String(article.id)} />
             </Table.Cell>
           </Table.Row>)}
         </Table.Body>

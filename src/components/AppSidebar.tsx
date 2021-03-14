@@ -1,24 +1,16 @@
-import { tail } from 'lodash'
-import pathToRegexp from 'path-to-regexp'
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
 import { ModuleMenu } from 'src/appMenu'
-import { routeMap, routePath } from 'src/routeConfig'
+import useModuleName from 'src/hooks/useModuleName'
 
 interface AppSidebarProps {
   moduleMenus: ModuleMenu[]
 }
 
 const AppSidebar: React.FC<AppSidebarProps> = ({ moduleMenus }) => {
-  const paramMatcher = pathToRegexp(routePath.moduleMatcher)
-  const location = useLocation()
-  const [appKey, moduleKey] = tail(paramMatcher.exec(location.pathname)) || ['', '']
-
-  const history = useHistory()
-  const onNavigate = (moduleKey: string) => {
-    history.push(routeMap.module(appKey, moduleKey))
-  }
+  const { appKey, moduleKey } = useModuleName()
+  const navigate = useNavigate()
 
   return <aside className='AppSidebar'>
     {moduleMenus.map(moduleMenu => {
@@ -31,7 +23,7 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ moduleMenus }) => {
             name={item.name}
             icon={item.icon}
             active={moduleKey === item.key}
-            onClick={() => onNavigate(item.key)}
+            onClick={() => navigate(`${appKey}/${item.key}`)}
           />
         })}
       </Menu>

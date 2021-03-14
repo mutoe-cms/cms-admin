@@ -3,10 +3,10 @@ import React from 'react'
 import { appMenus } from 'src/appMenu'
 import AppSidebar from 'src/components/AppSidebar'
 
-const mockPush = jest.fn()
+const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
   useLocation: () => ({ pathname: '/content/category' }),
-  useHistory: () => ({ push: mockPush }),
+  useNavigate: () => mockNavigate,
 }))
 
 describe('# AppHeader', () => {
@@ -29,6 +29,6 @@ describe('# AppHeader', () => {
 
     fireEvent.click(getByTestId('article'))
 
-    expect(mockPush).toBeCalledWith('/content/article')
+    expect(mockNavigate).toBeCalledWith('content/article')
   })
 })

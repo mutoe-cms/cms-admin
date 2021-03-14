@@ -8,11 +8,9 @@ import LoginPage from './LoginPage'
 
 jest.mock('src/contexts/authorization.context')
 
-const mockReplace = jest.fn()
+const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
-  useHistory: () => ({
-    replace: mockReplace,
-  }),
+  useNavigate: () => mockNavigate,
 }))
 
 jest.mock('src/services', () => ({
@@ -55,7 +53,7 @@ describe('# Login page', () => {
 
     render(<LoginPage />)
 
-    expect(mockReplace).toBeCalledWith('/')
+    expect(mockNavigate).toBeCalledWith('/', { replace: true })
   })
 
   it('should jump to home page when submit a valid form', async () => {
@@ -70,7 +68,7 @@ describe('# Login page', () => {
 
     await waitFor(() => expect(mockLoginRequest).toBeCalledWith(loginFormFixture, undefined))
     expect(mockMountAuthorization).toBeCalledWith({ username: 'invalid', token: 'token' })
-    expect(mockReplace).toBeCalledWith('/')
+    expect(mockNavigate).toBeCalledWith('/', { replace: true })
   })
 
   it('should display server validation error message when submit exist username form', async () => {

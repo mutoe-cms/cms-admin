@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
-import { Link, useHistory, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Dropdown, Icon, Menu } from 'semantic-ui-react'
-import { AppKey, appMenus } from 'src/appMenu'
+import { appMenus } from 'src/appMenu'
+import Notification from 'src/components/Notification'
 import useAuthorizationContext from 'src/contexts/authorization.context'
-import { routeMap } from 'src/routeConfig'
-import Notification from './Notification'
+import useModuleName from 'src/hooks/useModuleName'
 
 const AppHeader: React.FC = () => {
   const { profile, unmountAuthorization } = useAuthorizationContext()
-
-  const { app } = useParams<{ app: AppKey }>()
-  const appMenu = appMenus.find(it => it.key === app)
+  const { appKey } = useModuleName()
+  const appMenu = appMenus.find(it => it.key === appKey)
   const [activeItem, setActiveItem] = useState(appMenu?.key)
+  const navigate = useNavigate()
 
-  const history = useHistory()
+  useEffect(() => {
+    setActiveItem(appKey)
+  }, [appKey])
+
   const onLogout = () => {
     unmountAuthorization()
-    history.push('/login')
+    navigate('/login')
   }
 
   const userTrigger = <span className='userTrigger' role='button'>
@@ -24,11 +27,6 @@ const AppHeader: React.FC = () => {
     {' '}
     {profile?.username}
   </span>
-
-  const onNavigate = (appKey: AppKey) => {
-    setActiveItem(appKey)
-    history.push(routeMap.app(appKey))
-  }
 
   return <Menu pointing secondary className='AppHeader'>
     <Menu.Menu postion='left' className='menuLogo'>
@@ -43,7 +41,7 @@ const AppHeader: React.FC = () => {
         data-testid={item.key}
         name={item.appName}
         active={activeItem === item.key}
-        onClick={() => onNavigate(item.key)}
+        onClick={() => navigate(item.key)}
       >
         <Icon name={item.icon} size='large' className='itemIcon' />
         <span>{item.appName}</span>

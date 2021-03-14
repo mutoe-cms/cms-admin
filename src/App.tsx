@@ -1,22 +1,42 @@
 import React from 'react'
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 import NotFound from 'src/components/NotFound'
 import LoginPage from 'src/pages/auth/LoginPage/LoginPage'
+import ContentPage from 'src/pages/content/ContentPage'
+import DashboardPage from 'src/pages/dashboard/DashboardPage'
 import PortalPage from 'src/pages/PortalPage'
-import { routePath } from 'src/routeConfig'
-import { AuthorizationProvider } from './contexts/authorization.context'
 
-const App: React.FC = () => (
-  <BrowserRouter>
-    <AuthorizationProvider>
-      <Switch>
-        <Route path={routePath.login} component={LoginPage} />
-        <Route path={routePath.appMatcher} component={PortalPage} />
-        <Route exact path={routePath.root}><Redirect to={routePath.dashboard} /></Route>
-        <Route component={NotFound} />
-      </Switch>
-    </AuthorizationProvider>
-  </BrowserRouter>
-)
+const ArticleListPage = React.lazy(async () => await import('src/pages/content/article/ArticleListPage'))
+const ArticleEditPage = React.lazy(async () => await import('src/pages/content/article/ArticleEditPage'))
+
+const App: React.FC = () => {
+  const routes = useRoutes([
+    { path: '/login', element: <LoginPage /> },
+    {
+      path: '/',
+      element: <PortalPage />,
+      children: [
+        { path: 'dashboard', element: <DashboardPage /> },
+        {
+          path: 'content',
+          element: <ContentPage />,
+          children: [
+            {
+              path: 'article',
+              children: [
+                { path: '/', element: <ArticleListPage /> },
+                { path: ':id', element: <ArticleEditPage /> },
+              ],
+            },
+            { path: '*', element: <NotFound /> },
+          ],
+        },
+      ],
+    },
+    { path: '*', element: <NotFound /> },
+  ])
+
+  return routes
+}
 
 export default App

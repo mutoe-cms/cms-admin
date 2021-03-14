@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { service } from 'src/services'
 import { AuthRo, ProfileRo } from 'src/services/api'
 import StorageUtil from 'src/utils/storage.util'
@@ -16,7 +16,7 @@ const authorizationTokenStorage = new StorageUtil<string>('auth_token')
 export default function useAuthorization (): AuthorizationState {
   const [loading, setLoading] = useState(true)
   const [profile, setProfile] = useState<ProfileRo | null>(null)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const mountAuthorization = (authRo: AuthRo) => {
     setProfile(authRo)
@@ -34,7 +34,8 @@ export default function useAuthorization (): AuthorizationState {
     const localToken = authorizationTokenStorage.get()
     if (!localToken) {
       unmountAuthorization()
-      history.replace('/login')
+      navigate('/login', { replace: true })
+      setLoading(false)
       return
     }
     service.setSecurityData(localToken)
@@ -45,11 +46,11 @@ export default function useAuthorization (): AuthorizationState {
       setProfile(profile)
     } catch (e) {
       unmountAuthorization()
-      history.replace('/login')
+      navigate('/login', { replace: true })
     } finally {
       setLoading(false)
     }
-  }, [history])
+  }, [navigate])
 
   useEffect(() => {
     void retrieveUserProfile()

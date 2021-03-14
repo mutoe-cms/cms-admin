@@ -1,15 +1,13 @@
 import React from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Menu, Segment } from 'semantic-ui-react'
-import { CREATE } from 'src/routeConfig'
 import FormRenderer, { FieldConfig } from 'src/components/FormRenderer'
 
 const ArticleEditPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>()
+  const { id } = useParams()
   // TODO: Create article feature
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const isCreate = id === CREATE
-  const history = useHistory()
+  const isCreate = id === 'create'
+  const navigate = useNavigate()
 
   const form = {
     title: '',
@@ -23,8 +21,7 @@ const ArticleEditPage: React.FC = () => {
 
   return <div>
     <Menu attached='top'>
-      {/* eslint-disable-next-line react/jsx-handler-names */}
-      <Menu.Item role='link' icon='angle left' content='Back' onClick={history.goBack} />
+      <Menu.Item role='link' icon='angle left' content='Back' onClick={() => navigate(-1)} />
     </Menu>
     <Segment attached='bottom'>
       <FormRenderer initForm={form} fields={formConfig} />
