@@ -102,7 +102,8 @@ function FormRenderer<K extends string, F extends Form<K>> (props: FormRendererP
     switch (field.type) {
       case 'input':
       case 'password': {
-        return <Form.Input {...fieldProps}
+        return <Form.Input
+          {...fieldProps}
           value={form[field.name] ?? ''}
           type={field.type === 'input' ? 'text' : field.type}
           maxLength={field.maxLength}
@@ -117,13 +118,15 @@ function FormRenderer<K extends string, F extends Form<K>> (props: FormRendererP
     return null
   })
 
-  return <Form data-testid='form' className={props.className} onSubmit={onSubmit} noValidate>
+  return <Form noValidate data-testid="form" className={props.className} onSubmit={onSubmit}>
     {renderFields}
-    <Form.Button data-testid='submit'
-      type='submit'
+    <Form.Button
       primary
+      data-testid="submit"
+      type="submit"
       content={props.submitText ?? 'Submit'}
-      loading={props.submitting} />
+      loading={props.submitting}
+    />
   </Form>
 }
 

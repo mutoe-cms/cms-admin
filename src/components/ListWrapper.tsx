@@ -51,19 +51,25 @@ const ListWrapper: React.FC<ListWrapperProps> = (props) => {
     {props.children}
     {pageMeta && <Menu attached='bottom'>
       <Menu.Item fitted>
-        <Pagination as='nav' pointing secondary
+        <Pagination
+          pointing
+          secondary
+          as='nav'
           defaultActivePage={pageMeta.currentPage}
           totalPages={pageMeta.totalPages}
-          onPageChange={(_, data) => onPageChange(Number(data.activePage))}
           firstItem={{ content: <Icon name='angle double left' />, icon: true, disabled: pageMeta.currentPage === 1 }}
           prevItem={{ content: <Icon name='angle left' />, icon: true, disabled: pageMeta.currentPage === 1 }}
           ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
           nextItem={{ content: <Icon name='angle right' />, icon: true, disabled: pageMeta.currentPage === pageMeta.totalPages }}
           lastItem={{ content: <Icon name='angle double right' />, icon: true, disabled: pageMeta.currentPage === pageMeta.totalPages }}
+          onPageChange={(_, data) => onPageChange(Number(data.activePage))}
         />
       </Menu.Item>
       {/* TODO: Accessibility */}
-      <Dropdown role='button' className='link item' pointing='bottom'
+      <Dropdown
+        role='button'
+        className='link item'
+        pointing='bottom'
         text={`${limit} / page`}
         options={paginationLimitOptions}
         value={limit}

@@ -16,7 +16,7 @@ const PortalPage: React.FC = () => {
   const { app } = useParams<{ app: AppKey }>()
 
   if (loading) {
-    return <Loader role='progressbar' aria-busy />
+    return <Loader aria-busy role='progressbar' />
   }
 
   if (!profile) {

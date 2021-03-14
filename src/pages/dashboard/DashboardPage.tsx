@@ -2,7 +2,7 @@ import React from 'react'
 
 const DashboardPage: React.FC = () => {
   return <div>
-    <p> {'Mutoe\'s Content Manage System'} </p>
+    <p>Mutoe Content Manage System</p>
   </div>
 }
 

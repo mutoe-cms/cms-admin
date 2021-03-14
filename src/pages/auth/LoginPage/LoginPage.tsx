@@ -38,14 +38,14 @@ const LoginPage: React.FC = () => {
   }
 
   return <div className='LoginPage'>
-     <FormRenderer
+    <FormRenderer
       ref={formRef}
       className='form'
       submitting={submitting}
       fields={loginFormFields}
       initForm={loginForm}
       onSubmit={onSubmit}
-     />
+    />
   </div>
 }
 

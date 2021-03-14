@@ -23,7 +23,7 @@ const ArticleListPage: React.FC = () => {
       <Menu.Item icon='plus' content='New' as={Link} to={navigateEdit(CREATE)} />
       <Menu.Menu position='right'>
         <Menu.Item>
-          <Input icon='search' type='search' placeholder='Search' transparent />
+          <Input transparent icon='search' type='search' placeholder='Search' />
         </Menu.Item>
       </Menu.Menu>
     </Menu>

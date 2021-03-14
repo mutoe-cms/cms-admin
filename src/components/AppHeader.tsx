@@ -20,7 +20,9 @@ const AppHeader: React.FC = () => {
   }
 
   const userTrigger = <span className='userTrigger' role='button'>
-    <Icon name='user' /> {profile?.username}
+    <Icon name='user' />
+    {' '}
+    {profile?.username}
   </span>
 
   const onNavigate = (appKey: AppKey) => {
@@ -35,18 +37,17 @@ const AppHeader: React.FC = () => {
       </Menu.Item>
     </Menu.Menu>
     <Menu.Menu as='nav'>
-      {appMenus.map(item =>
-        <Menu.Item
-          className='menuItem'
-          data-testid={item.key}
-          key={item.key}
-          name={item.appName}
-          active={activeItem === item.key}
-          onClick={() => onNavigate(item.key)}
-        >
-          <Icon name={item.icon} size='large' className='itemIcon' />
-          <span>{item.appName}</span>
-        </Menu.Item>)}
+      {appMenus.map(item => <Menu.Item
+        key={item.key}
+        className='menuItem'
+        data-testid={item.key}
+        name={item.appName}
+        active={activeItem === item.key}
+        onClick={() => onNavigate(item.key)}
+      >
+        <Icon name={item.icon} size='large' className='itemIcon' />
+        <span>{item.appName}</span>
+      </Menu.Item>)}
     </Menu.Menu>
 
     <Menu.Menu position='right'>

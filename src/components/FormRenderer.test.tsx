@@ -28,7 +28,7 @@ describe('# Form Renderer Component', () => {
         placeholder: 'Password',
       },
     ]
-    container = render(<FormRenderer fields={fields} onSubmit={onSubmit} submitText={submitText} />).container
+    container = render(<FormRenderer fields={fields} submitText={submitText} onSubmit={onSubmit} />).container
     username = screen.getByPlaceholderText('Username') as HTMLInputElement
     password = screen.getByPlaceholderText('Password') as HTMLInputElement
     form = screen.getByTestId('form') as HTMLFormElement

@@ -6,6 +6,8 @@ import FormRenderer, { FieldConfig } from 'src/components/FormRenderer'
 
 const ArticleEditPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
+  // TODO: Create article feature
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isCreate = id === CREATE
   const history = useHistory()
 
@@ -21,6 +23,7 @@ const ArticleEditPage: React.FC = () => {
 
   return <div>
     <Menu attached='top'>
+      {/* eslint-disable-next-line react/jsx-handler-names */}
       <Menu.Item role='link' icon='angle left' content='Back' onClick={history.goBack} />
     </Menu>
     <Segment attached='bottom'>
