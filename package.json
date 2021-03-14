@@ -1,6 +1,6 @@
 {
   "name": "cms-admin",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "start": "vite",
@@ -10,7 +10,7 @@
     "test": "yarn tsc && yarn test:unit",
     "lint": "eslint 'src/**/*.ts?(x)'",
     "swagger": "bash scripts/sync-swagger-api.sh",
-    "changelog": "conventional-changelog -i CHANGELOG.md -s"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
     "axios": "^0.21.1",

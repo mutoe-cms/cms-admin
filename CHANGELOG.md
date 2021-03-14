@@ -1,3 +1,24 @@
+## [0.3.1](https://github.com/mutoe-cms/mutoe-cms/compare/v0.3.0...v0.3.1) (2021-03-14)
+
+
+### Bug Fixes
+
+* **auth:** should not jump to login page when reload page ([892870a](https://github.com/mutoe-cms/mutoe-cms/commit/892870a3a941d50eacc5e506b9fdb54f002b62e1))
+* fix eslint ignore issues ([b22f3a5](https://github.com/mutoe-cms/mutoe-cms/commit/b22f3a5c59b737394d06bdb783a6d2875f98ac7a))
+* **test:** fix import.meta transform issue ([6d73f73](https://github.com/mutoe-cms/mutoe-cms/commit/6d73f7385c003bc590b3ca03e66082cc180ed112))
+* the API prefix issue ([cdba64e](https://github.com/mutoe-cms/mutoe-cms/commit/cdba64ed847e15b4d42adeea188302dedd5afa9a))
+* **build:** semantic css build issue ([5663cca](https://github.com/mutoe-cms/mutoe-cms/commit/5663cca6e25c810c074fbaa3b134b4cc6c031846))
+* not display error info when login failed ([ee32287](https://github.com/mutoe-cms/mutoe-cms/commit/ee322876e666cf09571b184fcc453bf612c84e82))
+* **auth:** issue of token storage ([c7a37f9](https://github.com/mutoe-cms/mutoe-cms/commit/c7a37f9e2e105f67a65d86fb843f5fa3af7ff6d6))
+* swagger template issue ([14bbf47](https://github.com/mutoe-cms/mutoe-cms/commit/14bbf47dc4ad3c2680fda41ed9a6fc4ed6e613db))
+
+
+### Features
+
+* add NotFound page ([0b3454b](https://github.com/mutoe-cms/mutoe-cms/commit/0b3454bd1837fb94b20f1597a0d1b976b5b8316e))
+
+
+
 ## 0.3.0 (2021-03-07)
 
 * chore: downgrade dependencies (fix webpack compatibility) ([cf9017a](https://github.com/mutoe-cms/mutoe-cms/commit/cf9017a))
@@ -15,11 +36,6 @@
 * test: add test for fieldErrorDecorator ([9f06565](https://github.com/mutoe-cms/mutoe-cms/commit/9f06565))
 
 
-
-# Change Log
-
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 # 0.2.0 (2020-08-23)
 
