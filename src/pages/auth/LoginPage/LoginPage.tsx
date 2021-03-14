@@ -31,7 +31,10 @@ const LoginPage: React.FC = () => {
       const authRo = await onLogin(form)
       mountAuthorization(authRo)
       redirectToFrom()
-    } catch (e) {}
+    } catch (e) {
+      // TODO: error handling
+      console.error(e)
+    }
   }
 
   return <div className='LoginPage'>

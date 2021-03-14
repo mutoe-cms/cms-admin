@@ -3,6 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks'
 import { MemoryRouter } from 'react-router-dom'
 import useAuthorization from 'src/hooks/useAuthorization'
 import { service } from 'src/services'
+import StorageUtil from 'src/utils/storage.util'
 
 jest.mock('src/services')
 
@@ -36,6 +37,7 @@ describe('# Authorization Context', () => {
   })
 
   it('should return correct loading state when retrieve API', async () => {
+    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockResolvedValue({ username: 'foo' } as any)
 
     const { result, waitForNextUpdate } = renderHook(() => useAuthorization())
@@ -46,6 +48,7 @@ describe('# Authorization Context', () => {
   })
 
   it('should set localstorage when call mount authorization', async () => {
+    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockResolvedValue({ username: 'foo' } as any)
     const { result, waitForNextUpdate } = renderHook(() => useAuthorization())
     await waitForNextUpdate()
@@ -58,6 +61,7 @@ describe('# Authorization Context', () => {
   })
 
   it('should remove localStorage when call unmount authorization', async () => {
+    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockResolvedValue({ username: 'foo' } as any)
     const { result, waitForNextUpdate } = renderHook(() => useAuthorization())
     await waitForNextUpdate()

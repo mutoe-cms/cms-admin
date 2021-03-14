@@ -31,8 +31,6 @@ describe('# Login page', () => {
   }
 
   beforeEach(() => {
-    jest.clearAllMocks()
-
     mockUseAuthorizationContext.mockReturnValue({
       profile: null,
       loading: false,
@@ -76,6 +74,9 @@ describe('# Login page', () => {
   })
 
   it('should display server validation error message when submit exist username form', async () => {
+    const { error } = console
+    console.error = jest.fn()
+
     mockLoginRequest.mockRejectedValue({
       response: {
         status: 422,
@@ -95,5 +96,7 @@ describe('# Login page', () => {
     await waitFor(() => expect(mockLoginRequest).toBeCalledTimes(1))
     await waitFor(() => expect(getByText('Username is invalid')).toBeInTheDocument())
     expect(document.activeElement).toBe(getByPlaceholderText('Username'))
+
+    console.error = error
   })
 })

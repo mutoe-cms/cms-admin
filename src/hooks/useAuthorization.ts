@@ -32,6 +32,7 @@ export default function useAuthorization (): AuthorizationState {
 
   const retrieveUserProfile = useCallback(async () => {
     const localToken = authorizationTokenStorage.get()
+    if (!localToken) history.replace('/login')
     service.setSecurityData(localToken)
 
     try {
