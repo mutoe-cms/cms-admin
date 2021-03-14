@@ -45,8 +45,7 @@ export default function useAuthorization (): AuthorizationState {
     } finally {
       setLoading(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [history])
 
   useEffect(() => {
     void retrieveUserProfile()

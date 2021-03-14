@@ -203,7 +203,9 @@
           "allow": "single-child"
         }
       ],
-      "react/jsx-no-useless-fragment": "error"
+      "react/jsx-no-useless-fragment": "error",
+      "jest/no-jasmine-globals": "off",
+      "jest/no-conditional-expect": "off"
     },
     "settings": {
       "react": {

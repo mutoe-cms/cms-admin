@@ -57,9 +57,8 @@ describe('# useSubmit', () => {
       await act(async () => {
         await result.current.onSubmit({})
       })
+      fail('should throw error here')
     } catch (e) {
-      // FIXME: no-conditional-expect
-      // eslint-disable-next-line jest/no-conditional-expect
       expect(e).toEqual({
         response: {
           status: 422,

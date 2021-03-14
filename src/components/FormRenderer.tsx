@@ -30,16 +30,15 @@ export type FieldConfig<K> = InputFieldConfig<K> | RichTextFieldConfig<K>
 
 type FormValue = number | boolean | string | string[] | number[]
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-type Form<T extends string> = Record<T, FormValue>
+type FormData<T extends string> = Record<T, FormValue>
 
-export type FormConfig<TForm extends Form<string>> = FieldConfig<keyof TForm>[]
+export type FormConfig<TForm extends FormData<string>> = FieldConfig<keyof TForm>[]
 
 interface FormRendererHandle {
   setError: (fieldName: string, errorMessage?: string) => boolean
 }
 
-interface FormRendererProps<K extends string, F extends Form<K>> {
+interface FormRendererProps<K extends string, F extends FormData<K>> {
   fields: FieldConfig<K>[]
   initForm?: F
   submitText?: string
@@ -48,7 +47,7 @@ interface FormRendererProps<K extends string, F extends Form<K>> {
   className?: string
 }
 
-function FormRenderer<K extends string, F extends Form<K>> (props: FormRendererProps<K, F>, forwardedRef: React.Ref<FormRendererHandle>): React.ReactElement {
+function FormRenderer<K extends string, F extends FormData<K>> (props: FormRendererProps<K, F>, forwardedRef: React.Ref<FormRendererHandle>): React.ReactElement {
   const [form, setForm] = useState<F>(props.initForm ?? {} as F)
   const [errors, setErrors] = useState<Partial<Record<K, string>>>({})
 
@@ -132,6 +131,6 @@ function FormRenderer<K extends string, F extends Form<K>> (props: FormRendererP
 
 export type FormRef = React.RefObject<FormRendererHandle> | null
 
-type ForwardRefFormRenderer = <K extends string, F extends Form<K>>(props: FormRendererProps<K, F> & React.RefAttributes<FormRendererHandle>) => React.ReactElement | null
+type ForwardRefFormRenderer = <K extends string, F extends FormData<K>>(props: FormRendererProps<K, F> & React.RefAttributes<FormRendererHandle>) => React.ReactElement | null
 
 export default React.forwardRef(FormRenderer) as ForwardRefFormRenderer
