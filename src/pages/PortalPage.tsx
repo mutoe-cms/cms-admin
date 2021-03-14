@@ -1,10 +1,10 @@
 import React from 'react'
-import { Route, Switch } from 'react-router'
-import { useHistory, useParams } from 'react-router-dom'
+import { Route, Switch, useHistory, useParams } from 'react-router-dom'
 import { Loader } from 'semantic-ui-react'
 import { AppKey, appMenus } from 'src/appMenu'
 import AppHeader from 'src/components/AppHeader'
 import AppSidebar from 'src/components/AppSidebar'
+import NotFound from 'src/components/NotFound'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import ContentPage from 'src/pages/content/ContentPage'
 import DashboardPage from 'src/pages/dashboard/DashboardPage'
@@ -12,7 +12,6 @@ import { routePath } from 'src/routeConfig'
 
 const PortalPage: React.FC = () => {
   const { loading, profile } = useAuthorizationContext()
-
   const history = useHistory()
   const { app } = useParams<{ app: AppKey }>()
 
@@ -27,8 +26,7 @@ const PortalPage: React.FC = () => {
 
   const appMenu = appMenus.find(it => it.key === app)
   if (!appMenu) {
-    history.push('/404')
-    return null
+    return <NotFound />
   }
 
   return <div className='App'>

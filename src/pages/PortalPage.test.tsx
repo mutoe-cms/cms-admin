@@ -3,29 +3,26 @@ import React from 'react'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import PortalPage from 'src/pages/PortalPage'
 import { routePath } from 'src/routeConfig'
-import ReactRouterDom from 'react-router-dom'
+
+jest.mock('src/contexts/authorization.context')
 
 const mockPush = jest.fn()
-jest.mock('src/contexts/authorization.context')
+const mockUseParams = jest.fn()
 jest.mock('react-router-dom', () => ({
   useHistory: () => ({ push: mockPush }),
   useLocation: () => ({}),
-  useParams: jest.fn(),
+  useParams: () => mockUseParams(),
   Link: () => null,
-}))
-jest.mock('react-router', () => ({
   Switch: () => null,
   Route: () => null,
 }))
 
 describe('# PortalPage', () => {
   const mockUseAuthorizationContext = useAuthorizationContext as jest.Mock
-  const mockUseParams = jest.spyOn(ReactRouterDom, 'useParams').mockReturnValue({})
+  mockUseParams.mockReturnValue({ app: 'portal' })
 
   it('should render loading given authorization is loading', () => {
-    mockUseAuthorizationContext.mockReturnValue({
-      loading: true,
-    })
+    mockUseAuthorizationContext.mockReturnValue({ loading: true })
     const { getByRole } = render(<PortalPage />)
 
     expect(getByRole('progressbar')).toBeInTheDocument()
@@ -47,9 +44,9 @@ describe('# PortalPage', () => {
       loading: false,
       profile: { username: 'mutoe' },
     })
-    render(<PortalPage />)
+    const { container } = render(<PortalPage />)
 
-    expect(mockPush).toBeCalledWith(routePath.notFound)
+    expect(container).toHaveTextContent('Not found')
   })
 
   it('should render correct page given url is valid and logged', () => {

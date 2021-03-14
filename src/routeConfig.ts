@@ -5,7 +5,7 @@ export const routePath = {
   login: '/login',
   notFound: '/404',
   appMatcher: '/:app(dashboard|content)',
-  moduleMatcher: '/:app/:module?/:id?',
+  moduleMatcher: '/:app(dashboard|content)/:module?/:id?',
   dashboard: '/dashboard',
 
   content: {
