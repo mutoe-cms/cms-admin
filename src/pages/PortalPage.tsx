@@ -12,7 +12,10 @@ const PortalPage: React.FC = () => {
   const navigate = useNavigate()
   const { appKey } = useModuleName()
 
-  if (!appKey) return null
+  if (!appKey) {
+    navigate('/dashboard')
+    return null
+  }
 
   if (loading) {
     return <Loader aria-busy role='progressbar' />
