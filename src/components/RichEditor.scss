@@ -1,0 +1,14 @@
+@import 'src/assets/css/variables';
+
+.ui.rich-editor {
+    [role=textbox] {
+        padding: $inputPadding;
+        border: 1px solid $borderColor;
+        border-radius: $borderRadius;
+
+        &:focus {
+            border-color: $focusBorder;
+            box-shadow: 0 2px 3px 0 $borderColor;
+        }
+    }
+}
