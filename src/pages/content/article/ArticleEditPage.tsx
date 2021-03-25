@@ -5,11 +5,13 @@ import FormRenderer, { FieldConfig } from 'src/components/FormRenderer'
 
 const form = {
   title: '',
+  tags: [],
   content: '',
 }
 
 const formConfig: FieldConfig<keyof typeof form>[] = [
   { type: 'input', name: 'title', label: 'Title' },
+  { type: 'select', name: 'tags', label: 'Tags', multiple: true, options: [] },
   { type: 'rich', name: 'content', label: 'Content' },
 ]
 

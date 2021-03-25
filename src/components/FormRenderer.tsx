@@ -20,12 +20,23 @@ interface InputFieldConfig<T> extends FieldBasicConfig<T> {
   regexp?: RegExp
 }
 
+interface SelectOption {
+  label: string
+  value: string
+}
+
+interface SelectFieldConfig<T> extends FieldBasicConfig<T> {
+  type: 'select'
+  multiple?: boolean
+  options: SelectOption[]
+}
+
 interface RichTextFieldConfig<T> extends FieldBasicConfig<T> {
   type: 'rich'
   maxLength?: number
 }
 
-export type FieldConfig<K> = InputFieldConfig<K> | RichTextFieldConfig<K>
+export type FieldConfig<K> = InputFieldConfig<K> | RichTextFieldConfig<K> | SelectFieldConfig<K>
 
 type FormValue = number | boolean | string | string[] | number[]
 
@@ -78,7 +89,14 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
       case 'password': {
         const inputValue = value as string
         if (field.minLength && inputValue.length < field.minLength) return setError(field.name, ERROR_MESSAGE.MIN_LENGTH(field.label, field.minLength))
+        break
       }
+      case 'select': {
+        // TODO: select field validation
+        break
+      }
+      default:
+        break
     }
 
     return setError(field.name)
@@ -112,12 +130,26 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
       case 'rich': {
         return <RichEditor {...fieldProps} />
       }
+      case 'select':
+        return <Form.Dropdown
+          {...fieldProps}
+          selection
+          allowAdditions
+          search
+          multiple={field.multiple}
+          value={form[field.name] ?? ''}
+          options={field.options}
+          onChange={(_, { value }) => onChange(field, value as FormValue)}
+          onAddItem={(_, { value }) => onChange(field, value as FormValue)}
+        />
     }
     return null
   })
 
   return <Form noValidate data-testid="form" className={props.className} onSubmit={onSubmit}>
+
     {renderFields}
+
     <Form.Button
       primary
       data-testid="submit"
