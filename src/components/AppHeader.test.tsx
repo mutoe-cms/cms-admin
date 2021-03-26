@@ -3,13 +3,13 @@ import React from 'react'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import AppHeader from './AppHeader'
 
-const mockPush = jest.fn()
+const mockNavigate = jest.fn()
 const mockUnmountAuthorization = jest.fn()
 
 jest.mock('src/contexts/authorization.context')
 jest.mock('react-router-dom', () => ({
-  useParams: () => ({ app: 'dashboard' }),
-  useHistory: () => ({ push: mockPush }),
+  useLocation: () => ({ pathname: '/dashboard' }),
+  useNavigate: () => mockNavigate,
   Link: () => null,
 }))
 
@@ -41,7 +41,7 @@ describe('# AppHeader', () => {
 
     fireEvent.click(getByTestId('dashboard'))
 
-    expect(mockPush).toBeCalledWith('/dashboard')
+    expect(mockNavigate).toBeCalledWith('dashboard')
   })
 
   it('should call unmountAuthorization when click logout', () => {
@@ -49,7 +49,7 @@ describe('# AppHeader', () => {
 
     fireEvent.click(getByTestId('logout'))
 
-    expect(mockPush).toBeCalledWith('/login')
+    expect(mockNavigate).toBeCalledWith('/login')
     expect(mockUnmountAuthorization).toBeCalled()
   })
 })

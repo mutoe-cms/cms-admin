@@ -1,26 +1,33 @@
 import { render } from '@testing-library/react'
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import PortalPage from 'src/pages/PortalPage'
 
 jest.mock('src/contexts/authorization.context')
 
-const mockPush = jest.fn()
-const mockUseParams = jest.fn()
+const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
-  useHistory: () => ({ push: mockPush }),
-  useLocation: () => ({}),
-  useParams: () => mockUseParams(),
+  useNavigate: () => mockNavigate,
+  useLocation: jest.fn(),
   Link: () => null,
-  Switch: () => null,
-  Route: () => null,
+  Outlet: () => null,
 }))
 
 describe('# PortalPage', () => {
   const mockUseAuthorizationContext = useAuthorizationContext as jest.Mock
-  mockUseParams.mockReturnValue({ app: 'portal' })
+  const mockUseLocation = useLocation as jest.Mock
+
+  it('should jump to dashboard page when path is root', () => {
+    mockUseLocation.mockReturnValue({ pathname: '/' })
+    mockUseAuthorizationContext.mockReturnValue({ loading: true })
+    render(<PortalPage />)
+
+    expect(mockNavigate).toBeCalledWith('/dashboard')
+  })
 
   it('should render loading given authorization is loading', () => {
+    mockUseLocation.mockReturnValue({ pathname: '/dashboard' })
     mockUseAuthorizationContext.mockReturnValue({ loading: true })
     const { getByRole } = render(<PortalPage />)
 
@@ -28,17 +35,18 @@ describe('# PortalPage', () => {
   })
 
   it('should redirect to login page when not logged', () => {
+    mockUseLocation.mockReturnValue({ pathname: '/dashboard' })
     mockUseAuthorizationContext.mockReturnValue({
       loading: false,
       profile: null,
     })
     render(<PortalPage />)
 
-    expect(mockPush).toBeCalledWith('/login')
+    expect(mockNavigate).toBeCalledWith('/login')
   })
 
   it('should redirect to 404 page when url is invalid', () => {
-    mockUseParams.mockReturnValue({ app: 'invalid' })
+    mockUseLocation.mockReturnValue({ pathname: '/invalid' })
     mockUseAuthorizationContext.mockReturnValue({
       loading: false,
       profile: { username: 'mutoe' },
@@ -49,7 +57,7 @@ describe('# PortalPage', () => {
   })
 
   it('should render correct page given url is valid and logged', () => {
-    mockUseParams.mockReturnValue({ app: 'content' })
+    mockUseLocation.mockReturnValue({ pathname: '/dashboard' })
     mockUseAuthorizationContext.mockReturnValue({
       loading: false,
       profile: { username: 'mutoe' },

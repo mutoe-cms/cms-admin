@@ -112,6 +112,7 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
   const renderFields = props.fields.map(field => {
     const fieldProps = {
       ...pick(field, ['label', 'placeholder', 'required', 'disabled', 'name']),
+      'aria-label': field.label,
       error: errors[field.name],
       key: field.name,
     }
@@ -152,7 +153,7 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
 
     <Form.Button
       primary
-      data-testid="submit"
+      aria-label='Submit'
       type="submit"
       content={props.submitText ?? 'Submit'}
       loading={props.submitting}

@@ -38,6 +38,7 @@ const AppHeader: React.FC = () => {
       {appMenus.map(item => <Menu.Item
         key={item.key}
         className='menuItem'
+        aria-label={item.key}
         data-testid={item.key}
         name={item.appName}
         active={activeItem === item.key}

@@ -1,27 +1,23 @@
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import React from 'react'
 import useAuthorizationContext from 'src/contexts/authorization.context'
-import { service } from 'src/services'
+import { useSubmit } from 'src/services'
 import { ProfileRo } from 'src/services/api'
-import { FormExceptionKey } from 'src/utils/form.util'
 import LoginPage from './LoginPage'
 
 jest.mock('src/contexts/authorization.context')
+jest.mock('src/services')
 
 const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }))
 
-jest.mock('src/services', () => ({
-  ...jest.requireActual<Object>('src/services'),
-  service: { auth: { login: jest.fn() } },
-}))
-
 describe('# Login page', () => {
   const mockUseAuthorizationContext = useAuthorizationContext as jest.MockedFunction<typeof useAuthorizationContext>
   const mockMountAuthorization = jest.fn()
-  const mockLoginRequest = service.auth.login as jest.Mock
+  const onSubmit = jest.fn()
+  const mockUseSubmit = useSubmit as jest.MockedFunction<typeof useSubmit>
 
   const loginFormFixture = {
     username: 'admin',
@@ -34,6 +30,10 @@ describe('# Login page', () => {
       loading: false,
       mountAuthorization: mockMountAuthorization,
       unmountAuthorization: jest.fn(),
+    })
+    mockUseSubmit.mockReturnValue({
+      submitting: false,
+      onSubmit,
     })
   })
 
@@ -57,44 +57,39 @@ describe('# Login page', () => {
   })
 
   it('should jump to home page when submit a valid form', async () => {
-    mockLoginRequest.mockResolvedValue({ data: { username: 'invalid', token: 'token' } })
-    const { getByTestId, getByPlaceholderText } = render(<LoginPage />)
+    onSubmit.mockResolvedValue({ username: 'invalid', token: 'token' })
+    const { getByRole, getByPlaceholderText } = render(<LoginPage />)
 
-    fireEvent.change(getByPlaceholderText('Username'), { target: { value: loginFormFixture.username } })
+    fireEvent.change(getByRole('textbox', { name: 'Username' }), { target: { value: loginFormFixture.username } })
     fireEvent.change(getByPlaceholderText('Password'), { target: { value: loginFormFixture.password } })
 
-    const submitButton = getByTestId('submit')
+    const submitButton = getByRole('button', { name: 'Submit' })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(mockLoginRequest).toBeCalledWith(loginFormFixture, undefined))
+    await waitFor(() => expect(onSubmit).toBeCalledWith(loginFormFixture))
     expect(mockMountAuthorization).toBeCalledWith({ username: 'invalid', token: 'token' })
     expect(mockNavigate).toBeCalledWith('/', { replace: true })
   })
 
   it('should display server validation error message when submit exist username form', async () => {
     const { error } = console
+    // eslint-disable-next-line no-console
     console.error = jest.fn()
 
-    mockLoginRequest.mockRejectedValue({
-      response: {
-        status: 422,
-        data: {
-          username: ['isInvalid'] as FormExceptionKey[],
-        },
-      },
-    })
-    const { getByTestId, getByPlaceholderText, getByText } = render(<LoginPage />)
+    onSubmit.mockRejectedValue({})
+    const { getByRole, getByPlaceholderText } = render(<LoginPage />)
 
-    fireEvent.change(getByPlaceholderText('Username'), { target: { value: 'admin' } })
+    fireEvent.change(getByRole('textbox', { name: 'Username' }), { target: { value: 'admin' } })
     fireEvent.change(getByPlaceholderText('Password'), { target: { value: '123456' } })
 
-    const submitButton = getByTestId('submit')
+    const submitButton = getByRole('button', { name: 'Submit' })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(mockLoginRequest).toBeCalledTimes(1))
-    await waitFor(() => expect(getByText('Username is invalid')).toBeInTheDocument())
-    expect(document.activeElement).toBe(getByPlaceholderText('Username'))
+    await waitFor(() => expect(onSubmit).toBeCalledTimes(1))
+    // eslint-disable-next-line no-console
+    expect(console.error).toBeCalledTimes(1)
 
+    // eslint-disable-next-line no-console
     console.error = error
   })
 })

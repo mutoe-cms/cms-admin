@@ -4,6 +4,7 @@ import { Loader } from 'semantic-ui-react'
 import { appMenus } from 'src/appMenu'
 import AppHeader from 'src/components/AppHeader'
 import AppSidebar from 'src/components/AppSidebar'
+import NotFound from 'src/components/NotFound'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import useModuleName from 'src/hooks/useModuleName'
 
@@ -27,6 +28,8 @@ const PortalPage: React.FC = () => {
   }
 
   const appMenu = appMenus.find(menu => menu.key === appKey)
+
+  if (!appMenu) return <NotFound />
 
   return <div className='App'>
     <AppHeader />
