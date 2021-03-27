@@ -16,7 +16,7 @@ jest.mock('react-router-dom', () => ({
 describe('# Login page', () => {
   const mockUseAuthorizationContext = useAuthorizationContext as jest.MockedFunction<typeof useAuthorizationContext>
   const mockMountAuthorization = jest.fn()
-  const onSubmit = jest.fn()
+  const submitRequest = jest.fn()
   const mockUseSubmit = useSubmit as jest.MockedFunction<typeof useSubmit>
 
   const loginFormFixture = {
@@ -32,8 +32,9 @@ describe('# Login page', () => {
       unmountAuthorization: jest.fn(),
     })
     mockUseSubmit.mockReturnValue({
+      formRef: { current: null },
       submitting: false,
-      onSubmit,
+      submitRequest,
     })
   })
 
@@ -57,7 +58,7 @@ describe('# Login page', () => {
   })
 
   it('should jump to home page when submit a valid form', async () => {
-    onSubmit.mockResolvedValue({ username: 'invalid', token: 'token' })
+    submitRequest.mockResolvedValue({ username: 'invalid', token: 'token' })
     const { getByRole, getByPlaceholderText } = render(<LoginPage />)
 
     fireEvent.change(getByRole('textbox', { name: 'Username' }), { target: { value: loginFormFixture.username } })
@@ -66,7 +67,7 @@ describe('# Login page', () => {
     const submitButton = getByRole('button', { name: 'Submit' })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(onSubmit).toBeCalledWith(loginFormFixture))
+    await waitFor(() => expect(submitRequest).toBeCalledWith(loginFormFixture))
     expect(mockMountAuthorization).toBeCalledWith({ username: 'invalid', token: 'token' })
     expect(mockNavigate).toBeCalledWith('/', { replace: true })
   })
@@ -76,7 +77,7 @@ describe('# Login page', () => {
     // eslint-disable-next-line no-console
     console.error = jest.fn()
 
-    onSubmit.mockRejectedValue({})
+    submitRequest.mockRejectedValue({})
     const { getByRole, getByPlaceholderText } = render(<LoginPage />)
 
     fireEvent.change(getByRole('textbox', { name: 'Username' }), { target: { value: 'admin' } })
@@ -85,7 +86,7 @@ describe('# Login page', () => {
     const submitButton = getByRole('button', { name: 'Submit' })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(onSubmit).toBeCalledTimes(1))
+    await waitFor(() => expect(submitRequest).toBeCalledTimes(1))
     // eslint-disable-next-line no-console
     expect(console.error).toBeCalledTimes(1)
 

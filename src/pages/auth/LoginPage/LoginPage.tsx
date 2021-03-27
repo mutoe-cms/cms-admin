@@ -1,16 +1,15 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Loader } from 'semantic-ui-react'
-import FormRenderer, { FormRef } from 'src/components/FormRenderer'
+import FormRenderer from 'src/components/FormRenderer'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import { loginForm, loginFormFields } from 'src/pages/auth/LoginPage/LoginPage.form'
 import { service, useSubmit } from 'src/services'
 
 const LoginPage: React.FC = () => {
-  const formRef: FormRef = useRef(null)
   const navigate = useNavigate()
   const { loading, profile, mountAuthorization } = useAuthorizationContext()
-  const { submitting, onSubmit: onLogin } = useSubmit(formRef, service.auth.login)
+  const { formRef, submitting, submitRequest: onLogin } = useSubmit(service.auth.login)
 
   const redirectToFrom = () => {
     // TODO: redirect to from URI

@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { FormRef } from 'src/components/FormRenderer'
 import { RequestParams } from 'src/services/api'
 import { fieldErrorDecorator, focusErrorField, FormExceptionKey } from 'src/utils/form.util'
@@ -12,15 +12,16 @@ export function isFormError (error: any): error is AxiosError<FormErrorResponse>
 
 type SubmitRequest<Req = unknown, Res = unknown> = (body: Req, params?: RequestParams) => Promise<AxiosResponse<Res>>
 
-export function useSubmit<Req = unknown, Res = unknown> (formRef: FormRef, request: SubmitRequest<Req, Res>) {
+export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<Req, Res>) {
+  const formRef: FormRef = useRef(null)
   const [submitting, setSubmitting] = useState(false)
 
-  const onSubmit = async (data: Req, params?: RequestParams): Promise<Res> => {
+  const submitRequest = async (data: Req, params?: RequestParams): Promise<Res> => {
     try {
       setSubmitting(true)
       return (await request(data, params)).data
     } catch (e) {
-      if (formRef && isFormError(e)) {
+      if (formRef.current && isFormError(e)) {
         Object.entries(e.response?.data ?? {})
           .forEach(([field, message]) => formRef.current?.setError(field, fieldErrorDecorator(field, message)))
         focusErrorField()
@@ -32,7 +33,8 @@ export function useSubmit<Req = unknown, Res = unknown> (formRef: FormRef, reque
   }
 
   return {
+    formRef,
     submitting,
-    onSubmit,
+    submitRequest,
   }
 }

@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
+import React from 'react'
 import { isFormError, useSubmit } from './useSubmit'
 
 describe('# isFormError', () => {
@@ -29,14 +30,14 @@ describe('# isFormError', () => {
 
 describe('# useSubmit', () => {
   const setError = jest.fn()
-  const formRef = { current: { setError } }
+  jest.spyOn(React, 'useRef').mockReturnValue({ current: { setError } })
 
   it('should call request when call onSubmit method', async () => {
     const request = jest.fn().mockResolvedValue({ status: 200, data: {} })
-    const { result } = renderHook(() => useSubmit(formRef, request))
+    const { result } = renderHook(() => useSubmit(request))
 
     await act(async () => {
-      await result.current.onSubmit({ bar: 'baz' })
+      await result.current.submitRequest({ bar: 'baz' })
     })
 
     expect(request).toBeCalledWith({ bar: 'baz' }, undefined)
@@ -51,11 +52,11 @@ describe('# useSubmit', () => {
         },
       },
     })
-    const { result } = renderHook(() => useSubmit(formRef, request))
+    const { result } = renderHook(() => useSubmit(request))
 
     try {
       await act(async () => {
-        await result.current.onSubmit({})
+        await result.current.submitRequest({})
       })
       fail('should throw error here')
     } catch (e) {
