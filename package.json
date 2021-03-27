@@ -252,6 +252,14 @@
       "!src/{index,App}.tsx",
       "!src/{appMenu,serviceWorker}.ts"
     ],
+    "coverageThreshold": {
+      "src/**/*.ts?(x)": {
+        "branches": -10,
+        "functions": -5,
+        "statements": -15,
+        "lines": -20
+      }
+    },
     "moduleNameMapper": {
       "^src/(.*)$": "<rootDir>/src/$1"
     },

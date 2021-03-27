@@ -13,13 +13,13 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
 
   useEffect(() => {
-    console.log(editorState)
+    // console.log(editorState)
   }, [editorState])
 
   return <div className="field">
     <label>{props.label}</label>
     <div className="ui rich-editor">
-      <Editor editorState={editorState} onChange={setEditorState} />
+      <Editor ariaLabel={props.label} editorState={editorState} onChange={setEditorState} />
     </div>
   </div>
 }

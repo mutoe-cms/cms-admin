@@ -45,6 +45,7 @@ function FormSelectField <T> (props: FormSelectFieldProps<T>) {
     selection: true,
     allowAdditions: true,
     search: true,
+    'aria-label': label,
     onChange: (_, { value }) => onChange(value),
     onAddItem: (_, { value }) => onAddItem(value as string),
   }

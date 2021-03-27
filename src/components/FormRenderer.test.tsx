@@ -8,6 +8,8 @@ describe('# Form Renderer Component', () => {
   let container: HTMLElement
   let username: HTMLInputElement
   let password: HTMLInputElement
+  let select: HTMLDivElement
+  let richEditor: HTMLTextAreaElement
   let form: HTMLFormElement
 
   const onSubmit = jest.fn()
@@ -26,11 +28,22 @@ describe('# Form Renderer Component', () => {
         name: 'password',
         label: 'Username',
         placeholder: 'Password',
+      }, {
+        type: 'select',
+        name: 'select',
+        label: 'Select',
+        options: [{ text: 'Foo', value: 'foo' }],
+      }, {
+        type: 'rich',
+        name: 'rich',
+        label: 'Rich text editor',
       },
     ]
     container = render(<FormRenderer fields={fields} submitText={submitText} onSubmit={onSubmit} />).container
-    username = screen.getByPlaceholderText('Username') as HTMLInputElement
+    username = screen.getByRole('textbox', { name: 'Username' }) as HTMLInputElement
     password = screen.getByPlaceholderText('Password') as HTMLInputElement
+    select = screen.getByRole('combobox', { name: 'Select' }) as HTMLDivElement
+    richEditor = screen.getByRole('textbox', { name: 'Rich text editor' }) as HTMLTextAreaElement
     form = screen.getByTestId('form') as HTMLFormElement
   })
 
@@ -83,6 +96,18 @@ describe('# Form Renderer Component', () => {
       expect(username.tagName).toBe('INPUT')
       expect(username.type).toBe('text')
       expect(password.type).toBe('password')
+    })
+  })
+
+  describe('single select field', () => {
+    it('should render field correctly', () => {
+      expect(select).toBeInTheDocument()
+    })
+  })
+
+  describe('rich field', () => {
+    it('should render field correctly', () => {
+      expect(richEditor).toBeInTheDocument()
     })
   })
 })
