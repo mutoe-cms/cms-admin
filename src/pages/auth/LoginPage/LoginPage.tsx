@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Loader } from 'semantic-ui-react'
 import FormRenderer from 'src/components/FormRenderer'
@@ -11,18 +11,17 @@ const LoginPage: React.FC = () => {
   const { loading, profile, mountAuthorization } = useAuthorizationContext()
   const { formRef, submitting, submitRequest: onLogin } = useSubmit(service.auth.login)
 
-  const redirectToFrom = () => {
+  const redirectToFrom = useCallback(() => {
     // TODO: redirect to from URI
-    navigate('/', { replace: true })
-  }
+    navigate('/dashboard', { replace: true })
+  }, [navigate])
+
+  useEffect(() => {
+    if (profile) redirectToFrom()
+  }, [profile, redirectToFrom])
 
   if (loading) {
     return <Loader />
-  }
-
-  if (profile) {
-    redirectToFrom()
-    return null
   }
 
   const onSubmit = async (form: typeof loginForm) => {
@@ -32,6 +31,7 @@ const LoginPage: React.FC = () => {
       redirectToFrom()
     } catch (e) {
       // TODO: error handling
+      // eslint-disable-next-line no-console
       console.error(e)
     }
   }

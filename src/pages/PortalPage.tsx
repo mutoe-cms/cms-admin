@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { Loader } from 'semantic-ui-react'
 import { appMenus } from 'src/appMenu'
 import AppHeader from 'src/components/AppHeader'
@@ -9,23 +9,10 @@ import useAuthorizationContext from 'src/contexts/authorization.context'
 import useModuleName from 'src/hooks/useModuleName'
 
 const PortalPage: React.FC = () => {
-  const { loading, profile } = useAuthorizationContext()
-  const navigate = useNavigate()
+  const { loading } = useAuthorizationContext()
   const { appKey } = useModuleName()
 
-  if (!appKey) {
-    navigate('/dashboard')
-    return null
-  }
-
-  if (loading) {
-    return <Loader aria-busy role='progressbar' />
-  }
-
-  if (!profile) {
-    navigate('/login')
-    return null
-  }
+  if (loading) return <Loader aria-busy role='progressbar' />
 
   const appMenu = appMenus.find(menu => menu.key === appKey)
 
