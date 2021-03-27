@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import App from 'src/App'
 import { AuthorizationProvider } from 'src/contexts/authorization/authorization.context'
+import { ToastProvider } from 'src/contexts/toast/toast.context'
 import * as serviceWorker from 'src/serviceWorker'
 
 import 'semantic-ui-css/semantic.min.css'
@@ -11,9 +12,11 @@ import 'src/assets/css/index.scss'
 
 ReactDOM.render(
   <BrowserRouter>
-    <AuthorizationProvider>
-      <App />
-    </AuthorizationProvider>
+    <ToastProvider>
+      <AuthorizationProvider>
+        <App />
+      </AuthorizationProvider>
+    </ToastProvider>
   </BrowserRouter>,
   document.getElementById('root'),
 )

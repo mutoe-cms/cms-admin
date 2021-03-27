@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Header, Icon, Menu, Segment } from 'semantic-ui-react'
 import FormRenderer, { FieldConfig } from 'src/components/form/FormRenderer'
+import useToast from 'src/contexts/toast/toast.context'
 import { service, useSubmit } from 'src/services'
 import { CreateArticleDto } from 'src/services/api'
 
@@ -20,6 +21,7 @@ const formConfig: FieldConfig<keyof typeof form>[] = [
 const ArticleEditPage: React.FC = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const toast = useToast()
 
   const isCreate = id === 'create'
 
@@ -28,7 +30,8 @@ const ArticleEditPage: React.FC = () => {
   const onSubmit = async (form: CreateArticleDto) => {
     try {
       await submitRequest(form)
-      // TODO: success handling
+      toast.success('Success')
+      navigate('..')
     } catch (e) {
       // TODO: error handling
     }

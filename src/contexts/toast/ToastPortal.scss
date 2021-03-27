@@ -1,0 +1,14 @@
+.ToastPortal {
+  position: fixed;
+  top: 59px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  .ui.message {
+    width: unset;
+    margin: 0 0 12px;
+  }
+}
