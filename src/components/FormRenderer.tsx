@@ -26,6 +26,7 @@ export type SelectOption = StrictDropdownItemProps
 export interface SelectFieldConfig<T> extends FieldBasicConfig<T> {
   type: 'select'
   multiple?: boolean
+  creatable?: boolean
   options: SelectOption[]
 }
 

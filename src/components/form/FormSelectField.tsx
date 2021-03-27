@@ -17,7 +17,7 @@ type MultipleSelect<T, V extends SelectOption['value'] = string> = SelectFieldCo
 export type FormSelectFieldProps<T> = SingleSelect<T> | MultipleSelect<T>
 
 function FormSelectField <T> (props: FormSelectFieldProps<T>) {
-  const { value, multiple, disabled, placeholder, required, label } = props
+  const { value, multiple, disabled, placeholder, required, label, creatable } = props
   const [options, setOptions] = useState<SelectOption[]>(props.options ?? [])
 
   const onChange = (value: StrictDropdownProps['value']) => {
@@ -43,7 +43,7 @@ function FormSelectField <T> (props: FormSelectFieldProps<T>) {
     placeholder,
     required,
     selection: true,
-    allowAdditions: true,
+    allowAdditions: creatable,
     search: true,
     'aria-label': label,
     onChange: (_, { value }) => onChange(value),
