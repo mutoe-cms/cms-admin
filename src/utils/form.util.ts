@@ -24,7 +24,13 @@ export function fieldErrorDecorator (field: string, errors: FormExceptionKey[]):
     isNotExist: ERROR_MESSAGE.NOT_EXIST,
     isInvalid: ERROR_MESSAGE.INVALID,
   }
-  const messages = errors.map(error => errorMap[error](field))
+  const messages = errors.map(error => {
+    const errorMessageHandler = errorMap[error]
+    if (typeof errorMessageHandler === 'function') {
+      return errorMessageHandler(field)
+    }
+    return error
+  })
   return messages.join(fieldErrorSeparator)
 }
 

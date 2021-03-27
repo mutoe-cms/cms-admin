@@ -81,33 +81,17 @@ export interface CreateArticleDto {
   /** @example Lorem ipsum */
   title: string;
 
+  /** @example ["semantic-ui","material-ui"] */
+  tags: string[];
+
   /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
   content: string;
-}
-
-export interface UserEntity {
-  /** @example 1 */
-  id: number;
-
-  /** @example mutoe@foxmail.com */
-  email: string;
-
-  /** @example mutoe */
-  username: string;
-  bio?: string;
-  image?: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
-  createdAt: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
-  updatedAt: string;
 }
 
 export interface ArticleEntity {
   /** @example 1 */
   id: number;
-  user: UserEntity;
+  user: object;
 
   /** @example Lorem ipsum */
   title: string;
@@ -139,6 +123,34 @@ export interface PaginationMeta {
 export interface ArticlesRo {
   items: ArticleEntity[];
   meta: PaginationMeta;
+}
+
+export interface CreateTagDto {
+  /** @example Semantic UI */
+  name: string;
+
+  /** @example semantic-ui */
+  key: string;
+
+  /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
+  description: string;
+}
+
+export interface TagEntity {
+  /** @example semantic-ui */
+  key: string;
+
+  /** @example Semantic UI */
+  name: string;
+
+  /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
+  description?: string;
+
+  /** @example 2020-08-16T00:04:59.343Z */
+  createdAt: string;
+
+  /** @example 2020-08-16T00:04:59.343Z */
+  updatedAt: string;
 }
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from "axios";
@@ -229,7 +241,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title CMS
- * @version 0.2.0
+ * @version 0.3.0
  * @contact
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
@@ -340,6 +352,27 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/api/article`,
         method: "GET",
         query: query,
+        format: "json",
+        ...params,
+      }),
+  };
+  tag = {
+    /**
+     * No description
+     *
+     * @tags Tag
+     * @name CreateTag
+     * @summary Create tag
+     * @request POST:/api/tag
+     * @secure
+     */
+    createTag: (data: CreateTagDto, params: RequestParams = {}) =>
+      this.request<TagEntity, void>({
+        path: `/api/tag`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),

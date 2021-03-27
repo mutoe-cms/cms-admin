@@ -50,7 +50,7 @@ interface FormRendererProps<K extends string, F extends FormData<K>> {
   fields: FieldConfig<K>[]
   initForm?: F
   submitText?: string
-  onSubmit?: (form: F) => Promise<Record<string, string> | void>
+  onSubmit?: (form: F) => void | Promise<Record<string, string> | void>
   submitting?: boolean
   className?: string
 }
