@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import useAuthorizationContext from 'src/contexts/authorization.context'
+import useAuthorizationContext from 'src/contexts/authorization/authorization.context'
 import PortalPage from 'src/pages/PortalPage'
 import { routeMap } from 'src/route'
 
-jest.mock('src/contexts/authorization.context')
+jest.mock('src/contexts/authorization/authorization.context')
 
 const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({

@@ -1,13 +1,13 @@
 import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
-import useAuthorizationContext from 'src/contexts/authorization.context'
+import useAuthorizationContext from 'src/contexts/authorization/authorization.context'
 import { routeMap } from 'src/route'
 import AppHeader from './AppHeader'
 
 const mockNavigate = jest.fn()
 const mockUnmountAuthorization = jest.fn()
 
-jest.mock('src/contexts/authorization.context')
+jest.mock('src/contexts/authorization/authorization.context')
 jest.mock('react-router-dom', () => ({
   useLocation: () => ({ pathname: '/dashboard' }),
   useNavigate: () => mockNavigate,

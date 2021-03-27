@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 import { appMenus } from 'src/appMenu'
-import AppSidebar from 'src/components/AppSidebar'
+import AppSidebar from 'src/components/layout/AppSidebar'
 
 const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({

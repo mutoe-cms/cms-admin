@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import App from 'src/App'
-import { AuthorizationProvider } from 'src/contexts/authorization.context'
+import { AuthorizationProvider } from 'src/contexts/authorization/authorization.context'
 import * as serviceWorker from 'src/serviceWorker'
 
 import 'semantic-ui-css/semantic.min.css'

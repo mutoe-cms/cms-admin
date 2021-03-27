@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react'
 import { act, renderHook } from '@testing-library/react-hooks'
 import { MemoryRouter } from 'react-router-dom'
-import useAuthorization from 'src/hooks/useAuthorization'
+import useAuthorization from 'src/contexts/authorization/useAuthorization'
 import { service } from 'src/services'
 import StorageUtil from 'src/utils/storage.util'
 

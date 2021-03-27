@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Dropdown, Icon, Menu } from 'semantic-ui-react'
 import { appMenus } from 'src/appMenu'
 import Notification from 'src/components/Notification'
-import useAuthorizationContext from 'src/contexts/authorization.context'
+import useAuthorizationContext from 'src/contexts/authorization/authorization.context'
 import useModuleName from 'src/hooks/useModuleName'
 import { routeMap } from 'src/route'
 

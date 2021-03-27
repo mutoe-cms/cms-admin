@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react'
-import useAuthorization, { AuthorizationState } from 'src/hooks/useAuthorization'
+import useAuthorization, { AuthorizationState } from './useAuthorization'
 
 const AuthorizationContext = createContext<AuthorizationState>({} as AuthorizationState)
 

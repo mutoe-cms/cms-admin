@@ -1,7 +1,7 @@
 import { kebabCase } from 'lodash'
 import React, { useState } from 'react'
 import { Form, FormDropdownProps, StrictDropdownProps } from 'semantic-ui-react'
-import { SelectFieldConfig, SelectOption } from 'src/components/FormRenderer'
+import { SelectFieldConfig, SelectOption } from 'src/components/form/FormRenderer'
 
 type SelectFieldConfigProps<T> = Partial<Omit<SelectFieldConfig<T>, 'type'>>
 type SingleSelect<T, V extends SelectOption['value'] = string> = SelectFieldConfigProps<T> & {

@@ -1,4 +1,4 @@
-import { FormConfig } from 'src/components/FormRenderer'
+import { FormConfig } from 'src/components/form/FormRenderer'
 
 export const loginForm = {
   username: '',

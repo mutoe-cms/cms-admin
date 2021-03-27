@@ -2,7 +2,7 @@ import { pick } from 'lodash'
 import React, { useImperativeHandle, useState } from 'react'
 import { Form, StrictDropdownItemProps } from 'semantic-ui-react'
 import FormSelectField from 'src/components/form/FormSelectField'
-import RichEditor from 'src/components/RichEditor'
+import RichEditor from 'src/components/form/RichEditor'
 import { ERROR_MESSAGE } from 'src/constants/message'
 import { fieldErrorSeparator, focusErrorField, sentence } from 'src/utils/form.util'
 

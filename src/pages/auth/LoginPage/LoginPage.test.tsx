@@ -1,12 +1,12 @@
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import React from 'react'
-import useAuthorizationContext from 'src/contexts/authorization.context'
+import useAuthorizationContext from 'src/contexts/authorization/authorization.context'
 import { routeMap } from 'src/route'
 import { useSubmit } from 'src/services'
 import { ProfileRo } from 'src/services/api'
 import LoginPage from './LoginPage'
 
-jest.mock('src/contexts/authorization.context')
+jest.mock('src/contexts/authorization/authorization.context')
 jest.mock('src/services')
 
 const mockNavigate = jest.fn()

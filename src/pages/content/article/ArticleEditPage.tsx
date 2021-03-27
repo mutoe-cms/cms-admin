@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Header, Icon, Menu, Segment } from 'semantic-ui-react'
-import FormRenderer, { FieldConfig } from 'src/components/FormRenderer'
+import FormRenderer, { FieldConfig } from 'src/components/form/FormRenderer'
 import { service, useSubmit } from 'src/services'
 import { CreateArticleDto } from 'src/services/api'
 
@@ -31,6 +31,7 @@ const ArticleEditPage: React.FC = () => {
       // TODO: success handling
     } catch (e) {
       // TODO: error handling
+      // eslint-disable-next-line no-console
       console.error(e)
     }
   }

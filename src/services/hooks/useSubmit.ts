@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios'
 import { useRef, useState } from 'react'
-import { FormRef } from 'src/components/FormRenderer'
+import { FormRef } from 'src/components/form/FormRenderer'
 import { RequestParams } from 'src/services/api'
 import { fieldErrorDecorator, focusErrorField, FormExceptionKey } from 'src/utils/form.util'
 
