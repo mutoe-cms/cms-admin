@@ -5,15 +5,16 @@ import LoginPage from 'src/pages/auth/LoginPage/LoginPage'
 import ContentPage from 'src/pages/content/ContentPage'
 import DashboardPage from 'src/pages/dashboard/DashboardPage'
 import PortalPage from 'src/pages/PortalPage'
+import { routeMap } from 'src/route'
 
 const ArticleListPage = React.lazy(async () => await import('src/pages/content/article/ArticleListPage'))
 const ArticleEditPage = React.lazy(async () => await import('src/pages/content/article/ArticleEditPage'))
 
 const App: React.FC = () => {
   const routes = useRoutes([
-    { path: '/login', element: <LoginPage /> },
+    { path: routeMap.login, element: <LoginPage /> },
     {
-      path: '/',
+      path: routeMap.root,
       element: <PortalPage />,
       children: [
         { path: 'dashboard', element: <DashboardPage /> },

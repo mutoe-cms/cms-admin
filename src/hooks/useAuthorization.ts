@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { routeMap } from 'src/route'
 import { service } from 'src/services'
 import { AuthRo, ProfileRo } from 'src/services/api'
 import StorageUtil from 'src/utils/storage.util'
@@ -34,7 +35,7 @@ export default function useAuthorization (): AuthorizationState {
     const localToken = authorizationTokenStorage.get()
     if (!localToken) {
       unmountAuthorization()
-      navigate('/login', { replace: true })
+      navigate(routeMap.login, { replace: true })
       setLoading(false)
       return
     }
@@ -46,7 +47,7 @@ export default function useAuthorization (): AuthorizationState {
       setProfile(profile)
     } catch (e) {
       unmountAuthorization()
-      navigate('/login', { replace: true })
+      navigate(routeMap.login, { replace: true })
     } finally {
       setLoading(false)
     }

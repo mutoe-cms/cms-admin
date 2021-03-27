@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 import useAuthorizationContext from 'src/contexts/authorization.context'
+import { routeMap } from 'src/route'
 import AppHeader from './AppHeader'
 
 const mockNavigate = jest.fn()
@@ -49,7 +50,7 @@ describe('# AppHeader', () => {
 
     fireEvent.click(getByTestId('logout'))
 
-    expect(mockNavigate).toBeCalledWith('/login')
+    expect(mockNavigate).toBeCalledWith(routeMap.login)
     expect(mockUnmountAuthorization).toBeCalled()
   })
 })

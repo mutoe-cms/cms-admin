@@ -4,6 +4,7 @@ import { Loader } from 'semantic-ui-react'
 import FormRenderer from 'src/components/FormRenderer'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import { loginForm, loginFormFields } from 'src/pages/auth/LoginPage/LoginPage.form'
+import { routeMap } from 'src/route'
 import { service, useSubmit } from 'src/services'
 
 const LoginPage: React.FC = () => {
@@ -13,7 +14,7 @@ const LoginPage: React.FC = () => {
 
   const redirectToFrom = useCallback(() => {
     // TODO: redirect to from URI
-    navigate('/dashboard', { replace: true })
+    navigate(routeMap.home, { replace: true })
   }, [navigate])
 
   useEffect(() => {

@@ -5,6 +5,7 @@ import { appMenus } from 'src/appMenu'
 import Notification from 'src/components/Notification'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import useModuleName from 'src/hooks/useModuleName'
+import { routeMap } from 'src/route'
 
 const AppHeader: React.FC = () => {
   const { profile, unmountAuthorization } = useAuthorizationContext()
@@ -19,7 +20,7 @@ const AppHeader: React.FC = () => {
 
   const onLogout = () => {
     unmountAuthorization()
-    navigate('/login')
+    navigate(routeMap.login)
   }
 
   const userTrigger = <span className='userTrigger' role='button'>

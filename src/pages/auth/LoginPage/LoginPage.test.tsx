@@ -1,6 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import React from 'react'
 import useAuthorizationContext from 'src/contexts/authorization.context'
+import { routeMap } from 'src/route'
 import { useSubmit } from 'src/services'
 import { ProfileRo } from 'src/services/api'
 import LoginPage from './LoginPage'
@@ -54,7 +55,7 @@ describe('# Login page', () => {
 
     render(<LoginPage />)
 
-    expect(mockNavigate).toBeCalledWith('/', { replace: true })
+    expect(mockNavigate).toBeCalledWith(routeMap.home, { replace: true })
   })
 
   it('should jump to home page when submit a valid form', async () => {
@@ -69,7 +70,7 @@ describe('# Login page', () => {
 
     await waitFor(() => expect(submitRequest).toBeCalledWith(loginFormFixture))
     expect(mockMountAuthorization).toBeCalledWith({ username: 'invalid', token: 'token' })
-    expect(mockNavigate).toBeCalledWith('/', { replace: true })
+    expect(mockNavigate).toBeCalledWith(routeMap.home, { replace: true })
   })
 
   it('should display server validation error message when submit exist username form', async () => {
