@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Editor, EditorState } from 'draft-js'
 
+import './RichEditor.scss'
+
 interface RichEditorProps {
   name: string
   label: string

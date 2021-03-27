@@ -261,7 +261,9 @@
       }
     },
     "moduleNameMapper": {
-      "^src/(.*)$": "<rootDir>/src/$1"
+      "^src/(.*)$": "<rootDir>/src/$1",
+      "\\.(css|sass|scss)$": "<rootDir>/scripts/jest/mock-css.js",
+      "\\.(jpg|svg)$": "<rootDir>/scripts/jest/mock-file.js"
     },
     "moduleFileExtensions": [
       "js",

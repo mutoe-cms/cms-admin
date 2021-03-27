@@ -2,6 +2,8 @@ import React from 'react'
 import { Dropdown, Icon } from 'semantic-ui-react'
 import { SemanticICONS } from 'semantic-ui-react/dist/commonjs/generic'
 
+import './Notification.scss'
+
 interface NotificationProps {
   icon: SemanticICONS
   numOfNew: number

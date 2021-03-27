@@ -7,6 +7,8 @@ import { loginForm, loginFormFields } from 'src/pages/auth/LoginPage/LoginPage.f
 import { routeMap } from 'src/route'
 import { service, useSubmit } from 'src/services'
 
+import './LoginPage.scss'
+
 const LoginPage: React.FC = () => {
   const navigate = useNavigate()
   const { loading, profile, mountAuthorization } = useAuthorizationContext()

@@ -7,6 +7,8 @@ import useAuthorizationContext from 'src/contexts/authorization.context'
 import useModuleName from 'src/hooks/useModuleName'
 import { routeMap } from 'src/route'
 
+import './AppHeader.scss'
+
 const AppHeader: React.FC = () => {
   const { profile, unmountAuthorization } = useAuthorizationContext()
   const { appKey } = useModuleName()

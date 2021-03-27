@@ -18,3 +18,13 @@
         margin: 24px 0;
     }
 }
+
+.ui.placeholder.placeholderLine {
+  width: 100%;
+  max-width: 100%;
+
+  .line {
+    height: 12px;
+    margin-bottom: 48px;
+  }
+}

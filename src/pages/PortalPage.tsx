@@ -8,6 +8,8 @@ import NotFound from 'src/components/NotFound'
 import useAuthorizationContext from 'src/contexts/authorization.context'
 import useModuleName from 'src/hooks/useModuleName'
 
+import './PortalPage.scss'
+
 const PortalPage: React.FC = () => {
   const { loading } = useAuthorizationContext()
   const { appKey } = useModuleName()

@@ -1,6 +1,4 @@
 @import './semantic-rewrite';
-@import 'src/components';
-@import 'src/pages';
 
 body {
   box-sizing: border-box;
@@ -12,14 +10,4 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
-.ui.placeholder.placeholderLine {
-  width: 100%;
-  max-width: 100%;
-
-  .line {
-    height: 12px;
-    margin-bottom: 48px;
-  }
 }

@@ -4,6 +4,8 @@ import { Menu } from 'semantic-ui-react'
 import { ModuleMenu } from 'src/appMenu'
 import useModuleName from 'src/hooks/useModuleName'
 
+import './AppSidebar.scss'
+
 interface AppSidebarProps {
   moduleMenus: ModuleMenu[]
 }
