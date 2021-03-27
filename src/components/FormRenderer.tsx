@@ -1,11 +1,12 @@
 import { pick } from 'lodash'
 import React, { useImperativeHandle, useState } from 'react'
-import { Form } from 'semantic-ui-react'
+import { Form, StrictDropdownItemProps } from 'semantic-ui-react'
+import FormSelectField from 'src/components/form/FormSelectField'
 import RichEditor from 'src/components/RichEditor'
 import { ERROR_MESSAGE } from 'src/constants/message'
 import { fieldErrorSeparator, focusErrorField, sentence } from 'src/utils/form.util'
 
-interface FieldBasicConfig<T> {
+export interface FieldBasicConfig<T> {
   name: T
   label: string
   placeholder?: string
@@ -20,12 +21,9 @@ interface InputFieldConfig<T> extends FieldBasicConfig<T> {
   regexp?: RegExp
 }
 
-interface SelectOption {
-  label: string
-  value: string
-}
+export type SelectOption = StrictDropdownItemProps
 
-interface SelectFieldConfig<T> extends FieldBasicConfig<T> {
+export interface SelectFieldConfig<T> extends FieldBasicConfig<T> {
   type: 'select'
   multiple?: boolean
   options: SelectOption[]
@@ -131,18 +129,15 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
       case 'rich': {
         return <RichEditor {...fieldProps} />
       }
-      case 'select':
-        return <Form.Dropdown
-          {...fieldProps}
-          selection
-          allowAdditions
-          search
-          multiple={field.multiple}
-          value={form[field.name] ?? ''}
-          options={field.options}
-          onChange={(_, { value }) => onChange(field, value as FormValue)}
-          onAddItem={(_, { value }) => onChange(field, value as FormValue)}
-        />
+      case 'select': {
+        if (field.multiple) {
+          const value = (form[field.name] ?? []) as string[]
+          return <FormSelectField value={value} {...fieldProps} multiple onChange={(value: string[]) => onChange(field, value)} />
+        } else {
+          const value = (form[field.name] ?? '') as string
+          return <FormSelectField value={value} {...fieldProps} onChange={(value: string) => onChange(field, value)} />
+        }
+      }
     }
     return null
   })
