@@ -246,7 +246,7 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.{form}.ts",
+      "!src/**/*.{form,context}.ts?(x)",
       "!src/services/{index,api}.ts",
       "!src/constants/**",
       "!src/{index,App}.tsx",
