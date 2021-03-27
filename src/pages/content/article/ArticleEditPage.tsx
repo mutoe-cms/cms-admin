@@ -13,7 +13,7 @@ const form: CreateArticleDto = {
 
 const formConfig: FieldConfig<keyof typeof form>[] = [
   { type: 'input', name: 'title', label: 'Title', required: true },
-  { type: 'select', name: 'tags', label: 'Tags', multiple: true, options: [] },
+  { type: 'select', name: 'tags', label: 'Tags', multiple: true, options: [], creatable: true },
   { type: 'rich', name: 'content', label: 'Content' },
 ]
 
@@ -31,8 +31,6 @@ const ArticleEditPage: React.FC = () => {
       // TODO: success handling
     } catch (e) {
       // TODO: error handling
-      // eslint-disable-next-line no-console
-      console.error(e)
     }
   }
 

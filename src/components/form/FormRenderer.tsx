@@ -1,7 +1,7 @@
 import { pick } from 'lodash'
 import React, { useImperativeHandle, useState } from 'react'
 import { Form, StrictDropdownItemProps } from 'semantic-ui-react'
-import FormSelectField from 'src/components/form/FormSelectField'
+import FormSelectField, { FormSelectFieldProps } from 'src/components/form/FormSelectField'
 import RichEditor from 'src/components/form/RichEditor'
 import { ERROR_MESSAGE } from 'src/constants/message'
 import { fieldErrorSeparator, focusErrorField, sentence } from 'src/utils/form.util'
@@ -131,13 +131,21 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
         return <RichEditor {...fieldProps} />
       }
       case 'select': {
-        if (field.multiple) {
-          const value = (form[field.name] ?? []) as string[]
-          return <FormSelectField value={value} {...fieldProps} multiple onChange={(value: string[]) => onChange(field, value)} />
-        } else {
-          const value = (form[field.name] ?? '') as string
-          return <FormSelectField value={value} {...fieldProps} onChange={(value: string) => onChange(field, value)} />
+        const selectProps: FormSelectFieldProps<K> = {
+          creatable: field.creatable,
+          ...fieldProps,
+          ...(field.multiple
+            ? {
+                multiple: true,
+                value: form[field.name] as string[] ?? [],
+                onChange: (value: string[]) => onChange(field, value),
+              }
+            : {
+                value: form[field.name] as string ?? '',
+                onChange: (value: string) => onChange(field, value),
+              }),
         }
+        return <FormSelectField {...selectProps} />
       }
     }
     return null

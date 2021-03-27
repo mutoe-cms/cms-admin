@@ -25,6 +25,9 @@ export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<
         Object.entries(e.response?.data ?? {})
           .forEach(([field, message]) => formRef.current?.setError(field, fieldErrorDecorator(field, message)))
         focusErrorField()
+      } else {
+        // eslint-disable-next-line no-console
+        console.error(e)
       }
       throw e
     } finally {
