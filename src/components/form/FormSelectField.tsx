@@ -1,15 +1,17 @@
-import { kebabCase } from 'lodash'
+import { kebabCase, pick } from 'lodash'
 import React, { useState } from 'react'
 import { Form, FormDropdownProps, StrictDropdownProps } from 'semantic-ui-react'
 import { SelectFieldConfig, SelectOption } from 'src/components/form/FormRenderer'
 
-type SelectFieldConfigProps<T> = Partial<Omit<SelectFieldConfig<T>, 'type'>>
-type SingleSelect<T, V extends SelectOption['value'] = string> = SelectFieldConfigProps<T> & {
+interface SelectFieldConfigProps<T> extends Omit<Partial<SelectFieldConfig<T>>, 'type'> {
+  error?: string
+}
+interface SingleSelect<T, V extends SelectOption['value'] = string> extends SelectFieldConfigProps<T> {
   value: V
   multiple?: false
   onChange: (value: V) => void
 }
-type MultipleSelect<T, V extends SelectOption['value'] = string> = SelectFieldConfigProps<T> & {
+interface MultipleSelect<T, V extends SelectOption['value'] = string> extends SelectFieldConfigProps<T> {
   value: V[]
   multiple: true
   onChange: (value: V[]) => void
@@ -17,7 +19,6 @@ type MultipleSelect<T, V extends SelectOption['value'] = string> = SelectFieldCo
 export type FormSelectFieldProps<T> = SingleSelect<T> | MultipleSelect<T>
 
 function FormSelectField <T> (props: FormSelectFieldProps<T>) {
-  const { value, multiple, disabled, placeholder, required, label, creatable } = props
   const [options, setOptions] = useState<SelectOption[]>(props.options ?? [])
 
   const onChange = (value: StrictDropdownProps['value']) => {
@@ -35,17 +36,12 @@ function FormSelectField <T> (props: FormSelectFieldProps<T>) {
   }
 
   const dropdownProps: FormDropdownProps = {
-    label,
-    value,
+    ...pick(props, ['value', 'multiple', 'disabled', 'placeholder', 'required', 'label', 'error']),
     options,
-    multiple,
-    disabled,
-    placeholder,
-    required,
+    allowAdditions: props.creatable,
     selection: true,
-    allowAdditions: creatable,
     search: true,
-    'aria-label': label,
+    'aria-label': props.label,
     onChange: (_, { value }) => onChange(value),
     onAddItem: (_, { value }) => onAddItem(value as string),
   }
