@@ -82,10 +82,10 @@ export interface CreateArticleDto {
   title: string;
 
   /** @example ["semantic-ui","material-ui"] */
-  tags: string[];
+  tags?: string[];
 
   /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
-  content: string;
+  content?: string;
 }
 
 export interface ArticleEntity {
@@ -133,7 +133,7 @@ export interface CreateTagDto {
   key: string;
 
   /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
-  description: string;
+  description?: string;
 }
 
 export interface TagEntity {
@@ -153,7 +153,7 @@ export interface TagEntity {
   updatedAt: string;
 }
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios'
 
 export type QueryParamsType = Record<string | number, any>;
 

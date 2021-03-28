@@ -28,6 +28,7 @@ export interface SelectFieldConfig<T> extends FieldBasicConfig<T> {
   multiple?: boolean
   creatable?: boolean
   options: SelectOption[]
+  onAddItem?: (option: SelectOption) => void | Promise<void | SelectOption>
 }
 
 interface RichTextFieldConfig<T> extends FieldBasicConfig<T> {
@@ -133,6 +134,7 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
       case 'select': {
         const selectProps: FormSelectFieldProps<K> = {
           creatable: field.creatable,
+          onAddItem: field.onAddItem,
           ...fieldProps,
           ...(field.multiple
             ? {
