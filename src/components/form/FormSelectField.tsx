@@ -1,5 +1,5 @@
 import { kebabCase, pick, xor } from 'lodash'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, FormDropdownProps, Icon, StrictDropdownProps } from 'semantic-ui-react'
 import { SelectFieldConfig, SelectOption } from 'src/components/form/FormRenderer'
 
@@ -19,7 +19,15 @@ interface MultipleSelect<T, V extends SelectOption['value'] = string> extends Se
 export type FormSelectFieldProps<T> = SingleSelect<T> | MultipleSelect<T>
 
 function FormSelectField <T> (props: FormSelectFieldProps<T>) {
-  const [options, setOptions] = useState<SelectOption[]>(props.options ?? [])
+  const [options, setOptions] = useState<SelectOption[]>(Array.isArray(props.options) ? props.options : [])
+
+  useEffect(() => {
+    void (async () => {
+      if (typeof props.options !== 'function') return
+      setOptions(await props.options())
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.options])
 
   const onChange = (value: StrictDropdownProps['value']) => {
     if (Array.isArray(value)) {

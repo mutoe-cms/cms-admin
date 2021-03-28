@@ -27,7 +27,7 @@ export interface SelectFieldConfig<T> extends FieldBasicConfig<T> {
   type: 'select'
   multiple?: boolean
   creatable?: boolean
-  options: SelectOption[]
+  options: SelectOption[] | (() => Promise<SelectOption[]>)
   onAddItem?: (option: SelectOption) => void | Promise<void | SelectOption>
 }
 
@@ -135,6 +135,7 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
         const selectProps: FormSelectFieldProps<K> = {
           creatable: field.creatable,
           onAddItem: field.onAddItem,
+          options: field.options,
           ...fieldProps,
           ...(field.multiple
             ? {

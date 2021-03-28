@@ -153,6 +153,11 @@ export interface TagEntity {
   updatedAt: string;
 }
 
+export interface TagsRo {
+  items: TagEntity[];
+  meta: PaginationMeta;
+}
+
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios'
 
 export type QueryParamsType = Record<string | number, any>;
@@ -373,6 +378,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Tag
+     * @name RetrieveTags
+     * @summary Retrieve tags
+     * @request GET:/api/tag
+     */
+    retrieveTags: (query?: { page?: number; limit?: number }, params: RequestParams = {}) =>
+      this.request<TagsRo, any>({
+        path: `/api/tag`,
+        method: "GET",
+        query: query,
         format: "json",
         ...params,
       }),

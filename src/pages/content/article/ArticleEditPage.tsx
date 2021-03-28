@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Header, Icon, Menu, Segment } from 'semantic-ui-react'
-import FormRenderer, { FieldConfig } from 'src/components/form/FormRenderer'
+import FormRenderer, { FieldConfig, SelectOption } from 'src/components/form/FormRenderer'
 import useToast from 'src/contexts/toast/toast.context'
 import { service, useSubmit } from 'src/services'
 import { CreateArticleDto } from 'src/services/api'
@@ -19,7 +19,10 @@ const formConfig: FieldConfig<keyof typeof form>[] = [
     name: 'tags',
     label: 'Tags',
     multiple: true,
-    options: [],
+    options: async () => {
+      const { data: { items } } = await service.tag.retrieveTags({ limit: 1000 })
+      return items.map<SelectOption>(tag => ({ text: tag.name, value: tag.key, description: tag.description }))
+    },
     creatable: true,
     onAddItem: async ({ text, value }) => {
       const { data: tag } = await service.tag.createTag({ key: String(value), name: String(text) })
