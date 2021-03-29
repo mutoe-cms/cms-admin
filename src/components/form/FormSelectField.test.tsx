@@ -1,6 +1,14 @@
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import React from 'react'
+import { SelectOption } from 'src/components/form/FormRenderer'
 import FormSelectField from 'src/components/form/FormSelectField'
+
+const options: SelectOption[] = [
+  {
+    value: 'semantic-ui',
+    text: 'Semantic UI',
+  },
+]
 
 describe('# FormSelectField', () => {
   const onChange = jest.fn()
@@ -11,13 +19,24 @@ describe('# FormSelectField', () => {
       expect(getByRole('combobox')).toBeInTheDocument()
     })
 
-    it('should add options when input a new item', () => {
-      const { getByRole } = render(<FormSelectField creatable value="" onChange={onChange} />)
+    it('should select tag when input an exist tag', () => {
+      const { getByRole } = render(<FormSelectField value="" options={options} onChange={onChange} />)
+
+      const inputElement = getByRole('textbox')
+      fireEvent.change(inputElement, { target: { value: 'Semantic UI' } })
+      fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
+
+      expect(onChange).toBeCalledWith('semantic-ui')
+    })
+
+    it('should add options when input a new item', async () => {
+      const onAddItem = jest.fn().mockResolvedValue(undefined)
+      const { getByRole } = render(<FormSelectField creatable value="" onAddItem={onAddItem} onChange={onChange} />)
       const inputElement = getByRole('textbox')
       fireEvent.change(inputElement, { target: { value: 'foo' } })
       fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
 
-      expect(onChange).toBeCalledWith('foo')
+      await waitFor(() => expect(onChange).toBeCalledWith('foo'))
     })
   })
 
@@ -27,13 +46,23 @@ describe('# FormSelectField', () => {
       expect(getByRole('combobox')).toBeInTheDocument()
     })
 
-    it('should add options when input a new item', () => {
+    it('should select tag when input an exist tag', () => {
+      const { getByRole } = render(<FormSelectField multiple value={[]} options={options} onChange={onChange} />)
+
+      const inputElement = getByRole('textbox')
+      fireEvent.change(inputElement, { target: { value: 'Semantic UI' } })
+      fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
+
+      expect(onChange).toBeCalledWith(['semantic-ui'])
+    })
+
+    it('should add options when input a new item', async () => {
       const { getByRole } = render(<FormSelectField creatable multiple value={[]} onChange={onChange} />)
       const inputElement = getByRole('textbox')
       fireEvent.change(inputElement, { target: { value: 'foo' } })
       fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
 
-      expect(onChange).toBeCalledWith(['foo'])
+      await waitFor(() => expect(onChange).toBeCalledWith(['foo']))
     })
   })
 })

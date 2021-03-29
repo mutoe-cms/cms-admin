@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Form, FormDropdownProps, Icon, StrictDropdownProps } from 'semantic-ui-react'
 import { SelectFieldConfig, SelectOption } from 'src/components/form/FormRenderer'
 
-interface SelectFieldConfigProps<T> extends Omit<Partial<SelectFieldConfig<T>>, 'type'> {
+interface SelectFieldConfigProps<T> extends Partial<Omit<SelectFieldConfig<T>, 'type'>> {
   error?: string
 }
 interface SingleSelect<T, V extends SelectOption['value'] = string> extends SelectFieldConfigProps<T> {
