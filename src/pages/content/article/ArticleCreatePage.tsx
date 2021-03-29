@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Header, Icon, Menu, Segment } from 'semantic-ui-react'
 import FormRenderer from 'src/components/form/FormRenderer'
 import useToast from 'src/contexts/toast/toast.context'
@@ -7,10 +7,7 @@ import { articleForm, articleFormConfig } from 'src/pages/content/article/articl
 import { service, useSubmit } from 'src/services'
 import { CreateArticleDto } from 'src/services/api'
 
-const ArticleEditPage: React.FC = () => {
-  // TODO: implement edit article API
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id } = useParams()
+const ArticleCreatePage: React.FC = () => {
   const navigate = useNavigate()
   const toast = useToast()
 
@@ -34,7 +31,7 @@ const ArticleEditPage: React.FC = () => {
     <Segment attached='bottom'>
       <Header as="h2" >
         <Icon name="edit" />
-        <Header.Content>Edit Article</Header.Content>
+        <Header.Content>Create Article</Header.Content>
       </Header>
 
       <FormRenderer
@@ -48,4 +45,4 @@ const ArticleEditPage: React.FC = () => {
   </>
 }
 
-export default ArticleEditPage
+export default ArticleCreatePage

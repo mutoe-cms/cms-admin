@@ -8,6 +8,7 @@ import PortalPage from 'src/pages/PortalPage'
 import { routeMap } from 'src/route'
 
 const ArticleListPage = React.lazy(async () => await import('src/pages/content/article/ArticleListPage'))
+const ArticleCreatePage = React.lazy(async () => await import('src/pages/content/article/ArticleCreatePage'))
 const ArticleEditPage = React.lazy(async () => await import('src/pages/content/article/ArticleEditPage'))
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
               path: 'article',
               children: [
                 { path: '/', element: <ArticleListPage /> },
+                { path: 'create', element: <ArticleCreatePage /> },
                 { path: ':id', element: <ArticleEditPage /> },
               ],
             },

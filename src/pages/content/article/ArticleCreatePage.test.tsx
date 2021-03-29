@@ -2,7 +2,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { service } from 'src/services'
-import ArticleEditPage from './ArticleEditPage'
+import ArticleCreatePage from './ArticleCreatePage'
 
 const mockToast = jest.fn()
 jest.mock('src/contexts/toast/toast.context', () => () => mockToast)
@@ -13,22 +13,22 @@ jest.mock('react-router-dom', () => ({
   useParams: jest.fn(),
 }))
 
-describe('# ArticleEditPage', () => {
+describe('# ArticleCreatePage', () => {
   const mockUseParams = useParams as jest.Mock
   const mockCreateRequest = jest.spyOn(service.article, 'createArticle')
 
   beforeEach(() => {
-    mockUseParams.mockReturnValue({ id: '1' })
+    mockUseParams.mockReturnValue({ id: 'create' })
   })
 
   it('should render correctly', () => {
-    const { getByText } = render(<ArticleEditPage />)
+    const { getByText } = render(<ArticleCreatePage />)
 
-    expect(getByText('Edit Article')).toBeInTheDocument()
+    expect(getByText('Create Article')).toBeInTheDocument()
   })
 
   it('should navigate to previous page when click back button', () => {
-    const { getByRole } = render(<ArticleEditPage />)
+    const { getByRole } = render(<ArticleCreatePage />)
 
     fireEvent.click(getByRole('link', { name: 'Back' }))
 
@@ -36,7 +36,7 @@ describe('# ArticleEditPage', () => {
   })
 
   it('should not trigger onSubmit when submit a empty form', () => {
-    const { getByRole } = render(<ArticleEditPage />)
+    const { getByRole } = render(<ArticleCreatePage />)
 
     fireEvent.click(getByRole('button', { name: 'Submit' }))
 
@@ -45,7 +45,7 @@ describe('# ArticleEditPage', () => {
   })
 
   it('should call API when submit a valid form', async () => {
-    const { getByRole } = render(<ArticleEditPage />)
+    const { getByRole } = render(<ArticleCreatePage />)
 
     fireEvent.change(getByRole('textbox', { name: 'Title' }), { target: { value: 'article title' } })
 
