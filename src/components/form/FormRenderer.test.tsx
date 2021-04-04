@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
 import FormRenderer, { FieldConfig } from 'src/components/form/FormRenderer'
 import { ERROR_MESSAGE } from 'src/constants/message'
@@ -18,7 +18,7 @@ describe('# Form Renderer Component', () => {
   beforeEach(() => {
     fields = [
       {
-        type: 'input',
+        type: 'text',
         name: 'username',
         label: 'Username',
         placeholder: 'Username',
@@ -49,7 +49,9 @@ describe('# Form Renderer Component', () => {
 
   describe('common feature', () => {
     it('should display required error when submit an empty form given a required field', async () => {
-      fireEvent.submit(form)
+      act(() => {
+        fireEvent.submit(form)
+      })
 
       await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE.REQUIRED('Username'))).toHaveLength(1))
     })
@@ -69,13 +71,13 @@ describe('# Form Renderer Component', () => {
       return waitFor(() => expect(screen.queryAllByText(ERROR_MESSAGE.REQUIRED('Username'))).toHaveLength(0))
     })
 
-    it('should call props.onSubmit when submit a valid form', () => {
+    it('should call props.onSubmit when submit a valid form', async () => {
       fireEvent.change(username, { target: { value: 'foo' } })
       fireEvent.change(password, { target: { value: 'bar' } })
 
       fireEvent.submit(form)
 
-      expect(onSubmit).toBeCalledWith({ username: 'foo', password: 'bar' })
+      await waitFor(() => expect(onSubmit).toBeCalledWith({ username: 'foo', password: 'bar' }))
     })
 
     it('should render submit text passed in correctly', () => {

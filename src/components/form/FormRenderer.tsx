@@ -1,12 +1,13 @@
 import { pick } from 'lodash'
 import React, { useImperativeHandle, useState } from 'react'
 import { Form, StrictDropdownItemProps } from 'semantic-ui-react'
+import FormInputField from 'src/components/form/FormInputField'
 import FormSelectField, { FormSelectFieldProps } from 'src/components/form/FormSelectField'
-import RichEditor from 'src/components/form/RichEditor'
+import FormRichField from 'src/components/form/FormRichField'
 import { ERROR_MESSAGE } from 'src/constants/message'
 import { fieldErrorSeparator, focusErrorField, sentence } from 'src/utils/form.util'
 
-export interface FieldBasicConfig<T> {
+export interface FieldBasicConfig<T = string> {
   name: T
   label: string
   placeholder?: string
@@ -14,8 +15,8 @@ export interface FieldBasicConfig<T> {
   disabled?: boolean
 }
 
-interface InputFieldConfig<T> extends FieldBasicConfig<T> {
-  type: 'input' | 'password'
+export interface InputFieldConfig<T = string> extends FieldBasicConfig<T> {
+  type: 'text' | 'password'
   maxLength?: number
   minLength?: number
   regexp?: RegExp
@@ -23,7 +24,7 @@ interface InputFieldConfig<T> extends FieldBasicConfig<T> {
 
 export type SelectOption = StrictDropdownItemProps
 
-export interface SelectFieldConfig<T> extends FieldBasicConfig<T> {
+export interface SelectFieldConfig<T = string> extends FieldBasicConfig<T> {
   type: 'select'
   multiple?: boolean
   creatable?: boolean
@@ -31,7 +32,7 @@ export interface SelectFieldConfig<T> extends FieldBasicConfig<T> {
   onAddItem?: (option: SelectOption) => void | Promise<void | SelectOption>
 }
 
-interface RichTextFieldConfig<T> extends FieldBasicConfig<T> {
+interface RichTextFieldConfig<T = string> extends FieldBasicConfig<T> {
   type: 'rich'
   maxLength?: number
 }
@@ -55,6 +56,12 @@ interface FormRendererProps<K extends string, F extends FormData<K>> {
   onSubmit?: (form: F) => void | Promise<Record<string, string> | void>
   submitting?: boolean
   className?: string
+}
+
+export interface BasicFieldProps<T> extends FieldBasicConfig<T> {
+  key?: string
+  'aria-label'?: string
+  error?: string
 }
 
 function FormRenderer<K extends string, F extends FormData<K>> (props: FormRendererProps<K, F>, forwardedRef: React.Ref<FormRendererHandle>): React.ReactElement {
@@ -85,7 +92,7 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
     const value = newValue ?? form[field.name]
     if (field.required && !value) return setError(field.name, ERROR_MESSAGE.REQUIRED(field.label))
     switch (field.type) {
-      case 'input':
+      case 'text':
       case 'password': {
         const inputValue = value as string
         if (field.minLength && inputValue.length < field.minLength) return setError(field.name, ERROR_MESSAGE.MIN_LENGTH(field.label, field.minLength))
@@ -110,26 +117,29 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
   }
 
   const renderFields = props.fields.map(field => {
-    const fieldProps = {
+    const fieldProps: BasicFieldProps<K> = {
       ...pick(field, ['label', 'placeholder', 'required', 'disabled', 'name']),
       'aria-label': field.label,
       error: errors[field.name],
       key: field.name,
     }
     switch (field.type) {
-      case 'input':
+      case 'text':
       case 'password': {
-        return <Form.Input
+        return <FormInputField
           {...fieldProps}
-          value={form[field.name] ?? ''}
-          type={field.type === 'input' ? 'text' : field.type}
-          maxLength={field.maxLength}
-          onChange={(_, { value }) => onChange(field, value)}
+          type={field.type}
+          value={form[field.name] as string ?? ''}
+          onChange={value => onChange(field, value)}
           onBlur={() => validateField(field)}
         />
       }
       case 'rich': {
-        return <RichEditor {...fieldProps} />
+        return <FormRichField
+          {...fieldProps}
+          value={form[field.name] as string ?? ''}
+          onChange={console.log}
+        />
       }
       case 'select': {
         const selectProps: FormSelectFieldProps<K> = {

@@ -85,4 +85,8 @@ function FormSelectField <T> (props: FormSelectFieldProps<T>) {
   return <Form.Dropdown {...dropdownProps} />
 }
 
-export default FormSelectField
+export default React.memo(FormSelectField, (prevProps, nextProps) => {
+  return prevProps.value === nextProps.value &&
+    prevProps.error === nextProps.error &&
+    prevProps.options === nextProps.options
+})

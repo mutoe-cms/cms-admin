@@ -27,12 +27,12 @@ describe('# ArticleCreatePage', () => {
     expect(getByText('Create Article')).toBeInTheDocument()
   })
 
-  it('should navigate to previous page when click back button', () => {
+  it('should navigate to previous page when click back button', async () => {
     const { getByRole } = render(<ArticleCreatePage />)
 
     fireEvent.click(getByRole('link', { name: 'Back' }))
 
-    expect(mockNavigate).toBeCalledWith(-1)
+    await waitFor(() => expect(mockNavigate).toBeCalledWith(-1))
   })
 
   it('should not trigger onSubmit when submit a empty form', () => {

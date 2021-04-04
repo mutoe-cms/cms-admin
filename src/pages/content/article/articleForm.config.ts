@@ -9,7 +9,7 @@ export const articleForm: Required<CreateArticleDto> = {
 }
 
 export const articleFormConfig: FieldConfig<keyof typeof articleForm>[] = [
-  { type: 'input', name: 'title', label: 'Title', required: true },
+  { type: 'text', name: 'title', label: 'Title', required: true },
   {
     type: 'select',
     name: 'tags',

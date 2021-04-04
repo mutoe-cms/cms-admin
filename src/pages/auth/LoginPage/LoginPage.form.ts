@@ -7,7 +7,7 @@ export const loginForm = {
 
 export const loginFormFields: FormConfig<typeof loginForm> = [
   {
-    type: 'input',
+    type: 'text',
     name: 'username',
     required: true,
     label: 'Username',
