@@ -198,6 +198,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   constructor({ securityWorker, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
     this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
+
     this.securityWorker = securityWorker;
   }
 

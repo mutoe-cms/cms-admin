@@ -39,12 +39,15 @@ describe('# Form Renderer Component', () => {
         label: 'Rich text editor',
       },
     ]
-    container = render(<FormRenderer fields={fields} submitText={submitText} onSubmit={onSubmit} />).container
-    username = screen.getByRole('textbox', { name: 'Username' }) as HTMLInputElement
-    password = screen.getByPlaceholderText('Password') as HTMLInputElement
-    select = screen.getByRole('combobox', { name: 'Select' }) as HTMLDivElement
-    richEditor = screen.getByRole('textbox', { name: 'Rich text editor' }) as HTMLTextAreaElement
-    form = screen.getByTestId('form') as HTMLFormElement
+
+    act(() => {
+      ({ container } = render(<FormRenderer fields={fields} submitText={submitText} onSubmit={onSubmit} />))
+      username = screen.getByRole('textbox', { name: 'Username' }) as HTMLInputElement
+      password = screen.getByPlaceholderText('Password') as HTMLInputElement
+      select = screen.getByRole('combobox', { name: 'Select' }) as HTMLDivElement
+      richEditor = screen.getByRole('textbox', { name: 'Rich text editor' }) as HTMLTextAreaElement
+      form = screen.getByTestId('form') as HTMLFormElement
+    })
   })
 
   describe('common feature', () => {
@@ -87,7 +90,9 @@ describe('# Form Renderer Component', () => {
     it('should render nothing when passed in invalid field type', () => {
       const invalidFields = [{ type: 'foo', name: 'foo' }] as unknown as FieldConfig<'foo'>[]
 
-      const { container } = render(<FormRenderer fields={invalidFields} />)
+      act(() => {
+        ({ container } = render(<FormRenderer fields={invalidFields} />))
+      })
 
       expect(container.querySelectorAll('.field')).toHaveLength(1)
     })

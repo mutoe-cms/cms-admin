@@ -3,6 +3,17 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect'
+import { AxiosRequestConfig } from 'axios'
+
+jest.mock('axios', () => ({
+  ...jest.requireActual('axios'),
+  create: () => ({
+    defaults: {},
+    request: jest.fn().mockImplementation(({ method, url }: AxiosRequestConfig) => {
+      throw new Error(`You should mock the request '${method} ${url}'`)
+    }),
+  }),
+}))
 
 document.createRange = (): any => ({
   setStart: jest.fn(),

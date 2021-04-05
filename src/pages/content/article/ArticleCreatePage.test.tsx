@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { AxiosResponse } from 'axios'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { service } from 'src/services'
@@ -16,40 +17,37 @@ jest.mock('react-router-dom', () => ({
 describe('# ArticleCreatePage', () => {
   const mockUseParams = useParams as jest.Mock
   const mockCreateRequest = jest.spyOn(service.article, 'createArticle')
+  const mockRetrieveTags = jest.spyOn(service.tag, 'retrieveTags')
 
-  beforeEach(() => {
-    mockUseParams.mockReturnValue({ id: 'create' })
+  beforeEach(async () => {
+    mockUseParams.mockReturnValue({ id: '1' })
+    mockRetrieveTags.mockResolvedValue({ status: 200, data: { items: [], meta: {} } } as AxiosResponse)
+    mockCreateRequest.mockResolvedValue({ status: 201, data: { id: 1 } } as any)
+
+    render(<ArticleCreatePage />)
+    await waitFor(() => expect(mockRetrieveTags).toBeCalled())
   })
 
-  it('should render correctly', () => {
-    const { getByText } = render(<ArticleCreatePage />)
-
-    expect(getByText('Create Article')).toBeInTheDocument()
+  it('should render correctly', async () => {
+    expect(screen.getByText('Create Article')).toBeInTheDocument()
   })
 
   it('should navigate to previous page when click back button', async () => {
-    const { getByRole } = render(<ArticleCreatePage />)
+    fireEvent.click(screen.getByRole('link', { name: 'Back' }))
 
-    fireEvent.click(getByRole('link', { name: 'Back' }))
-
-    await waitFor(() => expect(mockNavigate).toBeCalledWith(-1))
+    expect(mockNavigate).toBeCalledWith(-1)
   })
 
-  it('should not trigger onSubmit when submit a empty form', () => {
-    const { getByRole } = render(<ArticleCreatePage />)
+  it('should not trigger onSubmit when submit a empty form', async () => {
+    fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
 
-    fireEvent.click(getByRole('button', { name: 'Submit' }))
-
-    expect(getByRole('alert')).toBeInTheDocument()
-    expect(mockCreateRequest).not.toBeCalled()
+    expect(screen.getByRole('alert')).toBeInTheDocument()
   })
 
   it('should call API when submit a valid form', async () => {
-    const { getByRole } = render(<ArticleCreatePage />)
+    fireEvent.change(screen.getByRole('textbox', { name: 'Title' }), { target: { value: 'article title' } })
 
-    fireEvent.change(getByRole('textbox', { name: 'Title' }), { target: { value: 'article title' } })
-
-    fireEvent.click(getByRole('button', { name: 'Submit' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
 
     await waitFor(() => expect(mockCreateRequest).toBeCalledWith({ title: 'article title', tags: [], content: '' }, undefined))
   })
