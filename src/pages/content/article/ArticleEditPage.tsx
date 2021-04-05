@@ -1,28 +1,37 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Header, Icon, Menu, Segment } from 'semantic-ui-react'
 import FormRenderer from 'src/components/form/FormRenderer'
 import useToast from 'src/contexts/toast/toast.context'
-import { articleForm, articleFormConfig } from 'src/pages/content/article/articleForm.config'
+import { articleFormConfig } from 'src/pages/content/article/articleForm.config'
 import { service, useSubmit } from 'src/services'
 import { CreateArticleDto } from 'src/services/api'
+import { useRetrieveDetail } from 'src/services/hooks/useRetrieveDetail'
 
 const ArticleEditPage: React.FC = () => {
-  // TODO: implement edit article API
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id } = useParams()
   const navigate = useNavigate()
   const toast = useToast()
 
-  const { formRef, submitting, submitRequest } = useSubmit(service.article.createArticle)
+  const { formRef, submitting, submitRequest } = useSubmit(service.article.updateArticle)
+  const { loading, detail } = useRetrieveDetail(service.article.retrieveArticle, +id)
+  const form: Required<CreateArticleDto> = useMemo(() => ({
+    title: detail?.title ?? '',
+    // FIXME: implement fill content into RichEditor
+    content: detail?.content ?? '',
+    // FIXME: need to return tags from API
+    tags: detail?.tags ?? [],
+  }), [detail])
 
   const onSubmit = async (form: CreateArticleDto) => {
     try {
-      await submitRequest(form)
+      await submitRequest(+id, form)
       toast.success('Success')
       navigate('..')
     } catch (e) {
-      // TODO: error handling
+      // eslint-disable-next-line no-console
+      console.error(e)
+      toast.error('Error')
     }
   }
 
@@ -31,7 +40,7 @@ const ArticleEditPage: React.FC = () => {
       <Menu.Item role='link' icon='angle left' content='Back' onClick={() => navigate(-1)} />
     </Menu>
 
-    <Segment attached='bottom'>
+    <Segment attached='bottom' loading={loading}>
       <Header as="h2" >
         <Icon name="edit" />
         <Header.Content>Edit Article</Header.Content>
@@ -39,7 +48,7 @@ const ArticleEditPage: React.FC = () => {
 
       <FormRenderer
         ref={formRef}
-        initForm={articleForm}
+        initForm={form}
         fields={articleFormConfig}
         submitting={submitting}
         onSubmit={onSubmit}

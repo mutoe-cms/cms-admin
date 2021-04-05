@@ -88,15 +88,46 @@ export interface CreateArticleDto {
   content?: string;
 }
 
+export interface UserSafeEntity {
+  /** @example 1 */
+  id: number;
+
+  /** @example mutoe@foxmail.com */
+  email: string;
+
+  /** @example mutoe */
+  username: string;
+
+  /** @example This guy is lazy and has left nothing. */
+  bio?: string;
+
+  /** @example https://imgur.com/200 */
+  image?: string;
+
+  /** @example 2020-08-16T00:04:59.343Z */
+  createdAt: string;
+
+  /** @example 2020-08-16T00:04:59.343Z */
+  updatedAt: string;
+}
+
 export interface ArticleEntity {
   /** @example 1 */
   id: number;
-  user: object;
+
+  /** Article author */
+  author: UserSafeEntity;
 
   /** @example Lorem ipsum */
   title: string;
 
-  /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
+  /** @example ["semantic-ui"] */
+  tags: string[];
+
+  /**
+   * Markdown body
+   * @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+   */
   content?: string;
 
   /** @example 2020-08-16T00:04:59.343Z */
@@ -198,7 +229,6 @@ export class HttpClient<SecurityDataType = unknown> {
 
   constructor({ securityWorker, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
     this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
-
     this.securityWorker = securityWorker;
   }
 
@@ -358,6 +388,42 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/api/article`,
         method: "GET",
         query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Article
+     * @name RetrieveArticle
+     * @summary Retrieve article by article id
+     * @request GET:/api/article/{articleId}
+     */
+    retrieveArticle: (articleId: number, params: RequestParams = {}) =>
+      this.request<ArticleEntity, void>({
+        path: `/api/article/${articleId}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Article
+     * @name UpdateArticle
+     * @summary Update article
+     * @request PUT:/api/article/{articleId}
+     * @secure
+     */
+    updateArticle: (articleId: number, data: CreateArticleDto, params: RequestParams = {}) =>
+      this.request<ArticleEntity, void>({
+        path: `/api/article/${articleId}`,
+        method: "PUT",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),

@@ -40,7 +40,7 @@ describe('# useSubmit', () => {
       await result.current.submitRequest({ bar: 'baz' })
     })
 
-    expect(request).toBeCalledWith({ bar: 'baz' }, undefined)
+    expect(request).toBeCalledWith({ bar: 'baz' })
   })
 
   it('should set form error when API throw 422 error', async () => {

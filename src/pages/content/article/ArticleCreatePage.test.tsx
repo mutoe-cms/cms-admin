@@ -49,6 +49,6 @@ describe('# ArticleCreatePage', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
 
-    await waitFor(() => expect(mockCreateRequest).toBeCalledWith({ title: 'article title', tags: [], content: '' }, undefined))
+    await waitFor(() => expect(mockCreateRequest).toBeCalledWith({ title: 'article title', tags: [], content: '' }))
   })
 })

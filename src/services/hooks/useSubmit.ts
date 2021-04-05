@@ -11,15 +11,24 @@ export function isFormError (error: any): error is AxiosError<FormErrorResponse>
 }
 
 type SubmitRequest<Req = unknown, Res = unknown> = (body: Req, params?: RequestParams) => Promise<AxiosResponse<Res>>
+type SubmitRequestWithId<Req = unknown, Res = unknown> = (id: number, body: Req, params?: RequestParams) => Promise<AxiosResponse<Res>>
 
-export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<Req, Res>) {
+interface UseSubmitReturnType<ReqArgs extends unknown[], Res> {
+  formRef: FormRef
+  submitting: boolean
+  submitRequest: (...args: ReqArgs) => Promise<Res>
+}
+
+export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<Req, Res>): UseSubmitReturnType<Parameters<SubmitRequest<Req>>, Res>
+export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequestWithId<Req, Res>): UseSubmitReturnType<Parameters<SubmitRequestWithId<Req>>, Res>
+export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<Req, Res> | SubmitRequestWithId<Req, Res>) {
   const formRef: FormRef = useRef(null)
   const [submitting, setSubmitting] = useState(false)
 
-  const submitRequest = async (data: Req, params?: RequestParams): Promise<Res> => {
+  const submitRequest = async (...args: unknown[]): Promise<Res> => {
     try {
       setSubmitting(true)
-      return (await request(data, params)).data
+      return (await (request as any)(...args)).data
     } catch (e) {
       if (formRef.current && isFormError(e)) {
         Object.entries(e.response?.data ?? {})

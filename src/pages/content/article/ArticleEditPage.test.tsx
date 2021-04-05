@@ -5,8 +5,7 @@ import { useParams } from 'react-router-dom'
 import { service } from 'src/services'
 import ArticleEditPage from './ArticleEditPage'
 
-const mockToast = jest.fn()
-jest.mock('src/contexts/toast/toast.context', () => () => mockToast)
+jest.mock('src/contexts/toast/toast.context', () => () => ({ success: jest.fn(), error: jest.fn() }))
 
 const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
@@ -16,16 +15,18 @@ jest.mock('react-router-dom', () => ({
 
 describe('# ArticleEditPage', () => {
   const mockUseParams = useParams as jest.Mock
-  const mockCreateRequest = jest.spyOn(service.article, 'createArticle')
+  const mockUpdateRequest = jest.spyOn(service.article, 'updateArticle')
   const mockRetrieveTags = jest.spyOn(service.tag, 'retrieveTags')
+  const mockRetrieveArticle = jest.spyOn(service.article, 'retrieveArticle')
 
   beforeEach(async () => {
     mockUseParams.mockReturnValue({ id: '1' })
     mockRetrieveTags.mockResolvedValue({ status: 200, data: { items: [], meta: {} } } as AxiosResponse)
-    mockCreateRequest.mockResolvedValue({ status: 201, data: { id: 1 } } as any)
+    mockUpdateRequest.mockResolvedValue({ status: 200, data: { id: 1 } } as any)
+    mockRetrieveArticle.mockResolvedValue({ status: 200, data: { id: 1, title: 'Title', content: '<p>content</p>' } } as AxiosResponse)
 
     render(<ArticleEditPage />)
-    await waitFor(() => expect(mockRetrieveTags).toBeCalled())
+    await waitFor(() => expect(mockRetrieveArticle).toBeCalled())
   })
 
   it('should render correctly', async () => {
@@ -38,18 +39,11 @@ describe('# ArticleEditPage', () => {
     expect(mockNavigate).toBeCalledWith(-1)
   })
 
-  it('should not trigger onSubmit when submit a empty form', async () => {
-    fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
-
-    await waitFor(() => expect(screen.getByRole('alert')).toBeInTheDocument())
-    expect(mockCreateRequest).not.toBeCalled()
-  })
-
   it('should call API when submit a valid form', async () => {
     fireEvent.change(screen.getByRole('textbox', { name: 'Title' }), { target: { value: 'article title' } })
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
 
-    await waitFor(() => expect(mockCreateRequest).toBeCalledWith({ title: 'article title', tags: [], content: '' }, undefined))
+    await waitFor(() => expect(mockUpdateRequest).toBeCalledWith(1, { title: 'article title', tags: [], content: '<p>content</p>' }))
   })
 })

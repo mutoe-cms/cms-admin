@@ -1,9 +1,9 @@
 import { pick } from 'lodash'
-import React, { useImperativeHandle, useState } from 'react'
+import React, { useEffect, useImperativeHandle, useState } from 'react'
 import { Form, StrictDropdownItemProps } from 'semantic-ui-react'
 import FormInputField from 'src/components/form/FormInputField'
-import FormSelectField, { FormSelectFieldProps } from 'src/components/form/FormSelectField'
 import FormRichField from 'src/components/form/FormRichField'
+import FormSelectField, { FormSelectFieldProps } from 'src/components/form/FormSelectField'
 import { ERROR_MESSAGE } from 'src/constants/message'
 import { fieldErrorSeparator, focusErrorField, sentence } from 'src/utils/form.util'
 
@@ -66,6 +66,8 @@ export interface BasicFieldProps<T> extends FieldBasicConfig<T> {
 
 function FormRenderer<K extends string, F extends FormData<K>> (props: FormRendererProps<K, F>, forwardedRef: React.Ref<FormRendererHandle>): React.ReactElement {
   const [form, setForm] = useState<F>(props.initForm ?? {} as F)
+  useEffect(() => { setForm(props.initForm ?? {} as F) }, [props.initForm])
+
   const [errors, setErrors] = useState<Partial<Record<K, string>>>({})
 
   const setError = (fieldName: string, errorMessage?: string) => {
