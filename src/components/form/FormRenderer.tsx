@@ -140,9 +140,8 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
         return <FormRichField
           {...fieldProps}
           value={form[field.name] as string ?? ''}
-          // TODO: update RichField
-          // eslint-disable-next-line react/jsx-handler-names,no-console
-          onChange={console.log}
+          onChange={value => onChange(field, value)}
+          onBlur={() => validateField(field)}
         />
       }
       case 'select': {

@@ -1,25 +1,50 @@
-import { Editor, EditorState } from 'draft-js'
-import React, { useEffect, useState } from 'react'
+import classNames from 'classnames'
+import React, { useEffect, useRef, useState } from 'react'
+import ReactQuill from 'react-quill'
 import { BasicFieldProps } from 'src/components/form/FormRenderer'
 
+import 'react-quill/dist/quill.snow.css'
 import './Form.scss'
 
-interface FormRichFieldProps extends BasicFieldProps<string> {
+interface FormRichFieldProps extends Partial<BasicFieldProps<string>> {
   value: string
-  // TODO: need to implement
   onChange: (value: string) => void
+  onBlur?: () => void
 }
 
 const FormRichField: React.FC<FormRichFieldProps> = props => {
-  const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
+  const [focus, setFocus] = useState(false)
+  const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-  }, [editorState])
+    const el = ref.current
+    const onFocus = () => setFocus(true)
+    const onBlur = () => setFocus(false)
+    el?.addEventListener('focus', onFocus, { capture: true })
+    el?.addEventListener('blur', onBlur, { capture: true })
+
+    return () => {
+      el?.removeEventListener('focus', onFocus)
+      el?.removeEventListener('blur', onBlur)
+    }
+  }, [])
+
+  // TODO: support required prop
+  // TODO: support error prop
 
   return <div className="field">
     <label>{props.label}</label>
-    <div className="ui rich-editor">
-      <Editor ariaLabel={props.label} editorState={editorState} onChange={setEditorState} />
+
+    <div ref={ref} className="ui rich-editor" data-testid="editor-wrapper">
+      <ReactQuill
+        className={classNames({ focus })}
+        theme="snow"
+        placeholder={props.placeholder}
+        readOnly={props.disabled}
+        value={props.value}
+        onBlur={props.onBlur}
+        onChange={props.onChange}
+      />
     </div>
   </div>
 }

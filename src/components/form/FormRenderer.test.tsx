@@ -37,6 +37,7 @@ describe('# Form Renderer Component', () => {
         type: 'rich',
         name: 'rich',
         label: 'Rich text editor',
+        placeholder: 'rich',
       },
     ]
 
@@ -45,7 +46,7 @@ describe('# Form Renderer Component', () => {
       username = screen.getByRole('textbox', { name: 'Username' }) as HTMLInputElement
       password = screen.getByPlaceholderText('Password') as HTMLInputElement
       select = screen.getByRole('combobox', { name: 'Select' }) as HTMLDivElement
-      richEditor = screen.getByRole('textbox', { name: 'Rich text editor' }) as HTMLTextAreaElement
+      richEditor = container.querySelector('.ql-editor') as HTMLTextAreaElement
       form = screen.getByTestId('form') as HTMLFormElement
     })
   })

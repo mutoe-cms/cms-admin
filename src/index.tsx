@@ -1,14 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
+
+import 'semantic-ui-css/semantic.min.css'
 import App from 'src/App'
+import 'src/assets/css/index.scss'
 import { AuthorizationProvider } from 'src/contexts/authorization/authorization.context'
 import { ToastProvider } from 'src/contexts/toast/toast.context'
 import * as serviceWorker from 'src/serviceWorker'
-
-import 'semantic-ui-css/semantic.min.css'
-import 'draft-js/dist/Draft.css'
-import 'src/assets/css/index.scss'
 
 ReactDOM.render(
   <BrowserRouter>

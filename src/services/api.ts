@@ -118,7 +118,10 @@ export interface TagEntity {
   /** @example Semantic UI */
   name: string;
 
-  /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
+  /**
+   * HTML content
+   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   */
   description?: string;
 
   /** @example 2020-08-16T00:04:59.343Z */
@@ -142,8 +145,8 @@ export interface ArticleEntity {
   tags: TagEntity[];
 
   /**
-   * Markdown body
-   * @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+   * HTML content
+   * @example <p>Hello <strong>Mutoe CMS</strong></p>
    */
   content?: string;
 
@@ -180,7 +183,10 @@ export interface CreateTagDto {
   /** @example semantic-ui */
   key: string;
 
-  /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
+  /**
+   * HTML content
+   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   */
   description?: string;
 }
 
