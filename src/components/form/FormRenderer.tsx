@@ -140,15 +140,15 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
         return <FormRichField
           {...fieldProps}
           value={form[field.name] as string ?? ''}
+          // TODO: update RichField
+          // eslint-disable-next-line react/jsx-handler-names,no-console
           onChange={console.log}
         />
       }
       case 'select': {
         const selectProps: FormSelectFieldProps<K> = {
-          creatable: field.creatable,
-          onAddItem: field.onAddItem,
-          options: field.options,
           ...fieldProps,
+          ...pick(field, ['creatable', 'onAddItem', 'options']),
           ...(field.multiple
             ? {
                 multiple: true,

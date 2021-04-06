@@ -2,7 +2,9 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { AxiosResponse } from 'axios'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { tagFixture } from 'src/fixtures'
 import { service } from 'src/services'
+import { ArticleEntity } from 'src/services/api'
 import ArticleEditPage from './ArticleEditPage'
 
 jest.mock('src/contexts/toast/toast.context', () => () => ({ success: jest.fn(), error: jest.fn() }))
@@ -23,7 +25,7 @@ describe('# ArticleEditPage', () => {
     mockUseParams.mockReturnValue({ id: '1' })
     mockRetrieveTags.mockResolvedValue({ status: 200, data: { items: [], meta: {} } } as AxiosResponse)
     mockUpdateRequest.mockResolvedValue({ status: 200, data: { id: 1 } } as any)
-    mockRetrieveArticle.mockResolvedValue({ status: 200, data: { id: 1, title: 'Title', content: '<p>content</p>' } } as AxiosResponse)
+    mockRetrieveArticle.mockResolvedValue({ status: 200, data: { id: 1, title: 'Title', content: '<p>content</p>', tags: [tagFixture.entity] } as ArticleEntity } as AxiosResponse)
 
     render(<ArticleEditPage />)
     await waitFor(() => expect(mockRetrieveArticle).toBeCalled())
@@ -44,6 +46,6 @@ describe('# ArticleEditPage', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
 
-    await waitFor(() => expect(mockUpdateRequest).toBeCalledWith(1, { title: 'article title', tags: [], content: '<p>content</p>' }))
+    await waitFor(() => expect(mockUpdateRequest).toBeCalledWith(1, { title: 'article title', tags: ['semantic-ui'], content: '<p>content</p>' }))
   })
 })

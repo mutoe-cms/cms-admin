@@ -19,8 +19,7 @@ const ArticleEditPage: React.FC = () => {
     title: detail?.title ?? '',
     // FIXME: implement fill content into RichEditor
     content: detail?.content ?? '',
-    // FIXME: need to return tags from API
-    tags: detail?.tags ?? [],
+    tags: detail?.tags.map(t => t.key) ?? [],
   }), [detail])
 
   const onSubmit = async (form: CreateArticleDto) => {

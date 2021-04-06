@@ -251,7 +251,7 @@
       "!src/services/{index,api}.ts",
       "!src/constants/**",
       "!src/{index,App}.tsx",
-      "!src/{appMenu,serviceWorker}.ts"
+      "!src/{appMenu,serviceWorker,fixtures}.ts"
     ],
     "coverageThreshold": {
       "src/**/*.ts?(x)": {

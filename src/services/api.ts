@@ -111,6 +111,23 @@ export interface UserSafeEntity {
   updatedAt: string;
 }
 
+export interface TagEntity {
+  /** @example semantic-ui */
+  key: string;
+
+  /** @example Semantic UI */
+  name: string;
+
+  /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
+  description?: string;
+
+  /** @example 2020-08-16T00:04:59.343Z */
+  createdAt: string;
+
+  /** @example 2020-08-16T00:04:59.343Z */
+  updatedAt: string;
+}
+
 export interface ArticleEntity {
   /** @example 1 */
   id: number;
@@ -121,8 +138,8 @@ export interface ArticleEntity {
   /** @example Lorem ipsum */
   title: string;
 
-  /** @example ["semantic-ui"] */
-  tags: string[];
+  /** Article tags */
+  tags: TagEntity[];
 
   /**
    * Markdown body
@@ -165,23 +182,6 @@ export interface CreateTagDto {
 
   /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
   description?: string;
-}
-
-export interface TagEntity {
-  /** @example semantic-ui */
-  key: string;
-
-  /** @example Semantic UI */
-  name: string;
-
-  /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
-  description?: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
-  createdAt: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
-  updatedAt: string;
 }
 
 export interface TagsRo {
