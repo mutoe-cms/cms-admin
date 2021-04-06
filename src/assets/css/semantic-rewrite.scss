@@ -28,3 +28,11 @@
     margin-bottom: 48px;
   }
 }
+
+.ui.table {
+  td {
+    max-width: 20em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

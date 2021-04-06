@@ -37,7 +37,7 @@ const ArticleListPage: React.FC = () => {
         <Table.Body>
           {articles.map(article => <Table.Row key={article.id} draggable>
             <Table.Cell>{article.id}</Table.Cell>
-            <Table.Cell>{article.title}</Table.Cell>
+            <Table.Cell title={article.title}>{article.title}</Table.Cell>
             <Table.Cell>{formatDateTime(article.createdAt)}</Table.Cell>
             <Table.Cell>{formatDateTime(article.updatedAt)}</Table.Cell>
             <Table.Cell>
