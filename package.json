@@ -1,7 +1,11 @@
 {
   "name": "cms-admin",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mutoe-cms/cms-admin"
+  },
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
