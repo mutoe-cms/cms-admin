@@ -14,3 +14,9 @@ $focusBorder: #96c8da;
 $borderRadius: (2em/7);
 
 $inputPadding: (3em/7)+(1em/4) 1em;
+
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
