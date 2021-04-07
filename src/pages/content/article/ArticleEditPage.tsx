@@ -17,7 +17,6 @@ const ArticleEditPage: React.FC = () => {
   const { loading, detail } = useRetrieveDetail(service.article.retrieveArticle, +id)
   const form: Required<CreateArticleDto> = useMemo(() => ({
     title: detail?.title ?? '',
-    // FIXME: implement fill content into RichEditor
     content: detail?.content ?? '',
     tags: detail?.tags.map(t => t.key) ?? [],
   }), [detail])
