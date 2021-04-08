@@ -25,7 +25,7 @@ export interface ProfileRo {
   /** @example 2020-08-16T00:04:59.343Z */
   updatedAt: string;
 
-  /** @example null */
+  /** @example This guy is lazy and has left nothing. */
   bio?: string;
 
   /** @example https://picsum.photos/200 */
@@ -59,7 +59,7 @@ export interface AuthRo {
   /** @example 2020-08-16T00:04:59.343Z */
   updatedAt: string;
 
-  /** @example null */
+  /** @example This guy is lazy and has left nothing. */
   bio?: string;
 
   /** @example https://picsum.photos/200 */
@@ -84,7 +84,10 @@ export interface CreateArticleDto {
   /** @example ["semantic-ui","material-ui"] */
   tags?: string[];
 
-  /** @example <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p> */
+  /**
+   * HTML content
+   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   */
   content?: string;
 }
 
@@ -294,7 +297,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title CMS
- * @version 0.3.0
+ * @version 0.3.1
  * @contact
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
