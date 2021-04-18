@@ -18,16 +18,19 @@ jest.mock('react-router-dom', () => ({
 describe('# ArticleEditPage', () => {
   const mockUseParams = useParams as jest.Mock
   const mockUpdateRequest = jest.spyOn(service.article, 'updateArticle')
-  const mockRetrieveTags = jest.spyOn(service.tag, 'retrieveTags')
   const mockRetrieveArticle = jest.spyOn(service.article, 'retrieveArticle')
+  const mockRetrieveTags = jest.spyOn(service.tag, 'retrieveTags')
+  const mockRetrieveCategories = jest.spyOn(service.category, 'retrieveRootCategories')
 
   beforeEach(async () => {
     mockUseParams.mockReturnValue({ id: '1' })
-    mockRetrieveTags.mockResolvedValue({ status: 200, data: { items: [], meta: {} } } as AxiosResponse)
     mockUpdateRequest.mockResolvedValue({ status: 200, data: { id: 1 } } as any)
     mockRetrieveArticle.mockResolvedValue({ status: 200, data: { id: 1, title: 'Title', content: '<p>content</p>', tags: [tagFixture.entity] } as ArticleEntity } as AxiosResponse)
+    mockRetrieveTags.mockResolvedValue({ status: 200, data: { items: [], meta: {} } } as AxiosResponse)
+    mockRetrieveCategories.mockResolvedValue({ status: 200, data: [] } as AxiosResponse)
 
     render(<ArticleEditPage />)
+
     await waitFor(() => expect(mockRetrieveArticle).toBeCalled())
   })
 
@@ -46,6 +49,6 @@ describe('# ArticleEditPage', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
 
-    await waitFor(() => expect(mockUpdateRequest).toBeCalledWith(1, { title: 'article title', tags: ['semantic-ui'], content: '<p>content</p>' }))
+    await waitFor(() => expect(mockUpdateRequest).toBeCalledWith(1, { title: 'article title', tags: ['semantic-ui'], content: '<p>content</p>', categoryId: NaN }))
   })
 })

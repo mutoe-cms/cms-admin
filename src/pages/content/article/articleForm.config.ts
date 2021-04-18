@@ -4,12 +4,22 @@ import { CreateArticleDto } from 'src/services/api'
 
 export const articleForm: Required<CreateArticleDto> = {
   title: '',
+  categoryId: 1,
   tags: [],
   content: '',
 }
 
 export const articleFormConfig: FieldConfig<keyof typeof articleForm>[] = [
   { type: 'text', name: 'title', label: 'Title', required: true },
+  {
+    type: 'select',
+    name: 'categoryId',
+    label: 'Category',
+    options: async () => {
+      const { data: items } = await service.category.retrieveRootCategories()
+      return items.map<SelectOption>(c => ({ text: c.label, value: c.id, description: c.description }))
+    },
+  },
   {
     type: 'select',
     name: 'tags',

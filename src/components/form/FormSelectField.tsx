@@ -35,9 +35,9 @@ function FormSelectField <T> (props: FormSelectFieldProps<T>) {
         const deleted = xor(value, options.map(o => o.value))
         setOptions(options => options.filter(o => !o.image || !deleted.includes(o.value)))
       }
-      props.onChange(value.map(v => kebabCase(String(v))) as any)
+      props.onChange(value.map(v => typeof v === 'string' ? kebabCase(v) : v) as any)
     } else {
-      props.onChange(kebabCase(String(value)) as any)
+      props.onChange(typeof value === 'string' ? kebabCase(value) as any : value)
     }
   }
 

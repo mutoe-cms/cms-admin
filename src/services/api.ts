@@ -81,6 +81,9 @@ export interface CreateArticleDto {
   /** @example Lorem ipsum */
   title: string;
 
+  /** @example 1 */
+  categoryId?: number;
+
   /** @example ["semantic-ui","material-ui"] */
   tags?: string[];
 
@@ -106,6 +109,35 @@ export interface UserSafeEntity {
 
   /** @example https://imgur.com/200 */
   image?: string;
+
+  /** @example 2020-08-16T00:04:59.343Z */
+  createdAt: string;
+
+  /** @example 2020-08-16T00:04:59.343Z */
+  updatedAt: string;
+}
+
+export interface CategoryEntity {
+  /** @example 1 */
+  id: number;
+
+  /** Category parent */
+  parent?: CategoryEntity;
+
+  /** Category children */
+  children: CategoryEntity[];
+
+  /** @example study-notes */
+  key: string;
+
+  /** @example Study notes */
+  label: string;
+
+  /**
+   * HTML content
+   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   */
+  description?: string;
 
   /** @example 2020-08-16T00:04:59.343Z */
   createdAt: string;
@@ -144,6 +176,9 @@ export interface ArticleEntity {
   /** @example Lorem ipsum */
   title: string;
 
+  /** Article category */
+  category?: CategoryEntity;
+
   /** Article tags */
   tags: TagEntity[];
 
@@ -179,6 +214,23 @@ export interface ArticlesRo {
   meta: PaginationMeta;
 }
 
+export interface CreateCategoryDto {
+  /** @example study-notes */
+  key: string;
+
+  /** @example Study notes */
+  label: string;
+
+  /**
+   * HTML content
+   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   */
+  description?: string;
+
+  /** @example 1 */
+  parentId?: number;
+}
+
 export interface CreateTagDto {
   /** @example Semantic UI */
   name: string;
@@ -198,7 +250,7 @@ export interface TagsRo {
   meta: PaginationMeta;
 }
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from "axios";
 
 export type QueryParamsType = Record<string | number, any>;
 
@@ -347,7 +399,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/auth/register
      */
     register: (data: RegisterDto, params: RequestParams = {}) =>
-      this.request<AuthRo, { "[field: string]": "isNotEmpty" | "isExist" | "isNotExist" | "isInvalid" }>({
+      this.request<AuthRo, any>({
         path: `/api/auth/register`,
         method: "POST",
         body: data,
@@ -444,6 +496,59 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  };
+  category = {
+    /**
+     * No description
+     *
+     * @tags Category
+     * @name CreateCategory
+     * @summary Create a category
+     * @request POST:/api/category
+     * @secure
+     */
+    createCategory: (data: CreateCategoryDto, params: RequestParams = {}) =>
+      this.request<CategoryEntity, void>({
+        path: `/api/category`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Category
+     * @name RetrieveRootCategories
+     * @summary Retrieve some categories that not have parent category
+     * @request GET:/api/category
+     */
+    retrieveRootCategories: (params: RequestParams = {}) =>
+      this.request<CategoryEntity[], void>({
+        path: `/api/category`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Category
+     * @name RetrieveCategory
+     * @summary Retrieve a category
+     * @request GET:/api/category/{categoryId}
+     */
+    retrieveCategory: (categoryId: number, params: RequestParams = {}) =>
+      this.request<CategoryEntity, void>({
+        path: `/api/category/${categoryId}`,
+        method: "GET",
         format: "json",
         ...params,
       }),

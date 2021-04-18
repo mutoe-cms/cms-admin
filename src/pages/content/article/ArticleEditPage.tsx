@@ -19,6 +19,7 @@ const ArticleEditPage: React.FC = () => {
     title: detail?.title ?? '',
     content: detail?.content ?? '',
     tags: detail?.tags.map(t => t.key) ?? [],
+    categoryId: detail?.category?.id ?? NaN,
   }), [detail])
 
   const onSubmit = async (form: CreateArticleDto) => {

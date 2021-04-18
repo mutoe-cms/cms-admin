@@ -18,11 +18,13 @@ describe('# ArticleCreatePage', () => {
   const mockUseParams = useParams as jest.Mock
   const mockCreateRequest = jest.spyOn(service.article, 'createArticle')
   const mockRetrieveTags = jest.spyOn(service.tag, 'retrieveTags')
+  const mockRetrieveCategories = jest.spyOn(service.category, 'retrieveRootCategories')
 
   beforeEach(async () => {
     mockUseParams.mockReturnValue({ id: '1' })
-    mockRetrieveTags.mockResolvedValue({ status: 200, data: { items: [], meta: {} } } as AxiosResponse)
     mockCreateRequest.mockResolvedValue({ status: 201, data: { id: 1 } } as any)
+    mockRetrieveTags.mockResolvedValue({ status: 200, data: { items: [], meta: {} } } as AxiosResponse)
+    mockRetrieveCategories.mockResolvedValue({ status: 200, data: [] } as AxiosResponse)
 
     render(<ArticleCreatePage />)
     await waitFor(() => expect(mockRetrieveTags).toBeCalled())
@@ -49,6 +51,6 @@ describe('# ArticleCreatePage', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
 
-    await waitFor(() => expect(mockCreateRequest).toBeCalledWith({ title: 'article title', tags: [], content: '' }))
+    await waitFor(() => expect(mockCreateRequest).toBeCalledWith({ title: 'article title', tags: [], content: '', categoryId: 1 }))
   })
 })
