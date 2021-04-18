@@ -15,7 +15,8 @@
     "test": "yarn tsc && yarn test:unit",
     "lint": "eslint 'src/**/*.ts?(x)'",
     "swagger": "bash scripts/sync-swagger-api.sh",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "version": "yarn changelog && git add CHANGELOG.md"
   },
   "dependencies": {
     "axios": "^0.21.1",
