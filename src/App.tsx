@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const routes = useRoutes([
     { path: routeMap.login, element: <LoginPage /> },
     {
-      path: routeMap.root,
+      path: '/',
       element: <PortalPage />,
       children: [
         { path: 'dashboard', element: <DashboardPage /> },
@@ -26,7 +26,7 @@ const App: React.FC = () => {
             {
               path: 'article',
               children: [
-                { path: '/', element: <ArticleListPage /> },
+                { path: '', element: <ArticleListPage /> },
                 { path: 'create', element: <ArticleCreatePage /> },
                 { path: ':id', element: <ArticleEditPage /> },
               ],
