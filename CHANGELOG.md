@@ -1,3 +1,19 @@
+## [0.3.4](https://github.com/mutoe-cms/cms-admin/compare/v0.3.2...v0.3.4) (2023-01-29)
+
+
+### Bug Fixes
+
+* nested route issue ([7e67b2b](https://github.com/mutoe-cms/cms-admin/commit/7e67b2b63ca0377559bd821386d9a7514982c536))
+* **tag:** tag select item description ellipsis issue ([d98a0fb](https://github.com/mutoe-cms/cms-admin/commit/d98a0fb50bd2acb7267ef6311087df72d869c484))
+
+
+### Features
+
+* add server error when request failed ([2b53a4d](https://github.com/mutoe-cms/cms-admin/commit/2b53a4d413cfac7245db6591f96319e7ffc46ded))
+* **category:** add category select when create article ([600a158](https://github.com/mutoe-cms/cms-admin/commit/600a1585e691c05cea182ea9b6909ea470f1e13c))
+
+
+
 ## [0.3.3](https://github.com/mutoe-cms/cms-admin/compare/v0.3.2...v0.3.3) (2021-04-18)
 
 
