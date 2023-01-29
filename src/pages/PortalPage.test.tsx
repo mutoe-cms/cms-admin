@@ -24,7 +24,7 @@ describe('# PortalPage', () => {
     mockUseAuthorizationContext.mockReturnValue({ loading: true })
     render(<PortalPage />)
 
-    expect(mockNavigate).toBeCalledWith(routeMap.home, { replace: true })
+    expect(mockNavigate).toHaveBeenCalledWith(routeMap.home, { replace: true })
   })
 
   it('should render loading given authorization is loading', () => {

@@ -29,6 +29,6 @@ describe('# AppHeader', () => {
 
     fireEvent.click(getByTestId('article'))
 
-    expect(mockNavigate).toBeCalledWith('content/article')
+    expect(mockNavigate).toHaveBeenCalledWith('content/article')
   })
 })

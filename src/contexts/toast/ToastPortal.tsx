@@ -27,16 +27,16 @@ const ToastPortal: React.FC<ToastPortalProps> = ({ toasts }) => {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    if (toasts.length) setOpen(true)
+    if (toasts.length > 0) setOpen(true)
     else {
       setTimeout(() => {
-        if (!toasts.length) setOpen(false)
+        if (toasts.length === 0) setOpen(false)
       }, CONFIG.animateDuration)
     }
   }, [toasts.length])
 
   return <Portal open={open}>
-    <div className="ToastPortal">
+    <div className='ToastPortal'>
       <Transition.Group {...transition}>
         {toasts.map((toast, index) =>
           <Message key={index} color={toast.type}>

@@ -11,28 +11,28 @@ describe('# Storage Util', () => {
     const fooStorage = new StorageUtil('storage_foo')
     fooStorage.get()
 
-    expect(localStorage.getItem).toBeCalledTimes(1)
+    expect(localStorage.getItem).toHaveBeenCalledTimes(1)
   })
 
   it('should using sessionStorage when passed in sessionStorage', () => {
     const fooStorage = new StorageUtil('storage_foo', 'sessionStorage')
     fooStorage.get()
 
-    expect(sessionStorage.getItem).toBeCalledTimes(1)
+    expect(sessionStorage.getItem).toHaveBeenCalledTimes(1)
   })
 
   it('should using passed key to store data', () => {
     const fooStorage = new StorageUtil('storage_foo')
     fooStorage.set('foo')
 
-    expect(localStorage.setItem).toBeCalledWith('storage_foo', '"foo"')
+    expect(localStorage.setItem).toHaveBeenCalledWith('storage_foo', '"foo"')
   })
 
   it('should convert data to string when passed in array or object', () => {
     const fooStorage = new StorageUtil('storage_foo')
     fooStorage.set({ foo: 'bar' })
 
-    expect(localStorage.setItem).toBeCalledWith('storage_foo', JSON.stringify({ foo: 'bar' }))
+    expect(localStorage.setItem).toHaveBeenCalledWith('storage_foo', JSON.stringify({ foo: 'bar' }))
   })
 
   it('should parse the data to object or array when store a stringify data', () => {
@@ -56,6 +56,6 @@ describe('# Storage Util', () => {
 
     fooStorage.remove()
 
-    expect(localStorage.removeItem).toBeCalledWith('storage_foo')
+    expect(localStorage.removeItem).toHaveBeenCalledWith('storage_foo')
   })
 })

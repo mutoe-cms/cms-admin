@@ -6,7 +6,7 @@ describe('# FormRichField', () => {
   const onChange = jest.fn()
 
   it('should render correctly', () => {
-    const { container } = render(<FormRichField value="" onChange={onChange} />)
+    const { container } = render(<FormRichField value='' onChange={onChange} />)
 
     expect(container).toBeInTheDocument()
   })

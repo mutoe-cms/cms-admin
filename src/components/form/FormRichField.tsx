@@ -32,13 +32,13 @@ const FormRichField: React.FC<FormRichFieldProps> = props => {
   // TODO: support required prop
   // TODO: support error prop
 
-  return <div className="field">
+  return <div className='field'>
     <label>{props.label}</label>
 
-    <div ref={ref} className="ui rich-editor" data-testid="editor-wrapper">
+    <div ref={ref} className='ui rich-editor' data-testid='editor-wrapper'>
       <ReactQuill
         className={classNames({ focus })}
-        theme="snow"
+        theme='snow'
         placeholder={props.placeholder}
         readOnly={props.disabled}
         value={props.value}
@@ -50,6 +50,6 @@ const FormRichField: React.FC<FormRichFieldProps> = props => {
 }
 
 export default React.memo(FormRichField, (prevProps, nextProps) => {
-  return prevProps.value === nextProps.value &&
-    prevProps.error === nextProps.error
+  return prevProps.value === nextProps.value
+    && prevProps.error === nextProps.error
 })

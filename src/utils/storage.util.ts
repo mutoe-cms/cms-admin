@@ -15,12 +15,12 @@ export default class StorageUtil<T> {
 
     try {
       return JSON.parse(value)
-    } catch (e) {
+    } catch {
       return null
     }
   }
 
-  set (data: T) {
+  set (data: T): void {
     window[this.storageType].setItem(this.key, JSON.stringify(data))
   }
 

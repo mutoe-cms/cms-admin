@@ -6,6 +6,7 @@ import { fieldErrorDecorator, focusErrorField, FormExceptionKey } from 'src/util
 
 export type FormErrorResponse = Record<string, FormExceptionKey[]>
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function isFormError (error: any): error is AxiosError<FormErrorResponse> {
   return error.response?.status === 422 && error.response.data
 }
@@ -21,24 +22,24 @@ interface UseSubmitReturnType<ReqArgs extends unknown[], Res> {
 
 export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<Req, Res>): UseSubmitReturnType<Parameters<SubmitRequest<Req>>, Res>
 export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequestWithId<Req, Res>): UseSubmitReturnType<Parameters<SubmitRequestWithId<Req>>, Res>
-export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<Req, Res> | SubmitRequestWithId<Req, Res>) {
+export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<Req, Res> | SubmitRequestWithId<Req, Res>): UseSubmitReturnType<Parameters<SubmitRequestWithId | SubmitRequest>, Res> {
   const formRef: FormRef = useRef(null)
   const [submitting, setSubmitting] = useState(false)
 
   const submitRequest = async (...args: unknown[]): Promise<Res> => {
     try {
       setSubmitting(true)
-      return (await (request as any)(...args)).data
-    } catch (e) {
-      if (formRef.current && isFormError(e)) {
-        Object.entries(e.response?.data ?? {})
-          .forEach(([field, message]) => formRef.current?.setError(field, fieldErrorDecorator(field, message)))
+      const response = await (request as any)(...args)
+      return response.data
+    } catch (error) {
+      if (formRef.current && isFormError(error)) {
+        for (const [field, message] of Object.entries(error.response?.data ?? {})) formRef.current?.setError(field, fieldErrorDecorator(field, message))
         focusErrorField()
       } else {
         // eslint-disable-next-line no-console
-        console.error(e)
+        console.error(error)
       }
-      throw e
+      throw error
     } finally {
       setSubmitting(false)
     }

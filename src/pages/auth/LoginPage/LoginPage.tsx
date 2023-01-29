@@ -32,10 +32,10 @@ const LoginPage: React.FC = () => {
       const authRo = await onLogin(form)
       mountAuthorization(authRo)
       redirectToFrom()
-    } catch (e) {
+    } catch (error) {
       // TODO: error handling
       // eslint-disable-next-line no-console
-      console.error(e)
+      console.error(error)
     }
   }
 

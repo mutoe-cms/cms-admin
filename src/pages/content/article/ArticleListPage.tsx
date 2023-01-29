@@ -16,7 +16,7 @@ const ArticleListPage: React.FC = () => {
 
   return <div>
     <Menu attached='top'>
-      <Menu.Item icon='plus' content='New' as={Link} to="create" />
+      <Menu.Item icon='plus' content='New' as={Link} to='create' />
       <Menu.Menu position='right'>
         <Menu.Item>
           <Input transparent icon='search' type='search' placeholder='Search' />

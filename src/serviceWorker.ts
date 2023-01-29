@@ -11,12 +11,12 @@
 // opt-in, read https://bit.ly/CRA-PWA
 
 const isLocalhost = Boolean(
-  window.location.hostname === 'localhost' ||
+  window.location.hostname === 'localhost'
   // [::1] is the IPv6 localhost address.
-  window.location.hostname === '[::1]' ||
+  || window.location.hostname === '[::1]'
   // 127.0.0.0/8 are considered localhost for IPv4.
-  window.location.hostname.match(
-    /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/,
+  || /^127(?:\.(?:25[0-5]|2[0-4]\d|[01]?\d{1,2})){3}$/.test(
+    window.location.hostname,
   ),
 )
 
@@ -50,8 +50,8 @@ export function register (config?: Config): void {
         // service worker/PWA documentation.
         void navigator.serviceWorker.ready.then(() => {
           console.log(
-            'This web app is being served cache-first by a service ' +
-            'worker. To learn more, visit https://bit.ly/CRA-PWA',
+            'This web app is being served cache-first by a service '
+            + 'worker. To learn more, visit https://bit.ly/CRA-PWA',
           )
         })
       } else {
@@ -66,21 +66,18 @@ function registerValidSW (swUrl: string, config?: Config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
-      registration.onupdatefound = () => {
+      registration.addEventListener('updatefound', () => {
         const installingWorker = registration.installing
         if (installingWorker == null) {
           return
         }
-        installingWorker.onstatechange = () => {
+        installingWorker.addEventListener('statechange', () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
-              console.log(
-                'New content is available and will be used when all ' +
-                'tabs for this page are closed. See https://bit.ly/CRA-PWA.',
-              )
+              console.log('New content is available and will be used when all tabs for this page are closed. See https://bit.ly/CRA-PWA.')
 
               // Execute callback
               if (config?.onUpdate) {
@@ -98,8 +95,8 @@ function registerValidSW (swUrl: string, config?: Config) {
               }
             }
           }
-        }
-      }
+        })
+      })
     })
     .catch(error => {
       console.error('Error during service worker registration:', error)
@@ -115,8 +112,8 @@ function checkValidServiceWorker (swUrl: string, config?: Config) {
       // Ensure service worker exists, and that we really are getting a JS file.
       const contentType = response.headers.get('content-type')
       if (
-        response.status === 404 ||
-        (contentType != null && !contentType.includes('javascript'))
+        response.status === 404
+        || (contentType != null && !contentType.includes('javascript'))
       ) {
         // No service worker found. Probably a different app. Reload the page.
         void navigator.serviceWorker.ready.then(registration => {

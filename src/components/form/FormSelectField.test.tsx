@@ -15,28 +15,28 @@ describe('# FormSelectField', () => {
 
   describe('single select', () => {
     it('should render correctly', () => {
-      const { getByRole } = render(<FormSelectField value="" onChange={onChange} />)
+      const { getByRole } = render(<FormSelectField value='' onChange={onChange} />)
       expect(getByRole('combobox')).toBeInTheDocument()
     })
 
     it('should select tag when input an exist tag', () => {
-      const { getByRole } = render(<FormSelectField value="" options={options} onChange={onChange} />)
+      const { getByRole } = render(<FormSelectField value='' options={options} onChange={onChange} />)
 
       const inputElement = getByRole('textbox')
       fireEvent.change(inputElement, { target: { value: 'Semantic UI' } })
       fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
 
-      expect(onChange).toBeCalledWith('semantic-ui')
+      expect(onChange).toHaveBeenCalledWith('semantic-ui')
     })
 
     it('should add options when input a new item', async () => {
       const onAddItem = jest.fn().mockResolvedValue(undefined)
-      const { getByRole } = render(<FormSelectField creatable value="" onAddItem={onAddItem} onChange={onChange} />)
+      const { getByRole } = render(<FormSelectField creatable value='' onAddItem={onAddItem} onChange={onChange} />)
       const inputElement = getByRole('textbox')
       fireEvent.change(inputElement, { target: { value: 'foo' } })
       fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
 
-      await waitFor(() => expect(onChange).toBeCalledWith('foo'))
+      await waitFor(() => expect(onChange).toHaveBeenCalledWith('foo'))
     })
   })
 
@@ -53,7 +53,7 @@ describe('# FormSelectField', () => {
       fireEvent.change(inputElement, { target: { value: 'Semantic UI' } })
       fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
 
-      expect(onChange).toBeCalledWith(['semantic-ui'])
+      expect(onChange).toHaveBeenCalledWith(['semantic-ui'])
     })
 
     it('should add options when input a new item', async () => {
@@ -62,7 +62,7 @@ describe('# FormSelectField', () => {
       fireEvent.change(inputElement, { target: { value: 'foo' } })
       fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
 
-      await waitFor(() => expect(onChange).toBeCalledWith(['foo']))
+      await waitFor(() => expect(onChange).toHaveBeenCalledWith(['foo']))
     })
   })
 })

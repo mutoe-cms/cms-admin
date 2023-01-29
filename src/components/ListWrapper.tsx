@@ -31,7 +31,7 @@ const ListWrapper: React.FC<ListWrapperProps> = (props) => {
   }
 
   const placeholder = <Placeholder className='placeholderLine'>
-    {new Array(10).fill(null).map((_, i) => <Placeholder.Line key={i} length='full' />)}
+    {Array.from({ length: 10 }).fill(null).map((_, i) => <Placeholder.Line key={i} length='full' />)}
   </Placeholder>
 
   const errorSegment = <Segment placeholder>

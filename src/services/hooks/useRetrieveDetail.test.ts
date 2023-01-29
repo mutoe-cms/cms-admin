@@ -16,7 +16,7 @@ describe('# useRetrieveDetail', () => {
     expect(result.current.loading).toEqual(true)
     await waitForNextUpdate()
 
-    expect(mockRetrieveArticle).toBeCalledWith(1)
+    expect(mockRetrieveArticle).toHaveBeenCalledWith(1)
     expect(result.current.detail).toEqual({ id: 1 })
     expect(result.current.loading).toEqual(false)
   })

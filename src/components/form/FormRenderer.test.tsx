@@ -72,7 +72,7 @@ describe('# Form Renderer Component', () => {
 
       fireEvent.change(username, { target: { value: 'foo' } })
 
-      return waitFor(() => expect(screen.queryAllByText(ERROR_MESSAGE.REQUIRED('Username'))).toHaveLength(0))
+      await waitFor(() => expect(screen.queryAllByText(ERROR_MESSAGE.REQUIRED('Username'))).toHaveLength(0))
     })
 
     it('should call props.onSubmit when submit a valid form', async () => {
@@ -81,7 +81,7 @@ describe('# Form Renderer Component', () => {
 
       fireEvent.submit(form)
 
-      await waitFor(() => expect(onSubmit).toBeCalledWith({ username: 'foo', password: 'bar' }))
+      await waitFor(() => expect(onSubmit).toHaveBeenCalledWith({ username: 'foo', password: 'bar' }))
     })
 
     it('should render submit text passed in correctly', () => {

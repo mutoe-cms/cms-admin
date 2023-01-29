@@ -64,9 +64,11 @@ export interface BasicFieldProps<T> extends FieldBasicConfig<T> {
   error?: string
 }
 
-function FormRenderer<K extends string, F extends FormData<K>> (props: FormRendererProps<K, F>, forwardedRef: React.Ref<FormRendererHandle>): React.ReactElement {
+const FormRenderer = <K extends string, F extends FormData<K>>(props: FormRendererProps<K, F>, forwardedRef: React.Ref<FormRendererHandle>): React.ReactElement => {
   const [form, setForm] = useState<F>(props.initForm ?? {} as F)
-  useEffect(() => { setForm(props.initForm ?? {} as F) }, [props.initForm])
+  useEffect(() => {
+    setForm(props.initForm ?? {} as F)
+  }, [props.initForm])
 
   const [errors, setErrors] = useState<Partial<Record<K | 'form', string>>>({})
 
@@ -105,8 +107,9 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
         // TODO: select field validation
         break
       }
-      default:
+      default: {
         break
+      }
     }
 
     return setError(field.name)
@@ -114,7 +117,7 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
 
   const onSubmit = async () => {
     const validateResults = props.fields.map(field => validateField(field))
-    if (!validateResults.every(valid => valid)) return focusErrorField()
+    if (!validateResults.every(Boolean)) return focusErrorField()
 
     await props.onSubmit?.(form)
   }
@@ -123,8 +126,8 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
     const fieldProps: BasicFieldProps<K> = {
       ...pick(field, ['label', 'placeholder', 'required', 'disabled', 'name']),
       'aria-label': field.label,
-      error: errors[field.name],
-      key: field.name,
+      'error': errors[field.name],
+      'key': field.name,
     }
     switch (field.type) {
       case 'text':
@@ -149,16 +152,16 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
         const selectProps: FormSelectFieldProps<K> = {
           ...fieldProps,
           ...pick(field, ['creatable', 'onAddItem', 'options']),
-          ...(field.multiple
+          ...field.multiple
             ? {
-                multiple: true,
-                value: form[field.name] as string[] ?? [],
-                onChange: (value: string[]) => onChange(field, value),
-              }
+              multiple: true,
+              value: form[field.name] as string[] ?? [],
+              onChange: (value: string[]) => onChange(field, value),
+            }
             : {
-                value: form[field.name] as string ?? '',
-                onChange: (value: string) => onChange(field, value),
-              }),
+              value: form[field.name] as string ?? '',
+              onChange: (value: string) => onChange(field, value),
+            },
         }
         return <FormSelectField {...selectProps} />
       }
@@ -166,14 +169,14 @@ function FormRenderer<K extends string, F extends FormData<K>> (props: FormRende
     return null
   })
 
-  return <Form noValidate data-testid="form" className={props.className} error={!!errors.form} onSubmit={onSubmit}>
+  return <Form noValidate data-testid='form' className={props.className} error={!!errors.form} onSubmit={onSubmit}>
 
     {renderFields}
 
     <Form.Button
       primary
       aria-label='Submit'
-      type="submit"
+      type='submit'
       content={props.submitText ?? 'Submit'}
       loading={props.submitting}
     />

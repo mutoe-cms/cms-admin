@@ -19,7 +19,7 @@ const ArticleEditPage: React.FC = () => {
     title: detail?.title ?? '',
     content: detail?.content ?? '',
     tags: detail?.tags.map(t => t.key) ?? [],
-    categoryId: detail?.category?.id ?? NaN,
+    categoryId: detail?.category?.id ?? Number.NaN,
   }), [detail])
 
   const onSubmit = async (form: CreateArticleDto) => {
@@ -27,9 +27,9 @@ const ArticleEditPage: React.FC = () => {
       await submitRequest(+id, form)
       toast.success('Success')
       navigate('..')
-    } catch (e) {
+    } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(e)
+      console.error(error)
       toast.error('Error')
     }
   }
@@ -40,8 +40,8 @@ const ArticleEditPage: React.FC = () => {
     </Menu>
 
     <Segment attached='bottom' loading={loading}>
-      <Header as="h2" >
-        <Icon name="edit" />
+      <Header as='h2' >
+        <Icon name='edit' />
         <Header.Content>Edit Article</Header.Content>
       </Header>
 

@@ -55,7 +55,7 @@ describe('# Login page', () => {
 
     render(<LoginPage />)
 
-    expect(mockNavigate).toBeCalledWith(routeMap.home, { replace: true })
+    expect(mockNavigate).toHaveBeenCalledWith(routeMap.home, { replace: true })
   })
 
   it('should jump to home page when submit a valid form', async () => {
@@ -68,15 +68,15 @@ describe('# Login page', () => {
     const submitButton = getByRole('button', { name: 'Submit' })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(submitRequest).toBeCalledWith(loginFormFixture))
-    expect(mockMountAuthorization).toBeCalledWith({ username: 'invalid', token: 'token' })
-    expect(mockNavigate).toBeCalledWith(routeMap.home, { replace: true })
+    await waitFor(() => expect(submitRequest).toHaveBeenCalledWith(loginFormFixture))
+    expect(mockMountAuthorization).toHaveBeenCalledWith({ username: 'invalid', token: 'token' })
+    expect(mockNavigate).toHaveBeenCalledWith(routeMap.home, { replace: true })
   })
 
   it('should display server validation error message when submit exist username form', async () => {
     const { error } = console
     // eslint-disable-next-line no-console
-    console.error = jest.fn()
+    jest.spyOn(console, 'error').mockImplementation()
 
     submitRequest.mockRejectedValue({})
     const { getByRole, getByPlaceholderText } = render(<LoginPage />)
@@ -87,11 +87,9 @@ describe('# Login page', () => {
     const submitButton = getByRole('button', { name: 'Submit' })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(submitRequest).toBeCalledTimes(1))
-    // eslint-disable-next-line no-console
-    expect(console.error).toBeCalledTimes(1)
+    await waitFor(() => expect(submitRequest).toHaveBeenCalledTimes(1))
+    expect(console.error).toHaveBeenCalledTimes(1)
 
-    // eslint-disable-next-line no-console
     console.error = error
   })
 })

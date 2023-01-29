@@ -42,7 +42,7 @@ describe('# AppHeader', () => {
 
     fireEvent.click(getByTestId('dashboard'))
 
-    expect(mockNavigate).toBeCalledWith('dashboard')
+    expect(mockNavigate).toHaveBeenCalledWith('dashboard')
   })
 
   it('should call unmountAuthorization when click logout', () => {
@@ -50,7 +50,7 @@ describe('# AppHeader', () => {
 
     fireEvent.click(getByTestId('logout'))
 
-    expect(mockNavigate).toBeCalledWith(routeMap.login)
-    expect(mockUnmountAuthorization).toBeCalled()
+    expect(mockNavigate).toHaveBeenCalledWith(routeMap.login)
+    expect(mockUnmountAuthorization).toHaveBeenCalled()
   })
 })

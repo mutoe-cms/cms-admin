@@ -45,7 +45,7 @@ export default function useAuthorization (): AuthorizationState {
       setLoading(true)
       const { data: profile } = await service.user.profile()
       setProfile(profile)
-    } catch (e) {
+    } catch {
       unmountAuthorization()
       navigate(routeMap.login, { replace: true })
     } finally {

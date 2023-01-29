@@ -11,9 +11,9 @@ export const service = new Api<string>({
   },
   securityWorker: token => token
     ? {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
     : {},
 })

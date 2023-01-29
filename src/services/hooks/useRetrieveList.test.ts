@@ -20,7 +20,7 @@ describe('# useRetrieveList', () => {
     })
 
     expect(result.current.loading).toBe(false)
-    expect(request).toBeCalledWith({ bar: 'baz' }, undefined)
+    expect(request).toHaveBeenCalledWith({ bar: 'baz' }, undefined)
     expect(result.current.items).toEqual(items)
   })
 

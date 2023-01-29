@@ -25,7 +25,7 @@ describe('# Authorization Context', () => {
 
     renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
 
-    await waitFor(() => expect(mockSetSecurityData).toBeCalledWith(null))
+    await waitFor(() => expect(mockSetSecurityData).toHaveBeenCalledWith(null))
   })
 
   it('should retrieve userProfile API when load context', async () => {
@@ -45,7 +45,7 @@ describe('# Authorization Context', () => {
     const { waitForNextUpdate } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
     await waitForNextUpdate()
 
-    await waitFor(() => expect(mockSetSecurityData).toBeCalledWith(null))
+    await waitFor(() => expect(mockSetSecurityData).toHaveBeenCalledWith(null))
   })
 
   it('should return correct loading state when retrieve API', async () => {
@@ -69,7 +69,7 @@ describe('# Authorization Context', () => {
       result.current.mountAuthorization({ id: 1, token: 'token' } as any)
     })
 
-    expect(mockSetSecurityData).toBeCalledWith('token')
+    expect(mockSetSecurityData).toHaveBeenCalledWith('token')
   })
 
   it('should remove localStorage when call unmount authorization', async () => {
@@ -82,6 +82,6 @@ describe('# Authorization Context', () => {
       result.current.unmountAuthorization()
     })
 
-    expect(mockSetSecurityData).toBeCalledWith(null)
+    expect(mockSetSecurityData).toHaveBeenCalledWith(null)
   })
 })

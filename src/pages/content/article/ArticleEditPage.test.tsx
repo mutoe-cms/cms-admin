@@ -31,7 +31,8 @@ describe('# ArticleEditPage', () => {
 
     render(<ArticleEditPage />)
 
-    await waitFor(() => expect(mockRetrieveArticle).toBeCalled())
+    // eslint-disable-next-line jest/no-standalone-expect,jest/prefer-called-with
+    await waitFor(() => expect(mockRetrieveArticle).toHaveBeenCalled())
   })
 
   it('should render correctly', async () => {
@@ -41,7 +42,7 @@ describe('# ArticleEditPage', () => {
   it('should navigate to previous page when click back button', async () => {
     fireEvent.click(screen.getByRole('link', { name: 'Back' }))
 
-    expect(mockNavigate).toBeCalledWith(-1)
+    expect(mockNavigate).toHaveBeenCalledWith(-1)
   })
 
   it('should call API when submit a valid form', async () => {
@@ -49,6 +50,6 @@ describe('# ArticleEditPage', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
 
-    await waitFor(() => expect(mockUpdateRequest).toBeCalledWith(1, { title: 'article title', tags: ['semantic-ui'], content: '<p>content</p>', categoryId: NaN }))
+    await waitFor(() => expect(mockUpdateRequest).toHaveBeenCalledWith(1, { title: 'article title', tags: ['semantic-ui'], content: '<p>content</p>', categoryId: Number.NaN }))
   })
 })

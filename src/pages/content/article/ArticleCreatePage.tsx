@@ -18,7 +18,7 @@ const ArticleCreatePage: React.FC = () => {
       await submitRequest(form)
       toast.success('Success')
       navigate('..')
-    } catch (e) {
+    } catch {
       // TODO: error handling
     }
   }
@@ -29,8 +29,8 @@ const ArticleCreatePage: React.FC = () => {
     </Menu>
 
     <Segment attached='bottom'>
-      <Header as="h2" >
-        <Icon name="edit" />
+      <Header as='h2' >
+        <Icon name='edit' />
         <Header.Content>Create Article</Header.Content>
       </Header>
 

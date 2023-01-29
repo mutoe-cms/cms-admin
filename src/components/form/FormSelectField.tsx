@@ -18,6 +18,7 @@ interface MultipleSelect<T, V extends SelectOption['value'] = string> extends Se
 }
 export type FormSelectFieldProps<T> = SingleSelect<T> | MultipleSelect<T>
 
+// eslint-disable-next-line react/function-component-definition
 function FormSelectField <T> (props: FormSelectFieldProps<T>) {
   const [options, setOptions] = useState<SelectOption[]>(Array.isArray(props.options) ? props.options : [])
 
@@ -44,14 +45,14 @@ function FormSelectField <T> (props: FormSelectFieldProps<T>) {
   const onAddItem = async (value: SelectOption['value']) => {
     const text = String(value)
     const newOption: SelectOption = {
-      text: text,
+      text,
       value: kebabCase(text),
       disabled: true,
-      image: <Icon loading name="spinner" />,
+      image: <Icon loading name='spinner' />,
     }
     setOptions(options => [...options, newOption])
     try {
-      const returnValue = (await props.onAddItem?.(newOption)) || newOption
+      const returnValue = await props.onAddItem?.(newOption) || newOption
       setOptions(options => {
         const index = options.findIndex(o => o.text === text)
         options[index].disabled = undefined
@@ -60,11 +61,11 @@ function FormSelectField <T> (props: FormSelectFieldProps<T>) {
         options[index].text = returnValue.text
         return [...options]
       })
-    } catch (e) {
+    } catch {
       setOptions(options => {
         const index = options.findIndex(o => o.text === text)
         options[index].disabled = true
-        options[index].image = <Icon name="times" color="red" />
+        options[index].image = <Icon name='times' color='red' />
         return [...options]
       })
     }
@@ -73,20 +74,20 @@ function FormSelectField <T> (props: FormSelectFieldProps<T>) {
   const dropdownProps: FormDropdownProps = {
     ...pick(props, ['value', 'multiple', 'disabled', 'placeholder', 'required', 'label', 'error']),
     options,
-    allowAdditions: props.creatable,
-    selection: true,
-    search: true,
-    clearable: !props.required,
+    'allowAdditions': props.creatable,
+    'selection': true,
+    'search': true,
+    'clearable': !props.required,
     'aria-label': props.label,
-    onChange: (_, { value }) => onChange(value),
-    onAddItem: async (_, { value }) => await onAddItem(value as string),
+    'onChange': (_, { value }) => onChange(value),
+    'onAddItem': async (_, { value }) => await onAddItem(value as string),
   }
 
   return <Form.Dropdown {...dropdownProps} />
 }
 
 export default React.memo(FormSelectField, (prevProps, nextProps) => {
-  return prevProps.value === nextProps.value &&
-    prevProps.error === nextProps.error &&
-    prevProps.options === nextProps.options
+  return prevProps.value === nextProps.value
+    && prevProps.error === nextProps.error
+    && prevProps.options === nextProps.options
 })

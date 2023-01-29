@@ -27,7 +27,7 @@ describe('# ArticleCreatePage', () => {
     mockRetrieveCategories.mockResolvedValue({ status: 200, data: [] } as AxiosResponse)
 
     render(<ArticleCreatePage />)
-    await waitFor(() => expect(mockRetrieveTags).toBeCalled())
+    await waitFor(() => expect(mockRetrieveTags).toHaveBeenCalled())
   })
 
   it('should render correctly', async () => {
@@ -37,7 +37,7 @@ describe('# ArticleCreatePage', () => {
   it('should navigate to previous page when click back button', async () => {
     fireEvent.click(screen.getByRole('link', { name: 'Back' }))
 
-    expect(mockNavigate).toBeCalledWith(-1)
+    expect(mockNavigate).toHaveBeenCalledWith(-1)
   })
 
   it('should not trigger onSubmit when submit a empty form', async () => {
@@ -51,6 +51,6 @@ describe('# ArticleCreatePage', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
 
-    await waitFor(() => expect(mockCreateRequest).toBeCalledWith({ title: 'article title', tags: [], content: '', categoryId: 1 }))
+    await waitFor(() => expect(mockCreateRequest).toHaveBeenCalledWith({ title: 'article title', tags: [], content: '', categoryId: 1 }))
   })
 })

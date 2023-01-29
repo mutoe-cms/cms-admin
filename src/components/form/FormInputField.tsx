@@ -16,6 +16,6 @@ const FormInputField: React.FC<FormInputFieldProps> = (props) => {
 }
 
 export default React.memo(FormInputField, (prevProps, nextProps) => {
-  return prevProps.value === nextProps.value &&
-    prevProps.error === nextProps.error
+  return prevProps.value === nextProps.value
+    && prevProps.error === nextProps.error
 })

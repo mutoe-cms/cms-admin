@@ -40,7 +40,7 @@ describe('# useSubmit', () => {
       await result.current.submitRequest({ bar: 'baz' })
     })
 
-    expect(request).toBeCalledWith({ bar: 'baz' })
+    expect(request).toHaveBeenCalledWith({ bar: 'baz' })
   })
 
   it('should set form error when API throw 422 error', async () => {
@@ -54,20 +54,15 @@ describe('# useSubmit', () => {
     })
     const { result } = renderHook(() => useSubmit(request))
 
-    try {
-      await act(async () => {
-        await result.current.submitRequest({})
-      })
-      fail('should throw error here')
-    } catch (e) {
-      expect(e).toEqual({
+    await act(async () => {
+      await expect(result.current.submitRequest({})).rejects.toEqual({
         response: {
           status: 422,
           data: { username: ['isNotExist'] },
         },
       })
-    }
+    })
 
-    expect(setError).toBeCalledWith('username', 'username is not exist')
+    expect(setError).toHaveBeenCalledWith('username', 'username is not exist')
   })
 })
