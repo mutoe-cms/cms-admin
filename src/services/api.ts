@@ -1,5 +1,7 @@
 /* eslint-disable */
 /* tslint:disable */
+// noinspection PointlessBooleanExpressionJS,JSValidateJSDoc,JSUnusedGlobalSymbols,TypeScriptFieldCanBeMadeReadonly
+
 /*
  * ---------------------------------------------------------------
  * ## THIS FILE WAS GENERATED VIA SWAGGER-TYPESCRIPT-API        ##
@@ -12,84 +14,65 @@
 export interface ProfileRo {
   /** @example 1 */
   id: number;
-
-  /** @example foo@example.com */
+  /** @example "foo@example.com" */
   email: string;
-
-  /** @example foo */
+  /** @example "foo" */
   username: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   createdAt: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   updatedAt: string;
-
-  /** @example This guy is lazy and has left nothing. */
+  /** @example "This guy is lazy and has left nothing." */
   bio?: string;
-
-  /** @example https://picsum.photos/200 */
+  /** @example "https://picsum.photos/200" */
   image?: string;
 }
 
 export interface RegisterDto {
-  /** @example foo@example.com */
+  /** @example "foo@example.com" */
   email: string;
-
-  /** @example username */
+  /** @example "username" */
   username: string;
-
-  /** @example 123456 */
+  /** @example "123456" */
   password: string;
 }
 
 export interface AuthRo {
   /** @example 1 */
   id: number;
-
-  /** @example foo@example.com */
+  /** @example "foo@example.com" */
   email: string;
-
-  /** @example foo */
+  /** @example "foo" */
   username: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   createdAt: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   updatedAt: string;
-
-  /** @example This guy is lazy and has left nothing. */
+  /** @example "This guy is lazy and has left nothing." */
   bio?: string;
-
-  /** @example https://picsum.photos/200 */
+  /** @example "https://picsum.photos/200" */
   image?: string;
-
-  /** @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiZm9vQGV4YW1wbGUuY29tIiwiaWF0IjoxNTk3NTY1MDk5fQ.qRFuw88Zw7l5KY3TSuyr8hpan0fzH9HcDtkKYrLvQRQ */
+  /** @example "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiZm9vQGV4YW1wbGUuY29tIiwiaWF0IjoxNTk3NTY1MDk5fQ.qRFuw88Zw7l5KY3TSuyr8hpan0fzH9HcDtkKYrLvQRQ" */
   token: string;
 }
 
 export interface LoginDto {
-  /** @example admin */
+  /** @example "admin" */
   username: string;
-
-  /** @example 123456 */
+  /** @example "123456" */
   password: string;
 }
 
 export interface CreateArticleDto {
-  /** @example Lorem ipsum */
+  /** @example "Lorem ipsum" */
   title: string;
-
   /** @example 1 */
   categoryId?: number;
-
   /** @example ["semantic-ui","material-ui"] */
   tags?: string[];
-
   /**
    * HTML content
-   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   * @example "<p>Hello <strong>Mutoe CMS</strong></p>"
    */
   content?: string;
 }
@@ -97,114 +80,87 @@ export interface CreateArticleDto {
 export interface UserSafeEntity {
   /** @example 1 */
   id: number;
-
-  /** @example mutoe@foxmail.com */
+  /** @example "mutoe@foxmail.com" */
   email: string;
-
-  /** @example mutoe */
+  /** @example "mutoe" */
   username: string;
-
-  /** @example This guy is lazy and has left nothing. */
+  /** @example "This guy is lazy and has left nothing." */
   bio?: string;
-
-  /** @example https://imgur.com/200 */
+  /** @example "https://imgur.com/200" */
   image?: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   createdAt: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   updatedAt: string;
 }
 
 export interface CategoryEntity {
   /** @example 1 */
   id: number;
-
   /** Category parent */
   parent?: CategoryEntity;
-
   /** Category children */
   children: CategoryEntity[];
-
-  /** @example study-notes */
+  /** @example "study-notes" */
   key: string;
-
-  /** @example Study notes */
+  /** @example "Study notes" */
   label: string;
-
   /**
    * HTML content
-   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   * @example "<p>Hello <strong>Mutoe CMS</strong></p>"
    */
   description?: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   createdAt: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   updatedAt: string;
 }
 
 export interface TagEntity {
-  /** @example semantic-ui */
+  /** @example "semantic-ui" */
   key: string;
-
-  /** @example Semantic UI */
+  /** @example "Semantic UI" */
   name: string;
-
   /**
    * HTML content
-   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   * @example "<p>Hello <strong>Mutoe CMS</strong></p>"
    */
   description?: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   createdAt: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   updatedAt: string;
 }
 
 export interface ArticleEntity {
   /** @example 1 */
   id: number;
-
   /** Article author */
   author: UserSafeEntity;
-
-  /** @example Lorem ipsum */
+  /** @example "Lorem ipsum" */
   title: string;
-
   /** Article category */
   category?: CategoryEntity;
-
   /** Article tags */
   tags: TagEntity[];
-
   /**
    * HTML content
-   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   * @example "<p>Hello <strong>Mutoe CMS</strong></p>"
    */
   content?: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   createdAt: string;
-
-  /** @example 2020-08-16T00:04:59.343Z */
+  /** @example "2020-08-16T00:04:59.343Z" */
   updatedAt: string;
 }
 
 export interface PaginationMeta {
   /** @example 15 */
   total: number;
-
   /** @example 10 */
   limit: number;
-
   /** @example 2 */
   totalPages: number;
-
   /** @example 1 */
   currentPage: number;
 }
@@ -215,32 +171,27 @@ export interface ArticlesRo {
 }
 
 export interface CreateCategoryDto {
-  /** @example study-notes */
+  /** @example "study-notes" */
   key: string;
-
-  /** @example Study notes */
+  /** @example "Study notes" */
   label: string;
-
   /**
    * HTML content
-   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   * @example "<p>Hello <strong>Mutoe CMS</strong></p>"
    */
   description?: string;
-
   /** @example 1 */
   parentId?: number;
 }
 
 export interface CreateTagDto {
-  /** @example Semantic UI */
+  /** @example "Semantic UI" */
   name: string;
-
-  /** @example semantic-ui */
+  /** @example "semantic-ui" */
   key: string;
-
   /**
    * HTML content
-   * @example <p>Hello <strong>Mutoe CMS</strong></p>
+   * @example "<p>Hello <strong>Mutoe CMS</strong></p>"
    */
   description?: string;
 }
@@ -250,7 +201,7 @@ export interface TagsRo {
   meta: PaginationMeta;
 }
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
 
 export type QueryParamsType = Record<string | number, any>;
 
@@ -283,10 +234,11 @@ export enum ContentType {
   Json = "application/json",
   FormData = "multipart/form-data",
   UrlEncoded = "application/x-www-form-urlencoded",
+  Text = "text/plain",
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  private instance: AxiosInstance;
+  public instance: AxiosInstance;
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private secure?: boolean;
@@ -303,17 +255,41 @@ export class HttpClient<SecurityDataType = unknown> {
     this.securityData = data;
   };
 
-  private mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
+  protected mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
+    const method = params1.method || (params2 && params2.method);
+
     return {
       ...this.instance.defaults,
       ...params1,
       ...(params2 || {}),
       headers: {
-        ...(this.instance.defaults.headers || {}),
+        ...((method && this.instance.defaults.headers[method.toLowerCase() as keyof HeadersDefaults]) || {}),
         ...(params1.headers || {}),
         ...((params2 && params2.headers) || {}),
       },
     };
+  }
+
+  protected stringifyFormItem(formItem: unknown) {
+    if (typeof formItem === "object" && formItem !== null) {
+      return JSON.stringify(formItem);
+    } else {
+      return `${formItem}`;
+    }
+  }
+
+  protected createFormData(input: Record<string, unknown>): FormData {
+    return Object.keys(input || {}).reduce((formData, key) => {
+      const property = input[key];
+      const propertyContent: any[] = property instanceof Array ? property : [property];
+
+      for (const formItem of propertyContent) {
+        const isFileType = formItem instanceof Blob || formItem instanceof File;
+        formData.append(key, isFileType ? formItem : this.stringifyFormItem(formItem));
+      }
+
+      return formData;
+    }, new FormData());
   }
 
   public request = async <T = any, _E = any>({
@@ -331,13 +307,21 @@ export class HttpClient<SecurityDataType = unknown> {
         (await this.securityWorker(this.securityData))) ||
       {};
     const requestParams = this.mergeRequestParams(params, secureParams);
-    const responseFormat = (format && this.format) || void 0;
+    const responseFormat = format || this.format || undefined;
+
+    if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
+      body = this.createFormData(body as Record<string, unknown>);
+    }
+
+    if (type === ContentType.Text && body && body !== null && typeof body !== "string") {
+      body = JSON.stringify(body);
+    }
 
     return this.instance.request({
       ...requestParams,
       headers: {
-        ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
         ...(requestParams.headers || {}),
+        ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
       },
       params: query,
       responseType: responseFormat,
@@ -349,7 +333,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title CMS
- * @version 0.3.1
+ * @version 0.3.2
  * @contact
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
@@ -362,7 +346,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Health check
      * @request GET:/api/hello
      */
-    healthCheck: (query?: { name?: string }, params: RequestParams = {}) =>
+    healthCheck: (
+      query?: {
+        /** @example "foo" */
+        name?: string;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<any, any>({
         path: `/api/hello`,
         method: "GET",
@@ -455,7 +445,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Retrieve articles
      * @request GET:/api/article
      */
-    retrieveArticles: (query?: { page?: number; limit?: number }, params: RequestParams = {}) =>
+    retrieveArticles: (
+      query?: {
+        /** @example 1 */
+        page?: number;
+        /** @example 10 */
+        limit?: number;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<ArticlesRo, any>({
         path: `/api/article`,
         method: "GET",
@@ -582,7 +580,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Retrieve tags
      * @request GET:/api/tag
      */
-    retrieveTags: (query?: { page?: number; limit?: number }, params: RequestParams = {}) =>
+    retrieveTags: (
+      query?: {
+        /** @example 1 */
+        page?: number;
+        /** @example 10 */
+        limit?: number;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<TagsRo, any>({
         path: `/api/tag`,
         method: "GET",
