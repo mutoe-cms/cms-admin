@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $primary: #18405b;
 $disabled: #7c7c7c;
 $grey: #222426;
@@ -11,9 +13,9 @@ $boxShadow: 0 2px 20px 0 rgba(185, 188, 210, 0.2);
 $borderColor: rgba($grey, .15);
 $hoverBorder: rgba($grey, 0.35);
 $focusBorder: #96c8da;
-$borderRadius: (2em/7);
+$borderRadius: math.div(2em, 7);
 
-$inputPadding: (3em/7)+(1em/4) 1em;
+$inputPadding: math.div(3em, 7)+math.div(1em, 4) 1em;
 
 @mixin ellipsis {
   white-space: nowrap;
