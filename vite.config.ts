@@ -1,5 +1,6 @@
-import reactRefresh from '@vitejs/plugin-react-refresh'
-import { resolve } from 'path'
+import path from 'node:path'
+import url from 'node:url'
+import reactPlugin from '@vitejs/plugin-react'
 import dayjs from 'dayjs'
 import { defineConfig } from 'vite'
 
@@ -7,10 +8,10 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   resolve: {
     alias: {
-      src: resolve(__dirname, 'src'),
+      src: path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), 'src'),
     },
   },
-  plugins: [reactRefresh()],
+  plugins: [reactPlugin()],
   build: {
     chunkSizeWarningLimit: 768,
   },
