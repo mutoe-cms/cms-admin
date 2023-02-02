@@ -1,11 +1,11 @@
 {
   "name": "cms-admin",
   "version": "0.3.4",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/mutoe-cms/cms-admin"
   },
+  "private": true,
   "scripts": {
     "prepare": "husky install",
     "start": "vite",
@@ -17,6 +17,9 @@
     "swagger": "bash scripts/sync-swagger-api.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "version": "pnpm changelog && git add CHANGELOG.md"
+  },
+  "lint-staged": {
+    "src/**/*.ts?(x)": "eslint --fix"
   },
   "dependencies": {
     "axios": "^1.2.6",
@@ -36,8 +39,6 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
-    "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
     "@mutoe/eslint-config-preset-jest": "^2.1.0",
     "@mutoe/eslint-config-preset-react": "^2.2.0",
     "@testing-library/dom": "^8.20.0",
@@ -70,14 +71,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "lint-staged": {
-    "src/**/*.ts?(x)": "eslint --fix"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   },
   "browserslist": {
     "production": [
