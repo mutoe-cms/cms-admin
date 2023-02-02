@@ -31,7 +31,6 @@ describe('# ArticleEditPage', () => {
 
     render(<ArticleEditPage />)
 
-    // eslint-disable-next-line jest/no-standalone-expect,jest/prefer-called-with
     await waitFor(() => expect(mockRetrieveArticle).toHaveBeenCalled())
   })
 
