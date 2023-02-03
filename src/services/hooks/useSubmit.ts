@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios'
-import { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { FormRef } from 'src/components/form/FormRenderer'
 import { RequestParams } from 'src/services/api'
 import { fieldErrorDecorator, focusErrorField, FormExceptionKey } from 'src/utils/form.util'
@@ -23,7 +23,7 @@ interface UseSubmitReturnType<ReqArgs extends unknown[], Res> {
 export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<Req, Res>): UseSubmitReturnType<Parameters<SubmitRequest<Req>>, Res>
 export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequestWithId<Req, Res>): UseSubmitReturnType<Parameters<SubmitRequestWithId<Req>>, Res>
 export function useSubmit<Req = unknown, Res = unknown> (request: SubmitRequest<Req, Res> | SubmitRequestWithId<Req, Res>): UseSubmitReturnType<Parameters<SubmitRequestWithId | SubmitRequest>, Res> {
-  const formRef: FormRef = useRef(null)
+  const formRef: FormRef = React.useRef(null)
   const [submitting, setSubmitting] = useState(false)
 
   const submitRequest = async (...args: unknown[]): Promise<Res> => {

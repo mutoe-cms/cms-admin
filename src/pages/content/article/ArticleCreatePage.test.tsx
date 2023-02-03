@@ -3,22 +3,25 @@ import { AxiosResponse } from 'axios'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { service } from 'src/services'
+import { Mock } from 'vitest'
 import ArticleCreatePage from './ArticleCreatePage'
 
-const mockToast = jest.fn()
-jest.mock('src/contexts/toast/toast.context', () => () => mockToast)
+const mockToast = vi.fn()
+vi.mock('src/contexts/toast/toast.context', () => ({
+  default: () => mockToast,
+}))
 
-const mockNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
+const mockNavigate = vi.fn()
+vi.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
-  useParams: jest.fn(),
+  useParams: vi.fn(),
 }))
 
 describe('# ArticleCreatePage', () => {
-  const mockUseParams = useParams as jest.Mock
-  const mockCreateRequest = jest.spyOn(service.article, 'createArticle')
-  const mockRetrieveTags = jest.spyOn(service.tag, 'retrieveTags')
-  const mockRetrieveCategories = jest.spyOn(service.category, 'retrieveRootCategories')
+  const mockUseParams = useParams as Mock
+  const mockCreateRequest = vi.spyOn(service.article, 'createArticle')
+  const mockRetrieveTags = vi.spyOn(service.tag, 'retrieveTags')
+  const mockRetrieveCategories = vi.spyOn(service.category, 'retrieveRootCategories')
 
   beforeEach(async () => {
     mockUseParams.mockReturnValue({ id: '1' })

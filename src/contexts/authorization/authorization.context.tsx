@@ -3,7 +3,7 @@ import useAuthorization, { AuthorizationState } from './useAuthorization'
 
 const AuthorizationContext = createContext<AuthorizationState>({} as AuthorizationState)
 
-export const AuthorizationProvider: React.FC = props => {
+export const AuthorizationProvider: React.FC<React.PropsWithChildren> = props => {
   const value = useAuthorization()
 
   return <AuthorizationContext.Provider value={value}>{props.children}</AuthorizationContext.Provider>

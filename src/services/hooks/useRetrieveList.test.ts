@@ -1,10 +1,11 @@
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react'
+import { noop } from 'lodash'
 import { PaginationRo, useRetrieveList } from './useRetrieveList'
 
 describe('# useRetrieveList', () => {
   it('should call request when call retrieveList method', async () => {
     const items = [1, 2, 3]
-    const request = jest.fn().mockResolvedValue({
+    const request = vi.fn().mockResolvedValue({
       status: 200,
       data: {
         items,
@@ -25,12 +26,12 @@ describe('# useRetrieveList', () => {
   })
 
   it('should display error when request failed', async () => {
-    const request = jest.fn().mockRejectedValue({
+    const request = vi.fn().mockRejectedValue({
       response: { status: 500 },
     })
 
-    const { result, waitForNextUpdate } = renderHook(() => useRetrieveList(request))
-    await waitForNextUpdate()
+    const { result } = renderHook(() => useRetrieveList(request))
+    await act(noop)
 
     expect(result.current.error).toBe(true)
   })

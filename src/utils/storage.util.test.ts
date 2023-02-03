@@ -2,9 +2,9 @@ import StorageUtil from './storage.util'
 
 describe('# Storage Util', () => {
   beforeAll(() => {
-    jest.spyOn(Storage.prototype, 'setItem')
-    jest.spyOn(Storage.prototype, 'getItem')
-    jest.spyOn(Storage.prototype, 'removeItem')
+    vi.spyOn(Storage.prototype, 'setItem')
+    vi.spyOn(Storage.prototype, 'getItem')
+    vi.spyOn(Storage.prototype, 'removeItem')
   })
 
   it('should using localStorage to store data default', () => {
@@ -36,7 +36,7 @@ describe('# Storage Util', () => {
   })
 
   it('should parse the data to object or array when store a stringify data', () => {
-    jest.spyOn(localStorage, 'getItem').mockReturnValue('{"foo": "bar"}')
+    vi.spyOn(localStorage, 'getItem').mockReturnValue('{"foo": "bar"}')
     const fooStorage = new StorageUtil('storage_foo')
     const result = fooStorage.get()
 
@@ -44,7 +44,7 @@ describe('# Storage Util', () => {
   })
 
   it('should return null when store a invalid stringify data', () => {
-    jest.spyOn(localStorage, 'getItem').mockReturnValue('{')
+    vi.spyOn(localStorage, 'getItem').mockReturnValue('{')
     const fooStorage = new StorageUtil('storage_foo')
     const result = fooStorage.get()
 

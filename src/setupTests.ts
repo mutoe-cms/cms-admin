@@ -1,25 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom/extend-expect'
-import { AxiosRequestConfig } from 'axios'
+import { Axios, AxiosRequestConfig } from 'axios'
 
-jest.mock('axios', () => ({
-  ...jest.requireActual('axios'),
-  create: () => ({
-    defaults: {},
-    request: jest.fn().mockImplementation(({ method, url }: AxiosRequestConfig) => {
-      throw new Error(`You should mock the request '${method} ${url}'`)
+import 'vitest-dom/extend-expect'
+import * as matchers from 'vitest-dom/matchers'
+import { afterEach, expect, vi } from 'vitest'
+expect.extend(matchers)
+
+vi.mock('axios', async () => {
+  const actual = await vi.importActual<typeof Axios>('axios')
+  return {
+    ...actual,
+    create: () => ({
+      defaults: {},
+      request: vi.fn().mockImplementation(({ method, url }: AxiosRequestConfig) => {
+        throw new Error(`You should mock the request '${method} ${url}'`)
+      }),
     }),
-  }),
-}))
+  }
+})
 
 document.createRange = (): Range => ({
-  setStart: jest.fn(),
-  setEnd: jest.fn(),
+  setStart: vi.fn(),
+  setEnd: vi.fn(),
   commonAncestorContainer: {
     nodeName: 'BODY',
     ownerDocument: document,
@@ -27,5 +30,5 @@ document.createRange = (): Range => ({
 }) as any
 
 afterEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })

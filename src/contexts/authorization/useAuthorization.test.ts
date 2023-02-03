@@ -1,15 +1,15 @@
-import { waitFor } from '@testing-library/react'
-import { act, renderHook } from '@testing-library/react-hooks'
+import { waitFor, act, renderHook } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import useAuthorization from 'src/contexts/authorization/useAuthorization'
 import { service } from 'src/services'
 import StorageUtil from 'src/utils/storage.util'
+import { Mock } from 'vitest'
 
-jest.mock('src/services')
+vi.mock('src/services')
 
 describe('# Authorization Context', () => {
-  const mockSetSecurityData = service.setSecurityData as jest.Mock
-  const mockRetrieveProfile = service.user.profile as jest.Mock
+  const mockSetSecurityData = service.setSecurityData as Mock
+  const mockRetrieveProfile = service.user.profile as Mock
 
   it('should got auth with null when init state', async () => {
     const { result } = renderHook(() => useAuthorization(), {
@@ -21,7 +21,7 @@ describe('# Authorization Context', () => {
   })
 
   it('should jump to login page when token not exist', async () => {
-    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue(null)
+    vi.spyOn(StorageUtil.prototype, 'get').mockReturnValue(null)
 
     renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
 
@@ -29,43 +29,40 @@ describe('# Authorization Context', () => {
   })
 
   it('should retrieve userProfile API when load context', async () => {
-    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
+    vi.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockResolvedValue({ status: 200, data: { username: 'foo' } })
 
-    const { result, waitForNextUpdate } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
-    await waitForNextUpdate()
-
-    expect(result.current.profile).toEqual({ username: 'foo' })
+    const { result } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
+    await waitFor(() => expect(result.current.profile).toEqual({ username: 'foo' }))
   })
 
   it('should redirect to login page when token is invalid', async () => {
-    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
+    vi.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockRejectedValue({ response: { status: 401 } })
 
-    const { waitForNextUpdate } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
-    await waitForNextUpdate()
+    renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
 
     await waitFor(() => expect(mockSetSecurityData).toHaveBeenCalledWith(null))
   })
 
   it('should return correct loading state when retrieve API', async () => {
-    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
+    vi.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockResolvedValue({ username: 'foo' } as any)
 
-    const { result, waitForNextUpdate } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
+    const { result } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
     expect(result.current.loading).toBeTruthy()
 
-    await waitForNextUpdate()
-    expect(result.current.loading).toBeFalsy()
+    await waitFor(() => {
+      expect(result.current.loading).toBeFalsy()
+    })
   })
 
   it('should set localstorage when call mount authorization', async () => {
-    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
+    vi.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockResolvedValue({ username: 'foo' } as any)
-    const { result, waitForNextUpdate } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
-    await waitForNextUpdate()
+    const { result } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
 
-    act(() => {
+    await act(() => {
       result.current.mountAuthorization({ id: 1, token: 'token' } as any)
     })
 
@@ -73,12 +70,11 @@ describe('# Authorization Context', () => {
   })
 
   it('should remove localStorage when call unmount authorization', async () => {
-    jest.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
+    vi.spyOn(StorageUtil.prototype, 'get').mockReturnValue('token')
     mockRetrieveProfile.mockResolvedValue({ username: 'foo' } as any)
-    const { result, waitForNextUpdate } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
-    await waitForNextUpdate()
+    const { result } = renderHook(() => useAuthorization(), { wrapper: MemoryRouter, initialProps: {} })
 
-    act(() => {
+    await act(() => {
       result.current.unmountAuthorization()
     })
 

@@ -4,14 +4,18 @@ import reactPlugin from '@vitejs/plugin-react-swc'
 import dayjs from 'dayjs'
 import { defineConfig } from 'vite'
 
+const resolve = (subPath: string) => path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), subPath)
+
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
-      src: path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), 'src'),
+      src: resolve('src'),
     },
   },
-  plugins: [reactPlugin()],
+  plugins: [
+    reactPlugin(),
+  ],
   build: {
     chunkSizeWarningLimit: 768,
   },

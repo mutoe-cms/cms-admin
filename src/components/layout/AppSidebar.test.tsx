@@ -3,8 +3,8 @@ import React from 'react'
 import { appMenus } from 'src/appMenu'
 import AppSidebar from 'src/components/layout/AppSidebar'
 
-const mockNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
+const mockNavigate = vi.fn()
+vi.mock('react-router-dom', () => ({
   useLocation: () => ({ pathname: '/content/category' }),
   useNavigate: () => mockNavigate,
 }))

@@ -5,22 +5,23 @@ import { useParams } from 'react-router-dom'
 import { tagFixture } from 'src/fixtures'
 import { service } from 'src/services'
 import { ArticleEntity } from 'src/services/api'
+import { Mock } from 'vitest'
 import ArticleEditPage from './ArticleEditPage'
 
-jest.mock('src/contexts/toast/toast.context', () => () => ({ success: jest.fn(), error: jest.fn() }))
+vi.mock('src/contexts/toast/toast.context', () => () => ({ success: vi.fn(), error: vi.fn() }))
 
-const mockNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
+const mockNavigate = vi.fn()
+vi.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
-  useParams: jest.fn(),
+  useParams: vi.fn(),
 }))
 
 describe('# ArticleEditPage', () => {
-  const mockUseParams = useParams as jest.Mock
-  const mockUpdateRequest = jest.spyOn(service.article, 'updateArticle')
-  const mockRetrieveArticle = jest.spyOn(service.article, 'retrieveArticle')
-  const mockRetrieveTags = jest.spyOn(service.tag, 'retrieveTags')
-  const mockRetrieveCategories = jest.spyOn(service.category, 'retrieveRootCategories')
+  const mockUseParams = useParams as Mock
+  const mockUpdateRequest = vi.spyOn(service.article, 'updateArticle')
+  const mockRetrieveArticle = vi.spyOn(service.article, 'retrieveArticle')
+  const mockRetrieveTags = vi.spyOn(service.tag, 'retrieveTags')
+  const mockRetrieveCategories = vi.spyOn(service.category, 'retrieveRootCategories')
 
   beforeEach(async () => {
     mockUseParams.mockReturnValue({ id: '1' })

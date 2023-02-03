@@ -9,7 +9,7 @@ interface ToastContextState {
 
 const ToastContext = createContext<ToastContextState>({} as ToastContextState)
 
-export const ToastProvider: React.FC = props => {
+export const ToastProvider: React.FC<React.PropsWithChildren> = props => {
   const [toasts, setToasts] = useState<Toast[]>([])
 
   const toast = (type: ToastType, title: string) => {

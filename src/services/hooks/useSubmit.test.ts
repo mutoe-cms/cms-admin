@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react'
 import React from 'react'
 import { isFormError, useSubmit } from './useSubmit'
 
@@ -29,11 +29,14 @@ describe('# isFormError', () => {
 })
 
 describe('# useSubmit', () => {
-  const setError = jest.fn()
-  jest.spyOn(React, 'useRef').mockReturnValue({ current: { setError } })
+  const setError = vi.fn()
+
+  beforeEach(() => {
+    vi.spyOn(React, 'useRef').mockReturnValue({ current: { setError } })
+  })
 
   it('should call request when call onSubmit method', async () => {
-    const request = jest.fn().mockResolvedValue({ status: 200, data: {} })
+    const request = vi.fn().mockResolvedValue({ status: 200, data: {} })
     const { result } = renderHook(() => useSubmit(request))
 
     await act(async () => {
@@ -44,7 +47,7 @@ describe('# useSubmit', () => {
   })
 
   it('should set form error when API throw 422 error', async () => {
-    const request = jest.fn().mockRejectedValue({
+    const request = vi.fn().mockRejectedValue({
       response: {
         status: 422,
         data: {

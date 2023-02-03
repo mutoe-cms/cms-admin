@@ -16,6 +16,7 @@ interface ListWrapperProps {
   error?: boolean
   pageMeta?: PaginationMeta
   onRetrieve?: (paginationDto: PaginationDto) => void
+  children?: React.ReactNode
 }
 
 const ListWrapper: React.FC<ListWrapperProps> = (props) => {

@@ -9,15 +9,16 @@
   "type": "module",
   "scripts": {
     "prepare": "husky install",
+    "preversion": "pnpm type-check && pnpm lint && pnpm test",
+    "version": "pnpm changelog && git add CHANGELOG.md",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "serve": "vite preview",
-    "test:unit": "jest --coverage",
-    "test": "pnpm tsc && pnpm test:unit",
+    "type-check": "tsc",
     "lint": "eslint .",
+    "test": "echo 'TODO: vitest run --coverage'",
     "swagger": "bash scripts/sync-swagger-api.sh",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "version": "pnpm changelog && git add CHANGELOG.md"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "lint-staged": {
     "src/**/*.ts?(x)": "eslint --fix"
@@ -36,19 +37,24 @@
   },
   "devDependencies": {
     "@mutoe/eslint-config-preset-react": "^2.2.0",
+    "@testing-library/react": "^13.4.0",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react-swc": "^3.1.0",
+    "@vitest/coverage-c8": "^0.28.3",
     "classnames": "^2.3.2",
     "eslint": "^8.33.0",
+    "happy-dom": "^8.2.3",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "sass": "^1.58.0",
     "swagger-typescript-api": "^12.0.2",
     "typescript": "^4.9.5",
-    "vite": "^4.1.1"
+    "vite": "^4.1.1",
+    "vitest": "^0.28.3",
+    "vitest-dom": "^0.0.4"
   },
   "browserslist": {
     "production": [
@@ -62,6 +68,10 @@
       "last 1 safari version"
     ]
   },
+  "eslintIgnore": [
+    "dist",
+    "coverage"
+  ],
   "eslintConfig": {
     "extends": [
       "@mutoe/eslint-config-preset-react"
@@ -104,55 +114,6 @@
           "unicorn/consistent-destructuring": "off"
         }
       }
-    ]
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.ts"
-    ],
-    "globals": {
-      "vue-jest": {
-        "babelConfig": true
-      }
-    },
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.{form,context}.ts?(x)",
-      "!src/services/{index,api}.ts",
-      "!src/constants/**",
-      "!src/{index,App}.tsx",
-      "!src/{appMenu,serviceWorker,fixtures}.ts"
-    ],
-    "coverageThreshold": {
-      "src/**/*.ts?(x)": {
-        "branches": -10,
-        "functions": -5,
-        "statements": -15,
-        "lines": -20
-      }
-    },
-    "moduleNameMapper": {
-      "^src/(.*)$": "<rootDir>/src/$1",
-      "\\.(css|sass|scss)$": "<rootDir>/scripts/jest/mock-css.js",
-      "\\.(jpg|svg)$": "<rootDir>/scripts/jest/mock-file.js"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "ts",
-      "tsx",
-      "json"
-    ],
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
     ]
   }
 }

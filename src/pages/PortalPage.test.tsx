@@ -4,20 +4,21 @@ import { useLocation } from 'react-router-dom'
 import useAuthorizationContext from 'src/contexts/authorization/authorization.context'
 import PortalPage from 'src/pages/PortalPage'
 import { routeMap } from 'src/route'
+import { Mock } from 'vitest'
 
-jest.mock('src/contexts/authorization/authorization.context')
+vi.mock('src/contexts/authorization/authorization.context')
 
-const mockNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
+const mockNavigate = vi.fn()
+vi.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
-  useLocation: jest.fn(),
+  useLocation: vi.fn(),
   Link: () => null,
   Outlet: () => null,
 }))
 
 describe('# PortalPage', () => {
-  const mockUseAuthorizationContext = useAuthorizationContext as jest.Mock
-  const mockUseLocation = useLocation as jest.Mock
+  const mockUseAuthorizationContext = useAuthorizationContext as Mock
+  const mockUseLocation = useLocation as Mock
 
   it('should jump to dashboard page when path is root', () => {
     mockUseLocation.mockReturnValue({ pathname: routeMap.root })
