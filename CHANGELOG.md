@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/mutoe-cms/cms-admin/compare/v0.3.4...v0.4.0) (2023-02-03)
+
+
+### Bug Fixes
+
+* update sass division operator ([8fa71c2](https://github.com/mutoe-cms/cms-admin/commit/8fa71c20f076fc587f2bc79c82167af1c2cb8a13))
+
+
+
 ## [0.3.4](https://github.com/mutoe-cms/cms-admin/compare/v0.3.2...v0.3.4) (2023-01-29)
 
 
