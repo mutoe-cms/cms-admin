@@ -1,5 +1,5 @@
-import { AxiosResponse } from 'axios'
 import { useCallback, useEffect, useState } from 'react'
+import { AxiosResponse } from 'axios'
 import { RequestParams } from 'src/services/api'
 
 type RetrieveDetailRequest<Entity = unknown> = (id: number, params?: RequestParams) => Promise<AxiosResponse<Entity>>

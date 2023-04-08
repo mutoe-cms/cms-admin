@@ -1,9 +1,9 @@
-import { waitFor, act, renderHook } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { act, renderHook, waitFor } from '@testing-library/react'
+import { Mock } from 'vitest'
 import useAuthorization from 'src/contexts/authorization/useAuthorization'
 import { service } from 'src/services'
 import StorageUtil from 'src/utils/storage.util'
-import { Mock } from 'vitest'
 
 vi.mock('src/services')
 

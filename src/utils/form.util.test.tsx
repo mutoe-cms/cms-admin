@@ -1,5 +1,5 @@
-import { render, waitFor } from '@testing-library/react'
 import React from 'react'
+import { render, waitFor } from '@testing-library/react'
 import { fieldErrorDecorator, focusErrorField, sentence } from 'src/utils/form.util'
 
 describe('# focus error field util', () => {

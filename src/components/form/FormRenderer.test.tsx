@@ -1,5 +1,5 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import FormRenderer, { FieldConfig } from 'src/components/form/FormRenderer'
 import { ERROR_MESSAGE } from 'src/constants/message'
 

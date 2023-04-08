@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Axios, AxiosRequestConfig } from 'axios'
+import { afterEach, expect, vi } from 'vitest'
+import * as matchers from 'vitest-dom/matchers'
 
 import 'vitest-dom/extend-expect'
-import * as matchers from 'vitest-dom/matchers'
-import { afterEach, expect, vi } from 'vitest'
+
 expect.extend(matchers)
 
 vi.mock('axios', async () => {

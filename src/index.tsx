@@ -1,14 +1,13 @@
 import React from 'react'
-import * as ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-
-import 'semantic-ui-css/semantic.min.css'
-
-import 'src/assets/css/index.scss'
+import * as ReactDOM from 'react-dom/client'
 import App from 'src/App'
 import { AuthorizationProvider } from 'src/contexts/authorization/authorization.context'
 import { ToastProvider } from 'src/contexts/toast/toast.context'
 import * as serviceWorker from 'src/serviceWorker'
+
+import 'semantic-ui-css/semantic.min.css'
+import 'src/assets/css/index.scss'
 
 ReactDOM
   .createRoot(document.querySelector('#root') as HTMLElement)

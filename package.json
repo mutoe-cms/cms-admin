@@ -1,11 +1,11 @@
 {
   "name": "cms-admin",
+  "private": true,
   "version": "0.4.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/mutoe-cms/cms-admin"
   },
-  "private": true,
   "type": "module",
   "scripts": {
     "prepare": "husky install",
@@ -36,7 +36,7 @@
     "semantic-ui-react": "^2.1.4"
   },
   "devDependencies": {
-    "@mutoe/eslint-config-preset-react": "~2.4.0",
+    "@mutoe/eslint-config-preset-react": "~3.0.0",
     "@testing-library/react": "^14.0.0",
     "@types/lodash": "^4.14.192",
     "@types/node": "^18.15.11",

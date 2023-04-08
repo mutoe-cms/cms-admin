@@ -1,5 +1,5 @@
-import { act, renderHook } from '@testing-library/react'
 import React from 'react'
+import { act, renderHook } from '@testing-library/react'
 import { isFormError, useSubmit } from './useSubmit'
 
 describe('# isFormError', () => {

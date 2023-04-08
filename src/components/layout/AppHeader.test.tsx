@@ -1,8 +1,8 @@
-import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
+import { fireEvent, render } from '@testing-library/react'
+import { Mock } from 'vitest'
 import useAuthorizationContext from 'src/contexts/authorization/authorization.context'
 import { routeMap } from 'src/route'
-import { Mock } from 'vitest'
 import AppHeader from './AppHeader'
 
 const mockNavigate = vi.fn()

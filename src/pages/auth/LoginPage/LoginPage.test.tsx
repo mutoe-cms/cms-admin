@@ -1,11 +1,11 @@
+import React from 'react'
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import { noop } from 'lodash'
-import React from 'react'
+import { MockedFunction } from 'vitest'
 import useAuthorizationContext from 'src/contexts/authorization/authorization.context'
 import { routeMap } from 'src/route'
 import { useSubmit } from 'src/services'
 import { ProfileRo } from 'src/services/api'
-import { MockedFunction } from 'vitest'
 import LoginPage from './LoginPage'
 
 vi.mock('src/contexts/authorization/authorization.context')

@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React, { useEffect, useRef, useState } from 'react'
 import ReactQuill from 'react-quill'
+import classNames from 'classnames'
 import { BasicFieldProps } from 'src/components/form/FormRenderer'
 
 import 'react-quill/dist/quill.snow.css'

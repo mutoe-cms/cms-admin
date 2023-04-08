@@ -1,5 +1,5 @@
-import { kebabCase, pick, xor } from 'lodash'
 import React, { useEffect, useState } from 'react'
+import { kebabCase, pick, xor } from 'lodash'
 import { Form, FormDropdownProps, Icon, StrictDropdownProps } from 'semantic-ui-react'
 import { SelectFieldConfig, SelectOption } from 'src/components/form/FormRenderer'
 

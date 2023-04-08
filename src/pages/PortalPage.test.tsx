@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
+import { render } from '@testing-library/react'
+import { Mock } from 'vitest'
 import useAuthorizationContext from 'src/contexts/authorization/authorization.context'
 import PortalPage from 'src/pages/PortalPage'
 import { routeMap } from 'src/route'
-import { Mock } from 'vitest'
 
 vi.mock('src/contexts/authorization/authorization.context')
 

@@ -1,11 +1,11 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { AxiosResponse } from 'axios'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { AxiosResponse } from 'axios'
+import { Mock } from 'vitest'
 import { tagFixture } from 'src/fixtures'
 import { service } from 'src/services'
 import { ArticleEntity } from 'src/services/api'
-import { Mock } from 'vitest'
 import ArticleEditPage from './ArticleEditPage'
 
 vi.mock('src/contexts/toast/toast.context', () => () => ({ success: vi.fn(), error: vi.fn() }))
