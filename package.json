@@ -16,7 +16,7 @@
     "serve": "vite preview",
     "type-check": "tsc",
     "lint": "eslint .",
-    "test": "echo 'TODO: vitest run --coverage'",
+    "test": "vitest run --coverage",
     "swagger": "bash scripts/sync-swagger-api.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
@@ -33,7 +33,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.10.0",
     "semantic-ui-css": "^2.5.0",
-    "semantic-ui-react": "^2.1.4"
+    "semantic-ui-react": "^3.0.0-beta.0"
   },
   "devDependencies": {
     "@mutoe/eslint-config-preset-react": "~3.0.0",

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+import React from 'react'
 import { Axios, AxiosRequestConfig } from 'axios'
 import { afterEach, expect, vi } from 'vitest'
 import * as matchers from 'vitest-dom/matchers'
@@ -20,6 +19,10 @@ vi.mock('axios', async () => {
     }),
   }
 })
+
+vi.mock('react-quill', () => ({
+  default: (props: unknown) => React.createElement('textarea', props),
+}))
 
 document.createRange = (): Range => ({
   setStart: vi.fn(),

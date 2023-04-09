@@ -9,7 +9,7 @@ import { CreateArticleDto } from 'src/services/api'
 import { useRetrieveDetail } from 'src/services/hooks/useRetrieveDetail'
 
 const ArticleEditPage: React.FC = () => {
-  const { id = 0 } = useParams()
+  const { id = '0' } = useParams()
   const navigate = useNavigate()
   const toast = useToast()
 

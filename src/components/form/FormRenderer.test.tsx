@@ -1,11 +1,11 @@
 import React from 'react'
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { RenderResult, act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import FormRenderer, { FieldConfig } from 'src/components/form/FormRenderer'
 import { ERROR_MESSAGE } from 'src/constants/message'
 
 describe('# Form Renderer Component', () => {
   let fields: FieldConfig<string>[]
-  let container: HTMLElement
+  let container: RenderResult['container']
   let username: HTMLInputElement
   let password: HTMLInputElement
   let select: HTMLDivElement
@@ -41,17 +41,14 @@ describe('# Form Renderer Component', () => {
       },
     ]
 
-    act(() => {
-      ({ container } = render(<FormRenderer fields={fields} submitText={submitText} onSubmit={onSubmit} />))
-      username = screen.getByRole('textbox', { name: 'Username' }) as HTMLInputElement
-      password = screen.getByPlaceholderText('Password') as HTMLInputElement
-      select = screen.getByRole('combobox', { name: 'Select' }) as HTMLDivElement
-      richEditor = container.querySelector('.ql-editor') as HTMLTextAreaElement
-      form = screen.getByTestId('form') as HTMLFormElement
-    })
+    container = render(<FormRenderer fields={fields} submitText={submitText} onSubmit={onSubmit} />).container
+    username = screen.getByRole('textbox', { name: 'Username' }) as HTMLInputElement
+    password = screen.getByPlaceholderText('Password') as HTMLInputElement
+    select = screen.getByRole('combobox', { name: 'Select' }) as HTMLDivElement
+    form = screen.getByTestId('form') as HTMLFormElement
   })
 
-  describe.skip('common feature', () => {
+  describe('common feature', () => {
     it('should display required error when submit an empty form given a required field', async () => {
       act(() => {
         fireEvent.submit(form)
@@ -100,19 +97,20 @@ describe('# Form Renderer Component', () => {
   })
 
   describe('input field', () => {
-    it.skip('should render text or password field correctly', () => {
+    it('should render text or password field correctly', () => {
       expect(username.tagName).toBe('INPUT')
       expect(username.type).toBe('text')
       expect(password.type).toBe('password')
     })
   })
 
-  describe.skip('single select field', () => {
+  describe('single select field', () => {
     it('should render field correctly', () => {
       expect(select).toBeInTheDocument()
     })
   })
 
+  // TODO: rich text cannot render normally in test
   describe.skip('rich field', () => {
     it('should render field correctly', () => {
       expect(richEditor).toBeInTheDocument()

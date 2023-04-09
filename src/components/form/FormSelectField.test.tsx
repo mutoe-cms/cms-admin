@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, fireEvent, render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { SelectOption } from 'src/components/form/FormRenderer'
 import FormSelectField from 'src/components/form/FormSelectField'
 
@@ -10,7 +10,7 @@ const options: SelectOption[] = [
   },
 ]
 
-describe.skip('# FormSelectField', () => {
+describe('# FormSelectField', () => {
   const onChange = vi.fn()
 
   describe('single select', () => {
@@ -34,12 +34,10 @@ describe.skip('# FormSelectField', () => {
       const { getByRole } = render(<FormSelectField creatable value='' onAddItem={onAddItem} onChange={onChange} />)
       const inputElement = getByRole('textbox')
 
-      act(() => {
-        fireEvent.change(inputElement, { target: { value: 'foo' } })
-        fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
-      })
+      fireEvent.change(inputElement, { target: { value: 'foo' } })
+      fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' })
 
-      expect(onChange).toBeCalledWith('foo')
+      await waitFor(() => expect(onChange).toBeCalledWith('foo'))
     })
   })
 

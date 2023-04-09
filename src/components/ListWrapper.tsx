@@ -1,7 +1,15 @@
-/* istanbul ignore file */
-
 import React, { useState } from 'react'
-import { Button, Dropdown, DropdownItemProps, Header, Icon, Menu, Pagination, Placeholder, Segment } from 'semantic-ui-react'
+import {
+  Button,
+  Dropdown,
+  DropdownItemProps,
+  Header,
+  Icon,
+  Menu,
+  Pagination,
+  Placeholder,
+  Segment,
+} from 'semantic-ui-react'
 import { PaginationDto } from 'src/services'
 import { PaginationMeta } from 'src/services/api'
 

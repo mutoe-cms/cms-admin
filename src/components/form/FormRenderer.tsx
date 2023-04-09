@@ -116,13 +116,14 @@ const FormRenderer = <K extends string, F extends FormData<K>>(props: FormRender
   }
 
   const onSubmit = async () => {
+    // TODO: do not prune the form when server error happened
     const validateResults = props.fields.map(field => validateField(field))
     if (!validateResults.every(Boolean)) return focusErrorField()
 
     await props.onSubmit?.(form)
   }
 
-  const renderFields = props.fields.map(field => {
+  const renderFields: React.ReactNode[] = props.fields.map(field => {
     const fieldProps: BasicFieldProps<K> = {
       ...pick(field, ['label', 'placeholder', 'required', 'disabled', 'name']),
       'aria-label': field.label,

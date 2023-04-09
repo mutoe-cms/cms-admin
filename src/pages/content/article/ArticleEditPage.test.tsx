@@ -8,7 +8,9 @@ import { service } from 'src/services'
 import { ArticleEntity } from 'src/services/api'
 import ArticleEditPage from './ArticleEditPage'
 
-vi.mock('src/contexts/toast/toast.context', () => () => ({ success: vi.fn(), error: vi.fn() }))
+vi.mock('src/contexts/toast/toast.context', () => ({
+  default: () => ({ success: vi.fn(), error: vi.fn() }),
+}))
 
 const mockNavigate = vi.fn()
 vi.mock('react-router-dom', () => ({
