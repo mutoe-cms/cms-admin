@@ -39,20 +39,25 @@ const ListWrapper: React.FC<ListWrapperProps> = (props) => {
     props.onRetrieve?.({ page, limit })
   }
 
-  const placeholder = <Placeholder className='placeholderLine'>
-    {Array.from({ length: 10 }).fill(null).map((_, i) => <Placeholder.Line key={i} length='full' />)}
-  </Placeholder>
+  if (props.loading) {
+    return (
+      <Placeholder className='placeholderLine' data-testid='placeholder'>
+        {Array.from({ length: 10 }).fill(null).map((_, i) => <Placeholder.Line key={i} length='full' />)}
+      </Placeholder>
+    )
+  }
 
-  const errorSegment = <Segment placeholder>
-    <Header icon>
-      <Icon icon='unlink' />
-      Something went wrong
-    </Header>
-    <Button primary>Retry</Button>
-  </Segment>
-
-  if (props.loading) return placeholder
-  if (props.error) return errorSegment
+  if (props.error) {
+    return (
+      <Segment placeholder>
+        <Header icon>
+          <Icon icon='unlink' /> Something went wrong
+        </Header>
+        {/* TODO: implement retry method */}
+        <Button primary>Retry</Button>
+      </Segment>
+    )
+  }
 
   const pageMeta = props.pageMeta
 
